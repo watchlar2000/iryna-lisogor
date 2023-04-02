@@ -1,14 +1,3 @@
-<script>
-import ProjectsService from "./services/ProjectsService";
-
-export default {
-  name: "App",
-  mounted() {
-    ProjectsService.getProjects();
-  },
-};
-</script>
-
 <template>
   <div id="app">
     <nav>
@@ -18,5 +7,3 @@ export default {
     <router-view />
   </div>
 </template>
-
-<style lang="scss"></style>
