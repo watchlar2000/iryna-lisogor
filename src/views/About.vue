@@ -1,3 +1,10 @@
+<script>
+export default {
+  name: "AboutView",
+  components: {},
+};
+</script>
+
 <template>
   <div class="about">
     <h1>This is an about page</h1>
