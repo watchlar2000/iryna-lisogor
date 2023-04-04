@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "date-fns": "^2.29.3",
     "firebase": "^9.19.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.33",
