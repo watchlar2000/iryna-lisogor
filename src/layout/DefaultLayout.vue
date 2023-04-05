@@ -23,11 +23,10 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  background-color: rgb(212, 172, 172);
   min-height: 100vh;
   width: 100%;
   display: grid;
-  grid-template-rows: 125px auto min-content;
+  grid-template-rows: min-content auto min-content;
   grid-template-areas:
     "header"
     "main"
@@ -36,13 +35,15 @@ export default {
 .header {
   width: 100%;
   grid-area: header;
-  background-color: rgb(162, 211, 179);
+  /* background-color: rgb(162, 211, 179); */
 }
 .main {
   display: grid;
-  background-color: rgb(235, 189, 157);
+  padding: 14px 32px;
+  /* background-color: rgb(235, 189, 157); */
   grid-area: main;
   justify-self: center;
+  align-self: start;
   width: 100%;
   max-width: 900px;
   height: 100%;
@@ -54,8 +55,9 @@ export default {
   }
 } */
 .footer {
-  background-color: rgb(97, 156, 215);
+  /* background-color: rgb(97, 156, 215); */
   grid-area: footer;
-  padding: 10px 0;
+  padding: 14px 0;
+  text-align: center;
 }
 </style>
