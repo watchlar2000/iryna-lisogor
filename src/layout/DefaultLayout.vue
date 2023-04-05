@@ -39,7 +39,7 @@ export default {
 }
 .main {
   display: grid;
-  padding: 14px 32px;
+  padding: 18px 32px;
   /* background-color: rgb(235, 189, 157); */
   grid-area: main;
   justify-self: center;
@@ -49,11 +49,12 @@ export default {
   height: 100%;
 }
 
-/* @media screen and (min-width: 576px) {
+@media screen and (min-width: 992px) {
   .main {
-    margin: 0 24px;
+    padding-inline: 0;
   }
-} */
+}
+
 .footer {
   /* background-color: rgb(97, 156, 215); */
   grid-area: footer;

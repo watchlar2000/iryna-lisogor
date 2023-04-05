@@ -41,7 +41,7 @@ export default {
 <style scoped lang="scss">
 .post-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
   gap: 36px;
   height: min-content;
@@ -51,7 +51,7 @@ export default {
   position: relative;
   cursor: pointer;
   width: 100%;
-  height: 250px;
+  height: 350px;
 
   img {
     z-index: 0;
@@ -78,5 +78,30 @@ export default {
 .hovered {
   transition: background-color 0.5s ease;
   background-color: var(--color-background-variant);
+}
+
+@media screen and (min-width: 576px) {
+  .post-item {
+    height: 450px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .post-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .post-item {
+    height: 350px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .post-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .post-item {
+    height: 250px;
+  }
 }
 </style>
