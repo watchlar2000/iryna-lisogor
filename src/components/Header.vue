@@ -1,27 +1,79 @@
 <script>
+import IconBurgerVue from "./icons/IconBurger.vue";
 import IconLogo from "./icons/IconLogo.vue";
+import MobileNav from "./MobileNav.vue";
 
 export default {
   name: "AppHeader",
   components: {
+    MobileNav,
+    IconBurgerVue,
     IconLogo,
+  },
+  data() {
+    return {
+      mobile: null,
+      mobileMenu: null,
+      currentWindowWidth: null,
+    };
+  },
+  created() {
+    this.isMobile();
+    window.addEventListener("resize", this.isMobile);
+  },
+  methods: {
+    toggleMobileMenu() {
+      document.body.style.overflow = "hidden";
+      this.mobileMenu = !this.mobileMenu;
+    },
+    isMobile() {
+      this.currentWindowWidth = window.innerWidth;
+      if (this.currentWindowWidth <= 768) {
+        this.mobile = true;
+        this.mobileMenu = false;
+        return;
+      }
+      this.mobile = false;
+      this.mobileMenu = false;
+      document.body.style.overflow = "visible";
+    },
+    closeMobileMenu() {
+      this.mobileMenu = false;
+      document.body.style.overflow = "visible";
+    },
+  },
+  watch: {
+    $route() {
+      this.mobileMenu = false;
+    },
   },
 };
 </script>
 
 <template>
-  <header class="header">
-    <IconLogo width="145" />
-    <nav class="nav">
-      <router-link to="/">Work</router-link>
-      <router-link to="/about">About & Contacts</router-link>
-    </nav>
-  </header>
+  <div>
+    <header class="header">
+      <IconLogo width="145" />
+
+      <nav v-if="!mobile" class="nav">
+        <router-link to="/">Work</router-link>
+        <router-link to="/about">About & Contacts</router-link>
+      </nav>
+      <IconBurgerVue
+        v-else
+        @click.native="toggleMobileMenu"
+        class="pointer"
+        :width="46"
+      />
+    </header>
+    <MobileNav :shown="mobileMenu" @close="closeMobileMenu" />
+  </div>
 </template>
 
 <style scoped lang="scss">
 .header {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   padding: 14px 24px;
@@ -44,15 +96,11 @@ export default {
       color: var(--color-secondary);
     }
 
-    &:hover,
+    /* &:hover,
     &:focus {
       color: var(--color-primary);
       outline: none;
-    }
+    } */
   }
-
-  /* &:active {
-    color: var(--color-secondary);
-  } */
 }
 </style>

@@ -23,10 +23,12 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  /* background-color: red; */
+  position: relative;
   min-height: 100vh;
   width: 100%;
   display: grid;
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: min-content 1fr min-content;
   grid-template-areas:
     "header"
     "main"
@@ -46,7 +48,7 @@ export default {
   align-self: start;
   width: 100%;
   max-width: 900px;
-  height: 100%;
+  min-height: 100%;
 }
 
 @media screen and (min-width: 992px) {

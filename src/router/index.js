@@ -36,6 +36,7 @@ router.beforeResolve((to, from, next) => {
     NProgress.start();
     projectStore.load();
   }
+
   next();
 });
 

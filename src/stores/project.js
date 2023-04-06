@@ -10,5 +10,8 @@ export const useProjectStore = defineStore("project", {
     async load() {
       this.projects = await ProjectsService.getProjects();
     },
+    getProject(slug) {
+      return this.projects.find((p) => p.slug === slug);
+    },
   },
 });

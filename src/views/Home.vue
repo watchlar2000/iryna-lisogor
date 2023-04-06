@@ -18,22 +18,24 @@ export default {
 <template>
   <div class="post-list">
     <div v-for="p in projects" :key="p.id">
-      <div
-        @mouseover="titleIdx = p.id"
-        @mouseleave="titleIdx = null"
-        class="post-item"
-      >
-        <img :src="p.cover" :alt="p.title" :data-id="p.id" />
-        <h3
-          v-if="titleIdx === p.id"
-          class="title"
-          :class="{
-            hovered: titleIdx === p.id,
-          }"
+      <router-link :to="{ name: 'project', params: { slug: p.slug } }">
+        <div
+          @mouseover="titleIdx = p.id"
+          @mouseleave="titleIdx = null"
+          class="post-item"
         >
-          {{ p.title }}
-        </h3>
-      </div>
+          <img :src="p.cover" :alt="p.title" :data-id="p.id" />
+          <div
+            v-if="titleIdx === p.id"
+            class="title"
+            :class="{
+              hovered: titleIdx === p.id,
+            }"
+          >
+            <!-- {{ p.title }} -->
+          </div>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -77,7 +79,8 @@ export default {
 
 .hovered {
   transition: background-color 0.5s ease;
-  background-color: var(--color-background-variant);
+  /* background-color: var(--color-background-variant); */
+  background-color: hsla(0, 0%, 100%, 0.35);
 }
 
 @media screen and (min-width: 576px) {

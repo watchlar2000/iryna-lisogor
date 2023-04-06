@@ -2,7 +2,7 @@ import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firestore/firestore.config";
 
 const COLLECTIONS = {
-  works: "portfolio",
+  works: "works",
   images: "images",
 };
 
@@ -14,19 +14,19 @@ export default {
     const projectsData = await Promise.all(
       projectSnap.docs.map(async (project) => {
         const data = { id: project.id, ...project.data() };
-        // const imagesSnap = await getDocs(
-        //   collection(
-        //     db,
-        //     `${COLLECTIONS.works}/${data.id}/${COLLECTIONS.images}`
-        //   )
-        // );
-        // const images = imagesSnap.docs.map((image) => {
-        //   return { id: image.id, ...image.data() };
-        // });
+        const imagesSnap = await getDocs(
+          collection(
+            db,
+            `${COLLECTIONS.works}/${data.id}/${COLLECTIONS.images}`
+          )
+        );
+        const images = imagesSnap.docs.map((image) => {
+          return { id: image.id, ...image.data() };
+        });
 
-        // return { ...data, images };
+        return { ...data, images };
 
-        return data;
+        // return data;
       })
     );
 
