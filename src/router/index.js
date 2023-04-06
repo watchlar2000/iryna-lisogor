@@ -10,23 +10,35 @@ const routes = [
     path: "/",
     name: "home",
     component: () => import("../views/Home.vue"),
+    meta: {
+      title: "Home",
+    },
   },
   {
     path: "/project/:slug",
     name: "project",
     component: () => import("../views/Project.vue"),
     props: true,
+    meta: {
+      title: "Projects",
+    },
   },
   {
     path: "/about",
     name: "about",
     component: () => import("../views/About.vue"),
+    meta: {
+      title: "About",
+    },
   },
 ];
 
 const router = new VueRouter({
   mode: "history",
   routes,
+  scrollBehavior() {
+    return { x: 0, y: 0, behavior: "smooth" };
+  },
 });
 
 router.beforeResolve((to, from, next) => {
@@ -37,6 +49,11 @@ router.beforeResolve((to, from, next) => {
     projectStore.load();
   }
 
+  next();
+});
+
+router.beforeEach((to, from, next) => {
+  window.document.title = `${to.meta.title} | Iryna Lisogor`;
   next();
 });
 
