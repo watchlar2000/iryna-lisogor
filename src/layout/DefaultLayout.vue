@@ -36,27 +36,39 @@ export default {
 .header {
   width: 100%;
   grid-area: header;
+  padding: 14px 8px;
 }
 .main {
   display: grid;
-  padding: 18px 32px;
+  padding: 18px 8px;
   grid-area: main;
   justify-self: center;
   align-self: start;
   width: 100%;
   max-width: 900px;
-  min-height: 100%;
+  height: 100%;
+}
+
+.footer {
+  grid-area: footer;
+  padding: 14px 8px;
+  text-align: center;
+}
+
+@media screen and (min-width: 576px) {
+  .header,
+  .footer {
+    padding: 14px 24px;
+  }
+
+  .main {
+    padding: 18px 24px;
+  }
 }
 
 @media screen and (min-width: 992px) {
   .main {
     padding-inline: 0;
   }
-}
-
-.footer {
-  grid-area: footer;
-  padding: 14px 0;
-  text-align: center;
 }
 </style>

@@ -48,6 +48,5 @@ export default {
   gap: 18px;
   width: 100%;
   justify-content: flex-end;
-  padding-right: 24px;
 }
 </style>

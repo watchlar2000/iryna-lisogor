@@ -53,8 +53,7 @@ export default {
 <template>
   <div>
     <header class="header">
-      <router-link to="/"><IconLogo width="145" /></router-link>
-
+      <IconLogo width="145" />
       <nav v-if="!mobile" class="nav">
         <router-link to="/">Work</router-link>
         <router-link to="/about">About & Contacts</router-link>
@@ -76,7 +75,6 @@ export default {
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
 }
 
 .nav {

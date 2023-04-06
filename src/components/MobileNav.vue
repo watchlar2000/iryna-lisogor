@@ -48,8 +48,8 @@ export default {
   min-height: 100vh;
   z-index: 5;
   background: var(--color-background);
-  font-size: 48px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 500;
 }
 
 .close-button {
@@ -66,5 +66,11 @@ export default {
 .mobile-menu-enter,
 .mobile-menu-leave-to {
   opacity: 0;
+}
+
+@media screen and (min-width: 576px) {
+  .mobile-nav {
+    font-size: 36px;
+  }
 }
 </style>

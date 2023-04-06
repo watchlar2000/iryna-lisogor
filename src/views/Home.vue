@@ -31,9 +31,7 @@ export default {
             :class="{
               hovered: titleIdx === p.id,
             }"
-          >
-            <!-- {{ p.title }} -->
-          </div>
+          ></div>
         </div>
       </router-link>
     </div>
