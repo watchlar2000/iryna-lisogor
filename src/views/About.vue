@@ -23,8 +23,9 @@ export default {
       up at
       <a href="mailto:iryna.lisogor.artwrk@gmail.com"
         >iryna.lisogor.artwrk@gmail.com</a
-      >
+      >.
     </p>
+    <p>Resume available upon request.</p>
   </div>
 </template>
 
