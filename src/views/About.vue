@@ -9,13 +9,8 @@ export default {
     <h1>Hi!</h1>
     <p>
       I'm Ira, an illustrator based in Kyiv, Ukraine, who is passionate about
-      character design and storytelling.
-    </p>
-    <p>
-      I enjoy diving headfirst into projects, exploring, and creating vibrant
-      artworks which tell stories and spark joy.
-    </p>
-    <p>
+      character design and storytelling. I enjoy diving headfirst into projects,
+      exploring, and creating vibrant artworks which tell stories and spark joy.
       Previously worked in various fields like editorial, advertising, and
       social media.
     </p>
@@ -35,9 +30,8 @@ export default {
 
 <style lang="scss" scoped>
 .about {
-  max-width: 700px;
+  max-width: 750px;
   margin-inline: auto;
-  /* text-align: justify; */
 
   h1 {
     font-weight: 600;
@@ -47,6 +41,7 @@ export default {
   p {
     font-size: 24px;
     margin-top: 14px;
+    font-weight: 300;
   }
 
   a {

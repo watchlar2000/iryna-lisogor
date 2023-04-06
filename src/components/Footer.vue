@@ -40,8 +40,8 @@ export default {
 
 <style scoped lang="scss">
 .footer {
-  color: var(--color-title);
-  font-size: 14px;
+  color: #96979a;
+  font-size: 16px;
 }
 .socials-list {
   display: flex;

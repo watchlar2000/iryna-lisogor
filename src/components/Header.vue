@@ -53,7 +53,7 @@ export default {
 <template>
   <div>
     <header class="header">
-      <IconLogo width="145" />
+      <router-link to="/"><IconLogo width="145" /></router-link>
 
       <nav v-if="!mobile" class="nav">
         <router-link to="/">Work</router-link>

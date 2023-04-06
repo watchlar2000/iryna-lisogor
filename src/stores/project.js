@@ -8,7 +8,10 @@ export const useProjectStore = defineStore("project", {
   getters: {},
   actions: {
     async load() {
-      this.projects = await ProjectsService.getProjects();
+      const projectsData = await ProjectsService.getProjects();
+      this.projects = projectsData.sort(
+        (a, b) => b.date.seconds - a.date.seconds
+      );
     },
     getProject(slug) {
       return this.projects.find((p) => p.slug === slug);
