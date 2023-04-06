@@ -23,7 +23,6 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  /* background-color: red; */
   position: relative;
   min-height: 100vh;
   width: 100%;
@@ -37,12 +36,10 @@ export default {
 .header {
   width: 100%;
   grid-area: header;
-  /* background-color: rgb(162, 211, 179); */
 }
 .main {
   display: grid;
   padding: 18px 32px;
-  /* background-color: rgb(235, 189, 157); */
   grid-area: main;
   justify-self: center;
   align-self: start;
@@ -58,7 +55,6 @@ export default {
 }
 
 .footer {
-  /* background-color: rgb(97, 156, 215); */
   grid-area: footer;
   padding: 14px 0;
   text-align: center;

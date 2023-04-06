@@ -16,10 +16,13 @@ export default {
   },
 
   created() {
-    this.projectData = this.getProject(this.slug);
+    this.getProjectData();
   },
   methods: {
     ...mapActions(useProjectStore, ["getProject"]),
+    async getProjectData() {
+      this.projectData = await this.getProject(this.slug);
+    },
   },
 };
 </script>

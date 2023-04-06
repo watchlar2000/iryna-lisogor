@@ -13,7 +13,10 @@ export const useProjectStore = defineStore("project", {
         (a, b) => b.date.seconds - a.date.seconds
       );
     },
-    getProject(slug) {
+    async getProject(slug) {
+      if (this.projects.length === 0) {
+        await this.load();
+      }
       return this.projects.find((p) => p.slug === slug);
     },
   },
