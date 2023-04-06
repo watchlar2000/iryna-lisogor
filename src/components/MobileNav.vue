@@ -37,6 +37,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 32px;
   align-items: center;
   padding: 0 20px;
   position: absolute;
@@ -48,6 +49,7 @@ export default {
   z-index: 5;
   background: var(--color-background);
   font-size: 48px;
+  font-weight: 600;
 }
 
 .close-button {
