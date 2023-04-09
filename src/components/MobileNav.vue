@@ -33,6 +33,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.nav a {
+  font-size: 36px;
+}
 .mobile-nav {
   display: flex;
   flex-direction: column;
