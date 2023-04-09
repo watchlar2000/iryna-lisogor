@@ -80,29 +80,4 @@ export default {
     z-index: 50;
   }
 }
-
-.nav {
-  a {
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--color-title);
-    margin-left: 36px;
-    transition: all 0.1s ease;
-
-    &:link,
-    &:visited {
-      color: var(--color-title);
-    }
-
-    &.router-link-exact-active {
-      color: var(--color-secondary);
-    }
-
-    /* &:hover,
-    &:focus {
-      color: var(--color-primary);
-      outline: none;
-    } */
-  }
-}
 </style>
