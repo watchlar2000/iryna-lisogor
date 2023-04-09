@@ -54,8 +54,8 @@ export default {
 
 .close-button {
   position: absolute;
-  top: 75px;
-  right: 55px;
+  top: 60px;
+  right: 35px;
 }
 
 // Transitions

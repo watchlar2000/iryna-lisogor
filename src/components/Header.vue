@@ -53,7 +53,7 @@ export default {
 <template>
   <div>
     <header class="header">
-      <IconLogo width="145" />
+      <IconLogo width="145" class="logo" :alt="mobileMenu" />
       <nav v-if="!mobile" class="nav">
         <router-link to="/">Work</router-link>
         <router-link to="/about">About & Contacts</router-link>
@@ -75,6 +75,10 @@ export default {
   width: 100%;
   align-items: center;
   justify-content: space-between;
+
+  .logo {
+    z-index: 50;
+  }
 }
 
 .nav {

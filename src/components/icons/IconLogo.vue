@@ -10,6 +10,10 @@ export default {
       type: [String, Number],
       default: "126",
     },
+    alt: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -22,7 +26,7 @@ export default {
 <template>
   <div @mouseenter="hover = true" @mouseleave="hover = false" class="box">
     <svg
-      v-if="!hover"
+      v-if="!hover && !alt"
       :width="width"
       :height="height"
       viewBox="0 0 165 126"

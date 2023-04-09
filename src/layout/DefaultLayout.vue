@@ -36,7 +36,7 @@ export default {
 .header {
   width: 100%;
   grid-area: header;
-  padding: 14px 8px;
+  padding: 14px 24px;
 }
 .main {
   display: grid;
@@ -58,7 +58,7 @@ export default {
 @media screen and (min-width: 576px) {
   .header,
   .footer {
-    padding: 14px 24px;
+    padding-inline: 14px 24px;
   }
 
   .main {
