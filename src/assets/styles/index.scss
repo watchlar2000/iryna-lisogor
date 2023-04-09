@@ -48,3 +48,20 @@
     }
   }
 }
+
+// Resetting nprogress bar styles
+
+#nprogress .bar {
+  background: var(--color-primary);
+  height: 3px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--color-primary), 0 0 5px var(--color-primary);
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+  display: none;
+}
