@@ -1,9 +1,12 @@
 <script>
+// import ImageItem from "@/components/ImageItem.vue";
+import ImageList from "@/components/ImageList.vue";
 import { mapActions } from "pinia";
 import { useProjectStore } from "../stores/project";
 
 export default {
   name: "AboutView",
+  components: { ImageList },
   data() {
     return {
       projectData: [],
@@ -14,7 +17,6 @@ export default {
       type: String,
     },
   },
-
   created() {
     this.getProjectData();
   },
@@ -29,18 +31,11 @@ export default {
 
 <template>
   <div class="image-list" v-if="projectData">
-    <div v-for="img in projectData.images" :key="img.id">
-      <img :src="img.url" :alt="img.name" />
-    </div>
+    <ImageList :images="projectData.images || []" />
+    <!-- <div v-for="img in projectData.images" :key="img.id">
+      <img v-lazyload :data-src="img.url" :alt="img.name" />
+    </div> -->
   </div>
 </template>
 
-<style lang="scss" scoped>
-.image-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  gap: 36px;
-  height: min-content;
-}
-</style>
+<style lang="scss" scoped></style>
