@@ -1,13 +1,15 @@
 <script>
-import IconBurgerVue from "./icons/IconBurger.vue";
-import IconLogo from "./icons/IconLogo.vue";
 import MobileNav from "./MobileNav.vue";
+import IconBurger from "./icons/IconBurger.vue";
+import IconClose from "./icons/IconClose.vue";
+import IconLogo from "./icons/IconLogo.vue";
 
 export default {
   name: "AppHeader",
   components: {
     MobileNav,
-    IconBurgerVue,
+    IconBurger,
+    IconClose,
     IconLogo,
   },
   data() {
@@ -30,7 +32,7 @@ export default {
       this.currentWindowWidth = window.innerWidth;
       if (this.currentWindowWidth <= 768) {
         this.mobile = true;
-        this.mobileMenu = false;
+        // this.mobileMenu = false;
         return;
       }
       this.mobile = false;
@@ -53,8 +55,8 @@ export default {
 <template>
   <div>
     <header class="header">
-      <router-link to="/"
-        ><IconLogo
+      <router-link to="/">
+        <IconLogo
           @click.native="closeMobileMenu"
           width="145"
           class="logo"
@@ -64,12 +66,14 @@ export default {
         <router-link to="/">Work</router-link>
         <router-link to="/about">About & Contacts</router-link>
       </nav>
-      <IconBurgerVue
-        v-else
-        @click.native="toggleMobileMenu"
-        class="pointer"
-        :width="46"
-      />
+      <div v-if="mobile" class="pointer icon">
+        <IconBurger
+          v-if="!mobileMenu"
+          @click.native="toggleMobileMenu"
+          :width="46"
+        />
+        <IconClose v-else @click.native="closeMobileMenu" />
+      </div>
     </header>
     <MobileNav :shown="mobileMenu" @close="closeMobileMenu" />
   </div>
@@ -82,8 +86,15 @@ export default {
   align-items: center;
   justify-content: space-between;
 
-  .logo {
+  .logo,
+  .icon {
     z-index: 50;
+  }
+}
+
+.nav {
+  a {
+    margin-left: 36px;
   }
 }
 </style>
