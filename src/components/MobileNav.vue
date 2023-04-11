@@ -64,11 +64,13 @@ export default {
 // Transitions
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity 0.1s, transform 0.2s;
 }
 .mobile-menu-enter,
 .mobile-menu-leave-to {
+  transition-delay: 0.1s;
   opacity: 0;
+  transform: translateY(-10%);
 }
 
 @media screen and (min-width: 576px) {

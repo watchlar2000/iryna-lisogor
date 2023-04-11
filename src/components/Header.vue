@@ -53,7 +53,13 @@ export default {
 <template>
   <div>
     <header class="header">
-      <IconLogo width="145" class="logo" :alt="mobileMenu" />
+      <router-link to="/"
+        ><IconLogo
+          @click.native="closeMobileMenu"
+          width="145"
+          class="logo"
+          :alt="mobileMenu"
+      /></router-link>
       <nav v-if="!mobile" class="nav">
         <router-link to="/">Work</router-link>
         <router-link to="/about">About & Contacts</router-link>

@@ -24,7 +24,13 @@ export default {
 </script>
 
 <template>
-  <div @mouseenter="hover = true" @mouseleave="hover = false" class="box">
+  <div
+    @mouseenter="hover = true"
+    @mouseleave="hover = false"
+    @touchstart="hover = true"
+    @touchend="hover = false"
+    class="box"
+  >
     <svg
       v-if="!hover && !alt"
       :width="width"

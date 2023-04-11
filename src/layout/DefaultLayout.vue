@@ -40,7 +40,7 @@ export default {
 }
 .main {
   display: grid;
-  padding: 18px 8px;
+  padding: 18px 24px;
   grid-area: main;
   justify-self: center;
   align-self: start;
@@ -51,7 +51,7 @@ export default {
 
 .footer {
   grid-area: footer;
-  padding: 14px 8px;
+  padding: 14px 24px;
   text-align: center;
 }
 
