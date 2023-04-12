@@ -4,14 +4,26 @@ import { defineStore } from "pinia";
 export const useProjectStore = defineStore("project", {
   state: () => ({
     projects: [],
+    error: null,
   }),
   getters: {},
   actions: {
     async load() {
-      const projectsData = await ProjectsService.getProjects();
-      this.projects = projectsData.sort(
-        (a, b) => b.date.seconds - a.date.seconds
-      );
+      try {
+        const projectsData = await ProjectsService.getProjects();
+
+        if (projectsData === undefined) throw new Error("404");
+
+        const sortedProjectsData = projectsData.sort(
+          (a, b) => b.date.seconds - a.date.seconds
+        );
+
+        this.projects = sortedProjectsData;
+
+        return sortedProjectsData;
+      } catch (e) {
+        this.error = e.message;
+      }
     },
     async getProject(slug) {
       if (this.projects.length === 0) {

@@ -1,6 +1,4 @@
 <script>
-import IconCloseVue from "./icons/IconClose.vue";
-
 export default {
   name: "MobileNav",
   props: {
@@ -8,9 +6,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  components: {
-    IconCloseVue,
   },
   methods: {
     close() {
@@ -23,7 +18,6 @@ export default {
 <template>
   <transition name="mobile-menu">
     <nav v-show="shown" class="nav mobile-nav">
-      <IconCloseVue @click.native="close" class="close-button pointer" />
       <router-link to="/" @click.native="close">Work</router-link>
       <router-link to="/about" @click.native="close"
         >About & Contacts</router-link
@@ -33,8 +27,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.nav a {
-  font-size: 36px;
+.nav {
+  position: relative;
+
+  a {
+    font-size: 36px;
+  }
 }
 .mobile-nav {
   display: flex;
@@ -42,7 +40,6 @@ export default {
   justify-content: center;
   gap: 32px;
   align-items: center;
-  padding: 0 20px;
   position: absolute;
   top: 0;
   right: 0;
@@ -55,16 +52,10 @@ export default {
   font-weight: 500;
 }
 
-.close-button {
-  position: absolute;
-  top: 60px;
-  right: 35px;
-}
-
 // Transitions
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
-  transition: opacity 0.1s, transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
 }
 .mobile-menu-enter,
 .mobile-menu-leave-to {

@@ -1,6 +1,6 @@
 <script>
-import { mapState } from "pinia";
-import { useProjectStore } from "../stores/project";
+// import { mapState } from "pinia";
+// import { useProjectStore } from "../stores/project";
 
 export default {
   name: "HomeView",
@@ -9,9 +9,15 @@ export default {
       titleIdx: null,
     };
   },
-  computed: {
-    ...mapState(useProjectStore, ["projects"]),
+  props: {
+    projects: {
+      type: Array,
+      required: true,
+    },
   },
+  // computed: {
+  //   ...mapState(useProjectStore, ["projects"]),
+  // },
 };
 </script>
 
