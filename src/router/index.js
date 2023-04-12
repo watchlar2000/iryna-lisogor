@@ -2,6 +2,7 @@ import { useProjectStore } from "@/stores/project";
 import NProgress from "nprogress";
 import Vue from "vue";
 import VueRouter from "vue-router";
+import pinia from "@/stores/store";
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,36 @@ const routes = [
     meta: {
       title: "Home",
     },
+    props: true,
+    beforeEnter: async (to, from, next) => {
+      NProgress.start();
+      const projectStore = useProjectStore(pinia);
+
+      if (projectStore.projects.length) {
+        console.log("hello");
+        to.params.projects = projectStore.projects;
+        next();
+      }
+
+      try {
+        const projectsData = await projectStore.load();
+
+        if (projectsData === undefined) throw new Error();
+
+        to.params.projects = projectsData;
+
+        next();
+      } catch (e) {
+        NProgress.done();
+        const error = projectStore.error;
+
+        if (error === "404") {
+          next({ name: "404", params: { resource: "project" } });
+        } else {
+          next({ name: "network-issue" });
+        }
+      }
+    },
   },
   {
     path: "/project/:slug",
@@ -22,22 +53,60 @@ const routes = [
     meta: {
       title: "Projects",
     },
+    beforeEnter: async (to, from, next) => {
+      NProgress.start();
+      const projectStore = useProjectStore(pinia);
+      const slug = to.params.slug;
+
+      try {
+        const projectData = await projectStore.getProject(slug);
+
+        if (projectData === undefined) throw new Error();
+
+        to.params.projectData = projectData;
+        next();
+      } catch (e) {
+        NProgress.done();
+        const error = projectStore.error;
+
+        if (error === "404") {
+          next({ name: "404", params: { resource: "project" } });
+        } else {
+          next({ name: "network-issue" });
+        }
+      }
+    },
   },
   {
     path: "/about",
     name: "about",
     component: () => import("../views/About.vue"),
+    props: true,
     meta: {
       title: "About",
     },
   },
   {
-    path: "*",
-    name: "not-found",
+    path: "/404",
+    name: "404",
     component: () => import("../views/NotFound.vue"),
+    props: true,
     meta: {
       title: "404",
     },
+  },
+  {
+    path: "/network-issue",
+    name: "network-issue",
+    component: () => import("../views/NetworkIssue.vue"),
+    props: true,
+    meta: {
+      title: "Network Issue",
+    },
+  },
+  {
+    path: "*",
+    redirect: { name: "404", params: { resource: "page" } },
   },
 ];
 
@@ -49,16 +118,16 @@ const router = new VueRouter({
   },
 });
 
-router.beforeResolve((to, from, next) => {
-  const projectStore = useProjectStore();
+// router.beforeResolve((to, from, next) => {
+//   const projectStore = useProjectStore();
 
-  if (projectStore.projects.length === 0) {
-    NProgress.start();
-    projectStore.load();
-  }
+//   if (projectStore.projects.length === 0) {
+//     NProgress.start();
+//     projectStore.load();
+//   }
 
-  next();
-});
+//   next();
+// });
 
 router.beforeEach((to, from, next) => {
   window.document.title = `${to.meta.title} | Iryna Lisogor`;

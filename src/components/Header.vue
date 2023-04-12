@@ -32,7 +32,7 @@ export default {
       this.currentWindowWidth = window.innerWidth;
       if (this.currentWindowWidth <= 768) {
         this.mobile = true;
-        // this.mobileMenu = false;
+        this.mobileMenu = false;
         return;
       }
       this.mobile = false;

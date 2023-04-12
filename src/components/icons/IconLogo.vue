@@ -22,7 +22,7 @@ export default {
   <div class="box">
     <transition name="slide" mode="out-in">
       <svg
-        v-if="!hover && !alt"
+        v-if="!alt"
         key="main"
         :width="width"
         :height="height"
