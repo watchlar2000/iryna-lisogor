@@ -1,22 +1,32 @@
 <script>
 import ImageList from "@/components/ImageList.vue";
+import { useProjectStore } from "@/stores/project";
+import { mapActions, mapState } from "pinia";
 
 export default {
   name: "AboutView",
-  components: { ImageList },
+  components: {
+    ImageList,
+  },
   props: {
-    projectData: {
-      type: Object,
-      required: true,
+    slug: {
+      type: String,
     },
+  },
+  mounted() {
+    this.getProjectBySlug(this.slug);
+  },
+  methods: {
+    ...mapActions(useProjectStore, ["getProjectBySlug"]),
+  },
+  computed: {
+    ...mapState(useProjectStore, ["currentProject"]),
   },
 };
 </script>
 
 <template>
-  <div class="image-list" v-if="projectData">
-    <ImageList :images="projectData.images || []" />
+  <div v-if="currentProject !== null">
+    <image-list :images="currentProject?.images" />
   </div>
 </template>
-
-<style lang="scss" scoped></style>

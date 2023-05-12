@@ -7,7 +7,7 @@ const COLLECTIONS = {
 };
 
 export default {
-  async getProjects() {
+  async fetchProjects() {
     try {
       const worksRef = collection(db, COLLECTIONS.works);
       const projectSnap = await getDocs(worksRef);
@@ -24,11 +24,9 @@ export default {
           const images = imagesSnap.docs.map((image) => {
             return { id: image.id, ...image.data() };
           });
-
           return { ...data, images };
         })
       );
-
       return projectsData;
     } catch (e) {
       throw new Error("500");

@@ -1,8 +1,8 @@
-import { useProjectStore } from "@/stores/project";
-import NProgress from "nprogress";
+// import { useProjectStore } from "@/stores/project";
+// import pinia from "@/stores/store";
+// import NProgress from "nprogress";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import pinia from "@/stores/store";
 
 Vue.use(VueRouter);
 
@@ -14,36 +14,35 @@ const routes = [
     meta: {
       title: "Home",
     },
-    props: true,
-    beforeEnter: async (to, from, next) => {
-      NProgress.start();
-      const projectStore = useProjectStore(pinia);
+    // props: true,
+    // beforeEnter: async (to, from, next) => {
+    //   NProgress.start();
+    //   const projectStore = useProjectStore(pinia);
 
-      if (projectStore.projects.length) {
-        console.log("hello");
-        to.params.projects = projectStore.projects;
-        next();
-      }
+    //   if (projectStore.projects.length) {
+    //     to.params.projects = projectStore.projects;
+    //     next();
+    //   }
 
-      try {
-        const projectsData = await projectStore.load();
+    //   try {
+    //     const projectsData = await projectStore.load();
 
-        if (projectsData === undefined) throw new Error();
+    //     if (projectsData === undefined) throw new Error();
 
-        to.params.projects = projectsData;
+    //     to.params.projects = projectsData;
 
-        next();
-      } catch (e) {
-        NProgress.done();
-        const error = projectStore.error;
+    //     next();
+    //   } catch (e) {
+    //     NProgress.done();
+    //     const error = projectStore.error;
 
-        if (error === "404") {
-          next({ name: "404", params: { resource: "project" } });
-        } else {
-          next({ name: "network-issue" });
-        }
-      }
-    },
+    //     if (error === "404") {
+    //       next({ name: "404", params: { resource: "project" } });
+    //     } else {
+    //       next({ name: "network-issue" });
+    //     }
+    //   }
+    // },
   },
   {
     path: "/project/:slug",
@@ -51,39 +50,77 @@ const routes = [
     component: () => import("../views/Project.vue"),
     props: true,
     meta: {
-      title: "Projects",
+      title: "Project",
     },
-    beforeEnter: async (to, from, next) => {
-      NProgress.start();
-      const projectStore = useProjectStore(pinia);
-      const slug = to.params.slug;
+    // beforeEnter: async (to, from, next) => {
+    //   NProgress.start();
+    //   const projectStore = useProjectStore(pinia);
+    //   const slug = to.params.slug;
 
-      try {
-        const projectData = await projectStore.getProject(slug);
+    //   try {
+    //     const projectData = await projectStore.getProject(slug);
 
-        if (projectData === undefined) throw new Error();
+    //     if (projectData === undefined) throw new Error();
 
-        to.params.projectData = projectData;
-        next();
-      } catch (e) {
-        NProgress.done();
-        const error = projectStore.error;
+    //     to.params.projectData = projectData;
+    //     next();
+    //   } catch (e) {
+    //     NProgress.done();
+    //     const error = projectStore.error;
 
-        if (error === "404") {
-          next({ name: "404", params: { resource: "project" } });
-        } else {
-          next({ name: "network-issue" });
-        }
-      }
-    },
+    //     if (error === "404") {
+    //       next({ name: "404", params: { resource: "project" } });
+    //     } else {
+    //       next({ name: "network-issue" });
+    //     }
+    //   }
+    // },
   },
   {
     path: "/about",
     name: "about",
     component: () => import("../views/About.vue"),
-    props: true,
     meta: {
       title: "About",
+    },
+  },
+  {
+    path: "/illustrations",
+    name: "illustrations",
+    component: () => import("../views/Projects.vue"),
+    props: true,
+    meta: {
+      title: "Illustrations",
+    },
+    beforeEnter: async (to, from, next) => {
+      to.params.category = "illustrations";
+      next();
+    },
+  },
+  {
+    path: "/character-design",
+    name: "character-design",
+    component: () => import("../views/Projects.vue"),
+    props: true,
+    meta: {
+      title: "Character design",
+    },
+    beforeEnter: async (to, from, next) => {
+      to.params.category = "character-design";
+      next();
+    },
+  },
+  {
+    path: "/sketches",
+    name: "sketches",
+    component: () => import("../views/Projects.vue"),
+    props: true,
+    meta: {
+      title: "Sketches",
+    },
+    beforeEnter: async (to, from, next) => {
+      to.params.category = "sketches";
+      next();
     },
   },
   {
@@ -118,24 +155,9 @@ const router = new VueRouter({
   },
 });
 
-// router.beforeResolve((to, from, next) => {
-//   const projectStore = useProjectStore();
-
-//   if (projectStore.projects.length === 0) {
-//     NProgress.start();
-//     projectStore.load();
-//   }
-
-//   next();
-// });
-
 router.beforeEach((to, from, next) => {
   window.document.title = `${to.meta.title} | Iryna Lisogor`;
   next();
-});
-
-router.afterEach(() => {
-  NProgress.done();
 });
 
 export default router;
