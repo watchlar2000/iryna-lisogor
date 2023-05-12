@@ -21,15 +21,15 @@ export default {
 <template>
   <footer class="footer">
     <div class="socials-list">
-      <a href="https://www.instagram.com/iryna_lisogor/" target="_blank"
-        ><IconInstagram :width="50"
-      /></a>
-      <a href="https://www.behance.net/lisogorka8741b" target="_blank"
-        ><IconBehance :width="50"
-      /></a>
-      <a href="mailto:iryna.lisogor.artwrk@gmail.com" target="_blank"
-        ><IconMail :width="50"
-      /></a>
+      <a href="https://www.instagram.com/iryna_lisogor/" target="_blank">
+        <IconInstagram :width="50" />
+      </a>
+      <a href="https://www.behance.net/lisogorka8741b" target="_blank">
+        <IconBehance :width="50" />
+      </a>
+      <a href="mailto:iryna.lisogor.artwrk@gmail.com" target="_blank">
+        <IconMail :width="50" />
+      </a>
     </div>
     <div>
       <p>All artistic content Copyright &#169;</p>
@@ -43,6 +43,7 @@ export default {
   color: #96979a;
   font-size: 16px;
 }
+
 .socials-list {
   display: flex;
   gap: 18px;

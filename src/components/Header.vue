@@ -1,4 +1,5 @@
 <script>
+import BaseNav from './BaseNav.vue';
 import MobileNav from "./MobileNav.vue";
 import IconBurger from "./icons/IconBurger.vue";
 import IconClose from "./icons/IconClose.vue";
@@ -11,6 +12,7 @@ export default {
     IconBurger,
     IconClose,
     IconLogo,
+    BaseNav
   },
   data() {
     return {
@@ -30,7 +32,7 @@ export default {
     },
     isMobile() {
       this.currentWindowWidth = window.innerWidth;
-      if (this.currentWindowWidth <= 768) {
+      if (this.currentWindowWidth <= 1100) {
         this.mobile = true;
         this.mobileMenu = false;
         return;
@@ -61,25 +63,35 @@ export default {
           width="145"
           class="logo"
           :alt="mobileMenu"
-      /></router-link>
-      <nav v-if="!mobile" class="nav">
-        <router-link to="/">Work</router-link>
-        <router-link to="/about">About & Contacts</router-link>
-      </nav>
-      <div v-if="mobile" class="pointer icon">
+        />
+      </router-link>
+      <base-nav
+        v-if="!mobile"
+        class="nav"
+      />
+      <div
+        v-if="mobile"
+        class="pointer icon"
+      >
         <IconBurger
           v-if="!mobileMenu"
           @click.native="toggleMobileMenu"
           :width="46"
         />
-        <IconClose v-else @click.native="closeMobileMenu" />
+        <IconClose
+          v-else
+          @click.native="closeMobileMenu"
+        />
       </div>
     </header>
-    <MobileNav :shown="mobileMenu" @close="closeMobileMenu" />
+    <MobileNav
+      :shown="mobileMenu"
+      @close="closeMobileMenu"
+    />
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .header {
   display: flex;
   width: 100%;

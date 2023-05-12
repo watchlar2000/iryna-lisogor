@@ -1,6 +1,11 @@
 <script>
+import BaseNav from "./BaseNav.vue";
+
 export default {
   name: "MobileNav",
+  components: {
+    BaseNav,
+  },
   props: {
     shown: {
       type: Boolean,
@@ -17,12 +22,7 @@ export default {
 
 <template>
   <transition name="mobile-menu">
-    <nav v-show="shown" class="nav mobile-nav">
-      <router-link to="/" @click.native="close">Work</router-link>
-      <router-link to="/about" @click.native="close"
-        >About & Contacts</router-link
-      >
-    </nav>
+    <base-nav v-show="shown" class="nav mobile-nav" />
   </transition>
 </template>
 
@@ -34,6 +34,7 @@ export default {
     font-size: 36px;
   }
 }
+
 .mobile-nav {
   display: flex;
   flex-direction: column;
@@ -57,6 +58,7 @@ export default {
 .mobile-menu-leave-active {
   transition: opacity 0.2s, transform 0.2s;
 }
+
 .mobile-menu-enter,
 .mobile-menu-leave-to {
   transition-delay: 0.1s;

@@ -13,9 +13,10 @@ export default {
 <template>
   <div class="error nav">
     <h3>There is some network issues...</h3>
-    <router-link :to="{ name: 'home' }" class="link"
-      >Back to home page</router-link
-    >
+    <router-link
+      :to="{ name: 'home' }"
+      class="link"
+    >Back to home page</router-link>
   </div>
 </template>
 

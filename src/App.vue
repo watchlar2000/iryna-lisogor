@@ -12,8 +12,11 @@ export default {
 <template>
   <div id="app">
     <DefaultLayout>
-      <transition name="slide" mode="out-in">
-        <router-view />
+      <transition
+        name="slide"
+        mode="out-in"
+      >
+        <router-view :key="$route.fullPath" />
       </transition>
     </DefaultLayout>
   </div>

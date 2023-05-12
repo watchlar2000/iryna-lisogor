@@ -19,9 +19,10 @@ export default {
 <template>
   <div class="error nav">
     <h3>404 | {{ toCapital }} not found...</h3>
-    <router-link :to="{ name: 'home' }" class="link"
-      >Back to home page</router-link
-    >
+    <router-link
+      :to="{ name: 'home' }"
+      class="link"
+    >Back to home page</router-link>
   </div>
 </template>
 

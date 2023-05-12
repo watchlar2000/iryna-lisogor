@@ -20,7 +20,10 @@ export default {
 
 <template>
   <div class="box">
-    <transition name="slide" mode="out-in">
+    <transition
+      name="slide"
+      mode="out-in"
+    >
       <svg
         v-if="!alt"
         key="main"
@@ -134,5 +137,4 @@ export default {
 .slide-leave-to {
   opacity: 0;
   transform: translateX(-10%);
-}
-</style>
+}</style>

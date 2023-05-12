@@ -12,8 +12,14 @@ export default {
 
 <template>
   <div class="image-list">
-    <div v-for="img in images" :key="img.id">
-      <img :src="img.url" :alt="img.name" />
+    <div
+      v-for="img in images"
+      :key="img.id"
+    >
+      <img
+        :src="img.url"
+        :alt="img.name"
+      />
     </div>
   </div>
 </template>
@@ -25,5 +31,4 @@ export default {
   grid-template-rows: auto;
   gap: 36px;
   height: min-content;
-}
-</style>
+}</style>
