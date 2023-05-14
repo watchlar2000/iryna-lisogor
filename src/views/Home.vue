@@ -1,6 +1,6 @@
 <script>
 import ProjectsList from "@/components/ProjectsList.vue";
-import { useProjectStore } from "@/stores/project";
+import { useProjectStore } from "@/store/project";
 import { mapActions, mapState } from "pinia";
 
 export default {

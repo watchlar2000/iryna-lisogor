@@ -1,9 +1,9 @@
 <script>
-import BaseNav from './BaseNav.vue';
-import MobileNav from "./MobileNav.vue";
-import IconBurger from "./icons/IconBurger.vue";
-import IconClose from "./icons/IconClose.vue";
-import IconLogo from "./icons/IconLogo.vue";
+import MobileNav from "../MobileNav.vue";
+import IconBurger from "../shared/icons/IconBurger.vue";
+import IconClose from "../shared/icons/IconClose.vue";
+import IconLogo from "../shared/icons/IconLogo.vue";
+import AppNav from "./AppNav.vue";
 
 export default {
   name: "AppHeader",
@@ -12,7 +12,7 @@ export default {
     IconBurger,
     IconClose,
     IconLogo,
-    BaseNav
+    AppNav,
   },
   data() {
     return {
@@ -47,8 +47,8 @@ export default {
     },
   },
   watch: {
-    $route() {
-      this.mobileMenu = false;
+    $route: {
+      handler: "closeMobileMenu",
     },
   },
 };
@@ -65,29 +65,17 @@ export default {
           :alt="mobileMenu"
         />
       </router-link>
-      <base-nav
-        v-if="!mobile"
-        class="nav"
-      />
-      <div
-        v-if="mobile"
-        class="pointer icon"
-      >
+      <app-nav v-if="!mobile" class="nav" />
+      <div v-if="mobile" class="pointer icon">
         <IconBurger
           v-if="!mobileMenu"
           @click.native="toggleMobileMenu"
           :width="46"
         />
-        <IconClose
-          v-else
-          @click.native="closeMobileMenu"
-        />
+        <IconClose v-else @click.native="closeMobileMenu" />
       </div>
     </header>
-    <MobileNav
-      :shown="mobileMenu"
-      @close="closeMobileMenu"
-    />
+    <MobileNav :shown="mobileMenu" @close="closeMobileMenu" />
   </div>
 </template>
 
@@ -105,8 +93,7 @@ export default {
 }
 
 .nav {
-  a {
-    margin-left: 36px;
-  }
+  display: flex;
+  gap: 36px;
 }
 </style>

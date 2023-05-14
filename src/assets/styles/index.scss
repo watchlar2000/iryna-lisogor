@@ -1,19 +1,11 @@
-@import './reset.scss';
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
-
-:root {
-  --color-primary: #F4A706;
-  --color-secondary: #9DBC42;
-  --color-secondary-hover: hsl(75, 48%, 47%);
-  --color-background: #fff;
-  --color-background-variant: #F5F5F5;
-  --color-text: #242424;
-  --color-title: #4F535C;
-}
+@import "nprogress/nprogress.css";
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+@import "./reset.scss";
+@import "./vars.scss";
 
 #app {
   font-size: 16px;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
@@ -24,43 +16,15 @@
   cursor: pointer;
 }
 
-.nav {
-  a {
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--color-title);
-    transition: all 0.1s ease;
-
-    &:link,
-    &:visited {
-      color: var(--color-title);
-    }
-
-    &.router-link-exact-active {
-      color: var(--color-secondary);
-    }
-
-    &:hover,
-    &:focus {
-      color: var(--color-secondary-hover);
-      outline: none;
-    }
-  }
-}
-
-// Resetting nprogress bar styles
-
 #nprogress .bar {
   background: var(--color-primary);
   height: 3px;
 }
 
-/* Fancy blur effect */
 #nprogress .peg {
   box-shadow: 0 0 10px var(--color-primary), 0 0 5px var(--color-primary);
 }
 
-/* Remove these to get rid of the spinner */
 #nprogress .spinner {
   display: none;
 }

@@ -17,21 +17,14 @@ export default {
 
 <template>
   <div class="post-list">
-    <div
-      v-for="p in projects"
-      :key="p.id"
-    >
+    <div v-for="p in projects" :key="p.id">
       <router-link :to="{ name: 'project', params: { slug: p.slug } }">
         <div
           @mouseover="titleIdx = p.id"
           @mouseleave="titleIdx = null"
           class="post-item"
         >
-          <img
-            :src="p.cover"
-            :alt="p.title"
-            :data-id="p.id"
-          />
+          <img :src="p.cover" :alt="p.title" :data-id="p.id" />
           <div
             v-if="titleIdx === p.id"
             class="title"

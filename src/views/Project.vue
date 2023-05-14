@@ -1,6 +1,6 @@
 <script>
 import ImageList from "@/components/ImageList.vue";
-import { useProjectStore } from "@/stores/project";
+import { useProjectStore } from "@/store/project";
 import { mapActions, mapState } from "pinia";
 
 export default {
@@ -27,6 +27,6 @@ export default {
 
 <template>
   <div v-if="currentProject !== null">
-    <image-list :images="currentProject?.images" />
+    <image-list :images="currentProject.images" />
   </div>
 </template>
