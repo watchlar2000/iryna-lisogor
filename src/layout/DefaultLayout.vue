@@ -1,6 +1,6 @@
 <script>
-import AppFooter from "@/components/Footer.vue";
-import AppHeader from "@/components/Header.vue";
+import AppFooter from "@/components/widgets/Footer.vue";
+import AppHeader from "@/components/widgets/Header.vue";
 
 export default {
   name: "DefaultLayout",

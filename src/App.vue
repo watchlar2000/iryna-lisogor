@@ -12,10 +12,7 @@ export default {
 <template>
   <div id="app">
     <DefaultLayout>
-      <transition
-        name="slide"
-        mode="out-in"
-      >
+      <transition name="slide" mode="out-in">
         <router-view :key="$route.fullPath" />
       </transition>
     </DefaultLayout>
@@ -23,6 +20,8 @@ export default {
 </template>
 
 <style>
+@import "./assets/styles/index.scss";
+
 .slide-enter-active,
 .slide-leave-active {
   transition: opacity 0.1s, transform 0.2s;

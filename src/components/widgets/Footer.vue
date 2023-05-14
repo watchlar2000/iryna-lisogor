@@ -1,14 +1,22 @@
 <script>
-import IconBehance from "./icons/IconBehance.vue";
-import IconInstagram from "./icons/IconInstagram.vue";
-import IconMail from "./icons/IconMail.vue";
+import { socialLinks } from "@/utils/consts";
+import BaseLink from "../shared/BaseLink.vue";
+import IconBehance from "../shared/icons/IconBehance.vue";
+import IconInstagram from "../shared/icons/IconInstagram.vue";
+import IconMail from "../shared/icons/IconMail.vue";
 
 export default {
   name: "AppFooter",
+  data() {
+    return {
+      socialLinks,
+    };
+  },
   components: {
     IconBehance,
     IconInstagram,
     IconMail,
+    BaseLink,
   },
   computed: {
     fullYear() {
@@ -21,15 +29,9 @@ export default {
 <template>
   <footer class="footer">
     <div class="socials-list">
-      <a href="https://www.instagram.com/iryna_lisogor/" target="_blank">
-        <IconInstagram :width="50" />
-      </a>
-      <a href="https://www.behance.net/lisogorka8741b" target="_blank">
-        <IconBehance :width="50" />
-      </a>
-      <a href="mailto:iryna.lisogor.artwrk@gmail.com" target="_blank">
-        <IconMail :width="50" />
-      </a>
+      <BaseLink v-for="link in socialLinks" :key="link.href" :href="link.href">
+        <component :is="link.component" :width="50" />
+      </BaseLink>
     </div>
     <div>
       <p>All artistic content Copyright &#169;</p>

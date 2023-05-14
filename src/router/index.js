@@ -1,6 +1,3 @@
-// import { useProjectStore } from "@/stores/project";
-// import pinia from "@/stores/store";
-// import NProgress from "nprogress";
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -14,35 +11,6 @@ const routes = [
     meta: {
       title: "Home",
     },
-    // props: true,
-    // beforeEnter: async (to, from, next) => {
-    //   NProgress.start();
-    //   const projectStore = useProjectStore(pinia);
-
-    //   if (projectStore.projects.length) {
-    //     to.params.projects = projectStore.projects;
-    //     next();
-    //   }
-
-    //   try {
-    //     const projectsData = await projectStore.load();
-
-    //     if (projectsData === undefined) throw new Error();
-
-    //     to.params.projects = projectsData;
-
-    //     next();
-    //   } catch (e) {
-    //     NProgress.done();
-    //     const error = projectStore.error;
-
-    //     if (error === "404") {
-    //       next({ name: "404", params: { resource: "project" } });
-    //     } else {
-    //       next({ name: "network-issue" });
-    //     }
-    //   }
-    // },
   },
   {
     path: "/project/:slug",
@@ -52,29 +20,6 @@ const routes = [
     meta: {
       title: "Project",
     },
-    // beforeEnter: async (to, from, next) => {
-    //   NProgress.start();
-    //   const projectStore = useProjectStore(pinia);
-    //   const slug = to.params.slug;
-
-    //   try {
-    //     const projectData = await projectStore.getProject(slug);
-
-    //     if (projectData === undefined) throw new Error();
-
-    //     to.params.projectData = projectData;
-    //     next();
-    //   } catch (e) {
-    //     NProgress.done();
-    //     const error = projectStore.error;
-
-    //     if (error === "404") {
-    //       next({ name: "404", params: { resource: "project" } });
-    //     } else {
-    //       next({ name: "network-issue" });
-    //     }
-    //   }
-    // },
   },
   {
     path: "/about",

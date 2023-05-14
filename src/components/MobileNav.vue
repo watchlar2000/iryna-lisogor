@@ -1,10 +1,10 @@
 <script>
-import BaseNav from "./BaseNav.vue";
+import AppNav from "./widgets/AppNav.vue";
 
 export default {
   name: "MobileNav",
   components: {
-    BaseNav,
+    AppNav,
   },
   props: {
     shown: {
@@ -13,8 +13,11 @@ export default {
     },
   },
   methods: {
-    close() {
-      this.$emit("close");
+    close(e) {
+      const tag = e.target.tagName;
+      if (tag === "A") {
+        this.$emit("close");
+      }
     },
   },
 };
@@ -22,19 +25,11 @@ export default {
 
 <template>
   <transition name="mobile-menu">
-    <base-nav v-show="shown" class="nav mobile-nav" />
+    <app-nav v-show="shown" class="nav mobile-nav" @click.native="close" />
   </transition>
 </template>
 
 <style lang="scss" scoped>
-.nav {
-  position: relative;
-
-  a {
-    font-size: 36px;
-  }
-}
-
 .mobile-nav {
   display: flex;
   flex-direction: column;
@@ -51,9 +46,12 @@ export default {
   background: var(--color-background);
   font-size: 28px;
   font-weight: 500;
+
+  a {
+    color: red;
+  }
 }
 
-// Transitions
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
   transition: opacity 0.2s, transform 0.2s;
