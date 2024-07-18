@@ -1,26 +1,22 @@
 <svelte:head>
-	<title>About</title>
-	<meta name="description" content="About this app" />
+	<title>Iryna Lisogor | About</title>
+	<meta content="About the author" name="description" />
 </svelte:head>
 
-<div class="text-column">
-	<h1>About this app</h1>
+<div class="">
+	<!--	<picture>-->
+	<!--		<source srcset={welcome} type="image/webp" />-->
+	<!--		<img alt="Welcome" src={welcome_fallback} />-->
+	<!--	</picture>-->
 
-	<p>
-		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
-		following into your command line and following the prompts:
-	</p>
-
-	<pre>npm create svelte@latest</pre>
-
-	<p>
-		The page you're looking at is purely static HTML, with no client-side interactivity needed.
-		Because of that, we don't need to load any JavaScript. Try viewing the page's source, or opening
-		the devtools network panel and reloading.
-	</p>
-
-	<p>
-		The <a href="/sverdle">Sverdle</a> page illustrates SvelteKit's data loading and form handling. Try
-		using it with JavaScript disabled!
-	</p>
+	<div class="w-1/2 h-[200px] bg-amber-600 mx-auto" />
+	<div class="flex flex-col gap-4 mt-6">
+		<h2 class="uppercase text-2xl font-normal">About</h2>
+		<div class="font-ubuntu font-light -mt-3">
+			<p>
+				Nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
+				ad minim veniam, quis nostrud exerci tation ullamcorper susci
+			</p>
+		</div>
+	</div>
 </div>
