@@ -5,19 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="546fcf66-efb6-4e42-8f87-860dbc869f8f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/(app)/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/images/github.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/images/svelte-logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/images/svelte-welcome.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/images/svelte-welcome.webp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/+layout.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+layout.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Counter.svelte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/+page.svelte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/+page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/(app)/+page.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/Header.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Header.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/about/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/about/+page.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/about/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/(app)/about/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/about/+page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/(app)/about/+page.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/playground/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/(app)/playground/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/playground/+page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/(app)/playground/+page.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sverdle/+page.server.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sverdle/+page.svelte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sverdle/game.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sverdle/how-to-play/+page.svelte" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sverdle/how-to-play/+page.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sverdle/reduced-motion.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/sverdle/words.server.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +46,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBowerSettings">
+    <bower-package value="" />
+    <bower.json value="" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -50,32 +68,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/sveltekit-rewrite&quot;,
-    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/bob/IT/iryna/iryna-lisogor/src/routes&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;/home/bob/.nvm/versions/node/v20.10.0/bin/node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/bob/IT/iryna/iryna-lisogor/node_modules/prettier&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/bob/IT/iryna/iryna-lisogor/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/sveltekit-rewrite",
+    "js.linters.configure.manually.selectedeslint": "true",
+    "last_opened_file_path": "/home/bob/IT/iryna/iryna-lisogor/src/routes/(app)/works/[slug]",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "/home/bob/.nvm/versions/node/v20.10.0/bin/node",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/home/bob/IT/iryna/iryna-lisogor/node_modules/prettier",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "preferences.sourceCode.TypeScript",
+    "ts.external.directory.path": "/home/bob/IT/iryna/iryna-lisogor/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routes/(app)/works/[slug]" />
+      <recent name="$PROJECT_DIR$/src/routes/(app)/about" />
+      <recent name="$PROJECT_DIR$/src/routes/(dashboard)" />
+      <recent name="$PROJECT_DIR$/src/routes/(app)" />
+      <recent name="$PROJECT_DIR$/src/routes/private" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routes/(app)" />
       <recent name="$PROJECT_DIR$/src/routes" />
-      <recent name="$PROJECT_DIR$/src/lib/icons" />
+      <recent name="$PROJECT_DIR$/src/routes/(dashboard)" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -91,7 +117,13 @@
       <workItem from="1721323066529" duration="2680000" />
       <workItem from="1721325752301" duration="411000" />
       <workItem from="1721326170112" duration="5201000" />
-      <workItem from="1721331377523" duration="4587000" />
+      <workItem from="1721331377523" duration="10016000" />
+      <workItem from="1721500497294" duration="3731000" />
+      <workItem from="1721514034487" duration="855000" />
+      <workItem from="1721576064664" duration="4373000" />
+      <workItem from="1721583808877" duration="11629000" />
+      <workItem from="1721635082330" duration="14374000" />
+      <workItem from="1721678495320" duration="9046000" />
     </task>
     <servers />
   </component>
