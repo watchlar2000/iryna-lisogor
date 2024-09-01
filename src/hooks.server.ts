@@ -2,10 +2,13 @@ import { createServerClient } from '@supabase/ssr';
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-import {
-	PUBLIC_SUPABASE_ANON_KEY,
-	PUBLIC_SUPABASE_URL
-} from '$env/static/public';
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+
+const ROUTE = {
+	home: '/',
+	auth: '/auth',
+	dashboard: '/dashboard'
+};
 
 const supabase: Handle = async ({ event, resolve }) => {
 	/**
@@ -23,7 +26,7 @@ const supabase: Handle = async ({ event, resolve }) => {
 			 */
 			setAll: (cookiesToSet) => {
 				cookiesToSet.forEach(({ name, value, options }) => {
-					event.cookies.set(name, value, { ...options, path: '/' });
+					event.cookies.set(name, value, { ...options, path: ROUTE.home });
 				});
 			}
 		}
@@ -70,12 +73,12 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	event.locals.session = session;
 	event.locals.user = user;
 
-	if (!event.locals.session && event.url.pathname.startsWith('/private')) {
-		redirect(303, '/auth');
+	if (!event.locals.session && event.url.pathname.startsWith(ROUTE.dashboard)) {
+		redirect(303, ROUTE.auth);
 	}
 
 	if (event.locals.session && event.url.pathname === '/auth') {
-		redirect(303, '/private');
+		redirect(303, ROUTE.dashboard);
 	}
 
 	return resolve(event);

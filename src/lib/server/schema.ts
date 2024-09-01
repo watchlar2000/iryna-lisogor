@@ -1,20 +1,18 @@
-import {
-	boolean,
-	integer,
-	pgTable,
-	serial,
-	text,
-	timestamp,
-	varchar
-} from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
+import { boolean, integer, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
-export const author = pgTable('author', {
+// const randomId = uuid('id')
+// 	.primaryKey()
+// 	.default(sql`(gen_random_uuid ())`);
+
+export const authors = pgTable('authors', {
 	id: serial('id').primaryKey(),
 	name: varchar('name'),
 	surname: varchar('surname'),
 	photoUrl: varchar('photo_url'),
-	about: text('about')
+	about: text('about'),
+	createdAt: timestamp('created_at').defaultNow(),
+	updatedAt: timestamp('updated_at').defaultNow()
 });
 
 export const works = pgTable('works', {
@@ -30,21 +28,14 @@ export const worksRelations = relations(works, ({ many }) => ({
 export const projects = pgTable('projects', {
 	id: serial('id').primaryKey(),
 	title: varchar('title').notNull(),
+	slug: varchar('slug').notNull(),
 	description: varchar('description'),
-	workId: integer('work_type_id').notNull().references(() => works.id),
-	coverImageId: integer('title_image_id').notNull().references(() => images.id),
-	createdAt: timestamp('created_at').defaultNow()
+	work: varchar('work'),
+	createdAt: timestamp('created_at').defaultNow(),
+	updatedAt: timestamp('updated_at').defaultNow()
 });
 
-export const projectsRelations = relations(projects, ({ one, many }) => ({
-	work: one(works, {
-		fields: [projects.workId],
-		references: [works.id]
-	}),
-	coverImage: one(projectCoverImages, {
-		fields: [projects.coverImageId],
-		references: [projectCoverImages.id]
-	}),
+export const projectsRelations = relations(projects, ({ many }) => ({
 	images: many(images)
 }));
 
@@ -53,28 +44,14 @@ export const images = pgTable('images', {
 	url: varchar('url').notNull(),
 	alt: varchar('alt').notNull(),
 	projectId: integer('project_id').references(() => projects.id, { onDelete: 'cascade' }),
-	isVisible: boolean('is_visible').default(true).notNull(),
-	createdAt: timestamp('created_at').defaultNow()
+	isCoverImage: boolean('is_cover_image').default(false).notNull(),
+	createdAt: timestamp('created_at').defaultNow(),
+	updatedAt: timestamp('updated_at').defaultNow()
 });
 
 export const imagesRelations = relations(images, ({ one }) => ({
 	project: one(projects, {
 		fields: [images.projectId],
-		references: [projects.id]
-	})
-}));
-
-export const projectCoverImages = pgTable('projectCoverImages', {
-	id: serial('id').primaryKey(),
-	url: varchar('url').notNull(),
-	alt: varchar('alt').notNull(),
-	projectId: integer('project_id').references(() => projects.id, { onDelete: 'cascade' }),
-	createdAt: timestamp('created_at').defaultNow()
-});
-
-export const projectCoverImagesRelations = relations(projectCoverImages, ({ one }) => ({
-	project: one(projects, {
-		fields: [projectCoverImages.projectId],
 		references: [projects.id]
 	})
 }));

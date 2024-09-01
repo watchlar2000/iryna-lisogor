@@ -1,49 +1,80 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import type { WorkMenuItem } from '$lib/types';
+	import { WorkOption as works } from '$lib/types';
+	import { transformWorkOptions } from '$lib/utils';
 	import { onMount } from 'svelte';
+	import { quintOut } from 'svelte/easing';
+	import { tweened } from 'svelte/motion';
 	import { scale } from 'svelte/transition';
 
-	export let worksMenuItems;
+	// export let workMenuItems;
 
-	let show = false;
-	let menu = null; // menu wrapper DOM reference
-	let menuMobile = null; // menu wrapper DOM reference
-	let showMobileMenu = false;
+	const workMenuItems: WorkMenuItem[] = transformWorkOptions(works);
 
-	let worksSubmenu = false;
+	let isOpen = false;
+	let dropdownOpen = false;
 
-	const toggleWorksSubmenu = () => {
-		worksSubmenu = !worksSubmenu;
-	};
+	let navPosition = tweened(-100, {
+		duration: 500,
+		easing: quintOut
+	});
 
-	const toggleMobileMenu = () => {
-		showMobileMenu = !showMobileMenu;
+	let desktopDropdownOpen = false;
+	let desktopDropdown = null;
 
-		if (showMobileMenu) {
-			document.body.style.position = 'fixed';
-			document.body.style.top = `-${window.scrollY}px`;
+	function toggleMenu() {
+		isOpen = !isOpen;
+		navPosition.set(isOpen ? 0 : -100);
+
+		if (isOpen) {
+			document.body.classList.add('overflow-hidden');
 		} else {
-			document.body.style.position = '';
-			document.body.style.top = '';
+			document.body.classList.remove('overflow-hidden');
 		}
-	};
 
-	const closeMobileMenu = () => {
-		if (!showMobileMenu) {
-			showMobileMenu = false;
+		if (isOpen) {
+			// document.body.style.position = 'fixed';
+
+			document.body.style.height = '100vh';
+			document.body.style.overflowY = 'hidden';
+		} else {
+			// document.body.style.position = '';
+
+			document.body.style.height = 'auto';
+			document.body.style.overflowY = 'visible';
 		}
-	};
+	}
+
+	function toggleDropdown() {
+		dropdownOpen = !dropdownOpen;
+	}
+
+	function toggleDesktopDropdown() {
+		desktopDropdownOpen = !desktopDropdownOpen;
+	}
+
+	function navigateTo() {
+		// setTimeout(() => {
+		// 	// Simulate navigation, replace with actual navigation logic
+		// 	window.location.href = page;
+		// }, 100); // Match this duration with the transition duration
+
+		setTimeout(() => {
+			toggleMenu();
+		}, 200);
+	}
 
 	onMount(() => {
 		const handleOutsideClick = (event) => {
-			if (show && menu && !menu.contains(event.target)) {
-				show = false;
+			if (desktopDropdownOpen && desktopDropdown && !desktopDropdown.contains(event.target)) {
+				desktopDropdownOpen = false;
 			}
 		};
 
 		const handleEscape = (event) => {
-			if (show && event.key === 'Escape') {
-				show = false;
+			if (desktopDropdownOpen && event.key === 'Escape') {
+				desktopDropdownOpen = false;
 			}
 		};
 
@@ -59,99 +90,56 @@
 	});
 </script>
 
-<header class="flex justify-between items-center">
-	<div class="corner z-50">
-		<a href="/">
+<header>
+	<div class="flex justify-between items-center">
+		<a href="/" class="z-50">
 			<h1 class="text-5xl">Iryna <br /> Lisogor</h1>
 		</a>
-	</div>
-	<!--	Desktop Manu-->
-	<nav class="hidden md:block">
-		<ul class="flex gap-4 text-2xl">
-			<!--			<li aria-current={$page.url.pathname === '/works' ? 'page' : undefined}>-->
-			<!--				<a href="/works">works</a>-->
-			<!--			</li>-->
-			<li bind:this={menu} class="relative">
-				<div>
-					<button class="menu focus:outline-none focus:underline" on:click={() => (show = !show)}>
-						works
-					</button>
+		<button
+			class="md:hidden z-50 group h-20 w-20 flex cursor-pointer items-center justify-center hover:bg-white focus:outline-none focus:bg-white"
+			on:click={toggleMenu}
+		>
+			<span class="space-y-2">
+				<span
+					class="block h-0.5 w-10 origin-center rounded-full bg-slate-900 transition-transform ease-in-out {isOpen &&
+						'translate-y-2.5 rotate-45'}"
+				/>
+				<span
+					class="block h-0.5 origin-center rounded-full bg-slate-900 transition-transform ease-in-out delay-100 {isOpen &&
+						'w-0'}"
+				/>
+				<span
+					class="block h-0.5 w-10 origin-center rounded-full bg-slate-900 transition-transform ease-in-out {isOpen &&
+						'-translate-y-2.5 -rotate-45'}"
+				/>
+			</span>
+		</button>
 
-					{#if show}
-						<div
-							in:scale={{ duration: 100, start: 0.95 }}
-							out:scale={{ duration: 75, start: 0.95 }}
-							class="absolute z-50 mt-5 w-max rounded shadow-md bg-white translate-x-[50%] right-[50%]"
-						>
-							{#each worksMenuItems as { title, slug }}
-								<a
-									href={`works/${slug}`}
-									class="block px-4 py-2 hover:bg-amber-600 transition-all"
-								>
-									{title}
-								</a>
-							{/each}
-						</div>
-					{/if}
-				</div>
-			</li>
-			<li aria-current={$page.url.pathname === '/playground' ? 'page' : undefined}>
-				<a class="focus:outline-none focus:underline" href="/playground">
-					playground </a>
-			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a class="focus:outline-none focus:underline" href="/about">
-					about </a>
-			</li>
-		</ul>
-	</nav>
-	<!--	Mobile Menu-->
-
-	<button
-		class="md:hidden z-50 group h-20 w-20 flex cursor-pointer items-center justify-center hover:bg-white focus:outline-none focus:bg-white"
-		on:click={toggleMobileMenu}
-	>
-		<span class="space-y-2">
-			<span
-				class="block h-0.5 w-10 origin-center rounded-full bg-slate-900 transition-transform ease-in-out {showMobileMenu &&
-					'translate-y-2.5 rotate-45'}"
-			/>
-			<span
-				class="block h-0.5 origin-center rounded-full bg-slate-900 transition-transform ease-in-out delay-100 {showMobileMenu &&
-					'w-0'}"
-			/>
-			<span
-				class="block h-0.5 w-10 origin-center rounded-full bg-slate-900 transition-transform ease-in-out {showMobileMenu &&
-					'-translate-y-2.5 -rotate-45'}"
-			/>
-		</span>
-	</button>
-	<aside
-		class="absolute z-30 px-4 py-40 min-h-screen w-full bottom-0 top-0 border-r-2 shadow-lg bg-amber-600 delay-100 transition-all {showMobileMenu
-			? 'left-0'
-			: '-left-[100%]'}"
-	>
-		<nav class="text-5xl p-12 bg-blue-300 h-full mx-5">
-			<ul class="flex flex-col gap-10">
-				<li bind:this={menuMobile} class="relative">
+		<nav class="hidden md:block">
+			<ul class="flex gap-10 text-2xl">
+				<!--			<li aria-current={$page.url.pathname === '/works' ? 'page' : undefined}>-->
+				<!--				<a href="/works">works</a>-->
+				<!--			</li>-->
+				<li bind:this={desktopDropdown} class="relative">
 					<div>
 						<button
-							class="focus:outline-none focus:underline hover:underline"
-							on:click={toggleWorksSubmenu}
+							class="menu focus:outline-none focus:underline"
+							on:click={toggleDesktopDropdown}
 						>
 							works
 						</button>
 
-						{#if worksSubmenu}
+						{#if desktopDropdownOpen}
 							<div
-								class="font-urbanist text-3xl font-light mt-4"
 								in:scale={{ duration: 100, start: 0.95 }}
 								out:scale={{ duration: 75, start: 0.95 }}
+								class="absolute z-50 mt-5 w-max rounded shadow-md bg-white translate-x-[50%] right-[50%]"
 							>
-								{#each worksMenuItems as { title, slug }}
+								{#each workMenuItems as { title, slug }}
 									<a
-										href={`works/${slug}`}
+										href={slug}
 										class="block px-4 py-2 hover:bg-amber-600 transition-all"
+										on:click={() => (desktopDropdownOpen = false)}
 									>
 										{title}
 									</a>
@@ -161,15 +149,75 @@
 					</div>
 				</li>
 				<li aria-current={$page.url.pathname === '/playground' ? 'page' : undefined}>
-					<a class="focus:outline-none focus:underline hover:underline" href="/playground">
+					<a
+						class="focus:outline-none focus:underline"
+						href="/playground"
+						on:click={toggleDropdown}
+					>
 						playground
 					</a>
 				</li>
 				<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-					<a class="focus:outline-none focus:underline hover:underline" href="/about">
-						about </a>
+					<a class="focus:outline-none focus:underline" href="/about" on:click={toggleDropdown}>
+						about
+					</a>
 				</li>
 			</ul>
 		</nav>
-	</aside>
+	</div>
+
+	<!-- Mobile Navigation -->
+	<nav
+		class="fixed top-0 left-0 w-full h-full bg-amber-600 flex justify-center items-center md:hidden z-30"
+		style="transform: translateX({$navPosition}%)"
+	>
+		<ul class="text-center text-6xl space-y-8">
+			<li class="relative">
+				<div>
+					<button
+						class="focus:outline-none focus:underline hover:underline"
+						on:click={toggleDropdown}
+					>
+						works
+					</button>
+
+					{#if dropdownOpen}
+						<div
+							class="font-urbanist text-3xl font-light mt-4"
+							in:scale={{ duration: 100, start: 0.95 }}
+							out:scale={{ duration: 75, start: 0.95 }}
+						>
+							{#each workMenuItems as { title, slug }}
+								<a
+									href={slug}
+									class="block px-4 py-2 hover:bg-amber-600 transition-all"
+									on:click={navigateTo}
+								>
+									{title}
+								</a>
+							{/each}
+						</div>
+					{/if}
+				</div>
+			</li>
+			<li aria-current={$page.url.pathname === '/playground' ? 'page' : undefined}>
+				<a
+					class="focus:outline-none focus:underline hover:underline"
+					href="/playground"
+					on:click={navigateTo}
+				>
+					playground
+				</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
+				<a
+					class="focus:outline-none focus:underline hover:underline"
+					href="/about"
+					on:click={navigateTo}
+				>
+					about
+				</a>
+			</li>
+		</ul>
+	</nav>
 </header>

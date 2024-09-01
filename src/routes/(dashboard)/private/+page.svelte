@@ -1,1 +1,0 @@
-<h1 class="text-5xl w-full">Dashboard</h1>

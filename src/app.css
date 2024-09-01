@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 html {
-    overflow-x: hidden;
-    overflow-y: scroll;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
+
+/*::selection {*/
+/*    @apply bg-primary-500/30;*/
+/*}*/
