@@ -56,7 +56,6 @@
 			document.removeEventListener('click', handleOutsideClick, false);
 			document.removeEventListener('keyup', handleEscape, false);
 		};
-
 	});
 </script>
 
@@ -85,10 +84,7 @@
 							class="absolute z-50 mt-5 w-max rounded shadow-md bg-white translate-x-[50%] right-[50%]"
 						>
 							{#each worksMenuItems as { title, slug }}
-								<a
-									href={slug}
-									class="block px-4 py-2 hover:bg-amber-600 transition-all"
-								>
+								<a href={slug} class="block px-4 py-2 hover:bg-amber-600 transition-all">
 									{title}
 								</a>
 							{/each}
@@ -97,12 +93,10 @@
 				</div>
 			</li>
 			<li aria-current={$page.url.pathname === '/playground' ? 'page' : undefined}>
-				<a class="focus:outline-none focus:underline" href="/playground">
-					playground </a>
+				<a class="focus:outline-none focus:underline" href="/playground"> playground </a>
 			</li>
 			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a class="focus:outline-none focus:underline" href="/about">
-					about </a>
+				<a class="focus:outline-none focus:underline" href="/about"> about </a>
 			</li>
 		</ul>
 	</nav>
@@ -150,10 +144,7 @@
 								out:scale={{ duration: 75, start: 0.95 }}
 							>
 								{#each worksMenuItems as { title, slug }}
-									<a
-										href={slug}
-										class="block px-4 py-2 hover:bg-amber-600 transition-all"
-									>
+									<a href={slug} class="block px-4 py-2 hover:bg-amber-600 transition-all">
 										{title}
 									</a>
 								{/each}
@@ -167,8 +158,7 @@
 					</a>
 				</li>
 				<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-					<a class="focus:outline-none focus:underline hover:underline" href="/about">
-						about </a>
+					<a class="focus:outline-none focus:underline hover:underline" href="/about"> about </a>
 				</li>
 			</ul>
 		</nav>
