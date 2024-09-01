@@ -10,7 +10,8 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler",
-		"module": "ES2020"
+		"module": "ES2020",
+		"allowImportingTsExtensions": true
 	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	// except $lib which is handled by https://kit.svelte.dev/docs/configuration#files

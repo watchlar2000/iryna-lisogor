@@ -137,7 +137,7 @@
 							>
 								{#each workMenuItems as { title, slug }}
 									<a
-										href={slug}
+										href={`/${slug}`}
 										class="block px-4 py-2 hover:bg-amber-600 transition-all"
 										on:click={() => (desktopDropdownOpen = false)}
 									>
@@ -189,7 +189,7 @@
 						>
 							{#each workMenuItems as { title, slug }}
 								<a
-									href={slug}
+									href={`/${slug}`}
 									class="block px-4 py-2 hover:bg-amber-600 transition-all"
 									on:click={navigateTo}
 								>

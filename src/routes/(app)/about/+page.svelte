@@ -1,10 +1,9 @@
 <script lang="ts">
+	import type { Author } from '$lib/types';
 	import { Image } from '@unpic/svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-
-	type Author = Exclude<PageData['authorData'], undefined>;
 
 	$: authorData = data.authorData as Author;
 </script>

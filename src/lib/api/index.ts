@@ -1,7 +1,7 @@
 import fsp from 'node:fs/promises';
 import path from 'node:path';
-import type { AuthorAPI } from './author';
-import type { ProjectAPI } from './project';
+import type { AuthorAPI } from './author.ts';
+import type { ProjectAPI } from './project.ts';
 
 const apiPath = path.join(process.cwd(), './src/lib/api');
 

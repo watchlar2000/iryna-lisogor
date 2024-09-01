@@ -1,6 +1,7 @@
 import { db } from '$lib/server';
 import { projects } from '$lib/server/schema';
-import { and, eq, type InferSelectModel } from 'drizzle-orm';
+import type { Project } from '$lib/types/index.ts';
+import { and, eq } from 'drizzle-orm';
 
 interface GetProjectParams {
 	id?: number;
@@ -8,14 +9,12 @@ interface GetProjectParams {
 	slug?: string;
 }
 
-export type ProjectType = InferSelectModel<typeof projects>;
-
 export interface ProjectAPI {
-	get(params: GetProjectParams): Promise<ProjectType | ProjectType[] | undefined>;
+	get(params: GetProjectParams): Promise<Project | Project[] | undefined>;
 }
 
 export default {
-	get(params: GetProjectParams = {}): Promise<ProjectType | ProjectType[] | undefined> {
+	get(params: GetProjectParams = {}): Promise<Project | Project[] | undefined> {
 		const { id, work, slug } = params;
 
 		if (id) {

@@ -1,15 +1,12 @@
-import { db } from '$lib/server';
-import type { authors } from '$lib/server/schema';
-import { type InferSelectModel } from 'drizzle-orm';
-
-type AuthorType = InferSelectModel<typeof authors>;
+import { db } from '$lib/server/index.ts';
+import type { Author } from '$lib/types/index.ts';
 
 export interface AuthorAPI {
-	get(): Promise<AuthorType | undefined>;
+	get(): Promise<Author | undefined>;
 }
 
 export default {
-	get(): Promise<AuthorType | undefined> {
+	get(): Promise<Author | undefined> {
 		return db.query.authors.findFirst();
 	}
 } as AuthorAPI;

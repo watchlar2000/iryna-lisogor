@@ -4,6 +4,8 @@
 	"trailingComma": "none",
 	"printWidth": 100,
 	"tabWidth": 2,
+	"htmlWhitespaceSensitivity": "ignore",
+	"jsxBracketSameLine": false,
 	"plugins": ["prettier-plugin-svelte"],
 	"overrides": [
 		{

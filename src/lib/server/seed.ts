@@ -1,5 +1,5 @@
-import { db } from './db';
-import { authors, images, projects, works } from './schema';
+import { db } from './db.ts';
+import { authors, images, projects, works } from './schema.ts';
 
 const worksValues = [
 	{

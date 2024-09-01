@@ -1,6 +1,6 @@
-import type { Image, WorkOption, WorkType } from '../types';
+import type { Image, Work, WorkOption } from '$lib/types/index.ts';
 
-export const convertToSlug = (text: WorkType) => {
+export const convertToSlug = (text: Work) => {
 	return text
 		.toLowerCase()
 		.trim()
