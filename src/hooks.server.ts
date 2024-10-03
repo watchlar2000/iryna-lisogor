@@ -1,8 +1,9 @@
 import { createServerClient } from '@supabase/ssr';
-import { type Handle, redirect } from '@sveltejs/kit';
+import { type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+import { initRouting, isRoutingReady, start } from '$lib/api';
 
 const ROUTE = {
 	home: '/',
@@ -84,4 +85,21 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-export const handle: Handle = sequence(supabase, authGuard);
+const checkIfRouteApiReady: Handle = async ({ event, resolve }) => {
+	try {
+		if (!isRoutingReady) await start();
+	} catch (error) {
+		console.error(error);
+		throw 'Route API is not built';
+	}
+
+	return resolve(event);
+};
+
+export const handleError: HandleServerError = async () => {
+	return {
+		message: 'Whoops!'
+	};
+};
+
+export const handle: Handle = sequence(checkIfRouteApiReady, supabase, authGuard);

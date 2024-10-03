@@ -1,0 +1,72 @@
+.auto-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size, 14rem), 1fr));
+	grid-gap: var(--auto-grid-gap, 0);
+	padding: 0;
+}
+
+.flow > * + * {
+	margin-block-start: var(--flow-space, 1em);
+}
+
+.wrapper {
+	--padding-space: var(--space-s);
+
+	max-width: 75rem;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 var(--padding-space);
+
+	&[data-wrapper-type='inner'] {
+		padding: var(--padding-space);
+	}
+}
+
+.visually-hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
+}
+
+.radius {
+	border-radius: var(--border-radius, 0.5rem);
+}
+
+.cluster {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	gap: var(--space, 0.5rem);
+	// margin: calc(var(--space) / 2 * -1);
+}
+
+// .cluster > * > * {
+// 	margin: calc(var(--space) / 2);
+// }
+
+// .splitter {
+// 	> :last-child {
+// 		margin-top: 32px;
+// 	}
+
+// 	@media (min-width: 768px) {
+// 		display: flex;
+
+// 		> * {
+// 			flex-grow: 1;
+// 		}
+
+// 		> :last-child {
+// 			margin-top: 0;
+// 			margin-left: 32px;
+// 			min-width: 22rem;
+// 		}
+// 	}
+// }

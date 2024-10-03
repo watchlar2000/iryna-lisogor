@@ -7,7 +7,6 @@
 
 	$: logout = async () => {
 		const { error } = await supabase.auth.signOut();
-		console.log('logging out');
 		if (error) {
 			console.error(error);
 		}

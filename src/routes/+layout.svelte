@@ -1,7 +1,7 @@
 <script>
 	import { invalidate } from '$app/navigation';
+	import '$lib/styles/global.scss';
 	import { onMount } from 'svelte';
-	import '../app.css';
 
 	export let data;
 

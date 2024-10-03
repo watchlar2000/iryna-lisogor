@@ -1,16 +1,20 @@
 <script lang="ts">
-	import Footer from '../Footer.svelte';
-	import Header from '../Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import Header from '$lib/components/Header.svelte';
 </script>
 
-<div
-	class="flex flex-col min-h-screen bg-slate-100 text-gray-950 p-5 font-urbanist selection:bg-amber-300"
->
+<div class="app-wrapper">
 	<Header />
 
-	<main class="relative flex-1 mt-10 z-0 max-w-[900px] mx-auto">
+	<main class="main">
 		<slot />
 	</main>
-
 	<Footer />
 </div>
+
+<style>
+	.main {
+		margin-top: var(--space-m);
+		margin-inline: auto;
+	}
+</style>

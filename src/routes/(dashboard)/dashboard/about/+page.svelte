@@ -1,140 +1,149 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { applyAction, deserialize, enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+	import TipTap from '$lib/components/TipTapEditor.svelte';
+	import type { Author } from '$lib/types/common';
+	import type { ActionResult } from '@sveltejs/kit';
 	import { Image } from '@unpic/svelte';
-	import IconEdit from '../../../IconEdit.svelte';
 	import type { PageData } from './$types';
+	import { readFileAsDataURL } from './utils';
 
 	export let data: PageData;
 
-	// console.log(data);
+	$: ({ photoUrl, about: aboutHTML } = data.author[0] as Author);
 
-	$: ({ photoUrl, about } = data.authors[0]);
+	$: about = aboutHTML ?? '';
 
-	// let isEditMode: boolean = false;
-	// let updatedPhotoUrl: string;
-	// let updatedAbout: string;
-	let form: null;
+	$: {
+		isDirty = about !== aboutHTML;
+	}
+
+	let isDirty: boolean = false;
 	let inputFile: HTMLElement;
-	let formLoading: boolean = false;
+	let updatedPhotoUrl: string | null = null;
 
 	const initImageUpload = () => {
 		inputFile.click();
 	};
 
-	// const readFileAsDataURL = (file: File): Promise<string> => {
-	// 	return new Promise((resolve, reject) => {
-	// 		const reader = new FileReader();
-	//
-	// 		reader.onload = function (event: ProgressEvent<FileReader>) {
-	// 			resolve(event.target.result as string);
-	// 		};
-	//
-	// 		reader.onerror = function (error) {
-	// 			reject(error);
-	// 		};
-	//
-	// 		reader.readAsDataURL(file);
-	// 	});
-	// };
+	const handleChange = async (event: { currentTarget: EventTarget & HTMLFormElement }) => {
+		const fd = new FormData(event.currentTarget);
+		const photoFile = fd.get('photoFile');
+		isDirty = true;
 
-	// const handleImageUpload = async (e: Event) => {
-	// 	const image = (e.target as HTMLInputElement)?.files?.[0];
-	//
-	// 	if (!image) return;
-	//
-	// 	updatedPhotoUrl = publicUrl;
-	//
-	// 	setEditMode();
-	// };
-	//
-	// const setEditMode = (mode: boolean = true): void => {
-	// 	isEditMode = mode;
-	// };
+		if (photoFile) {
+			updatedPhotoUrl = await readFileAsDataURL(photoFile as File);
+		}
+	};
 
-	// const reset = () => {
-	// 	updatedPhotoUrl = '';
-	// 	updatedAbout = '';
-	// 	setEditMode(false);
-	// };
+	type FormEvent = EventTarget & HTMLFormElement;
+
+	const handleSubmit = async (event: { currentTarget: FormEvent }): Promise<void> => {
+		type InitData = Author & {
+			prevPhotoUrl: string;
+		};
+
+		const authorData = data.author[0] as Author;
+		const initData: InitData = {
+			...authorData,
+			prevPhotoUrl: authorData.photoUrl ?? ''
+		};
+
+		const fd = new FormData(event.currentTarget);
+
+		fd.set('about', about);
+
+		type Key = keyof InitData;
+
+		const filteredFormData = [...fd.entries()]
+			.filter(([key, value]) => {
+				if (key === 'photoFile' && value instanceof File) {
+					return value.name.length;
+				}
+
+				return initData[key as Key] !== value;
+			})
+			.reduce((acc, [key, value]) => {
+				acc.set(key, value);
+				return acc;
+			}, new FormData());
+
+		if (filteredFormData.get('photoFile')) {
+			filteredFormData.set('prevPhotoUrl', initData.prevPhotoUrl);
+		}
+
+		const response = await fetch(event.currentTarget.action, {
+			method: 'POST',
+			body: filteredFormData
+		});
+		const result: ActionResult = deserialize(await response.text());
+
+		if (result.type === 'success') {
+			await invalidateAll();
+		}
+
+		applyAction(result);
+	};
 </script>
 
 <!--https://hartenfeller.dev/blog/sveltekit-image-upload-store-->
-
+<!--
+use:enhance={() => {
+	// formLoading = true;
+	return async ({ update }) => {
+		// formLoading = false;
+		update();
+	};
+}}
+-->
 <h1 class="text-2xl font-bold">About page</h1>
-{#if formLoading}
+<!-- {#if formLoading}
 	<p>Server is running...</p>
-{/if}
+{/if} -->
 <form
-	bind:this={form}
-	class="mt-6"
+	class="mt-6 max-w-[600px]"
 	enctype="multipart/form-data"
 	method="POST"
-	use:enhance={() => {
-		formLoading = true;
-		return async ({ update }) => {
-			formLoading = false;
-			update();
-		};
-	}}
+	action="?/about"
+	on:change={handleChange}
+	on:submit|preventDefault={handleSubmit}
 >
 	<div>
-		<button
-			class="flex gap-2 items-center hover:underline focus:underline"
-			on:click={initImageUpload}
-			type="button"
-		>
-			<IconEdit />
-			<span class="text-lg font-semibold">Profile photo:</span>
-		</button>
-		<div class="mt-2 w-1/2">
+		<h2 class="text-lg font-semibold">Profile photo:</h2>
+		<div class="mt-2 max-w-[400px]">
 			<Image
 				alt="Iryna Lisogor profile photo"
-				aspectRatio={1.6}
+				aspectRatio={1.5}
 				layout="constrained"
-				src={photoUrl}
+				src={updatedPhotoUrl ?? photoUrl}
 			/>
 			<input
 				accept="image/*"
 				bind:this={inputFile}
 				class="hidden"
-				name="profileImage"
-				on:change={() => form.requestSubmit()}
+				id="photoFile"
+				name="photoFile"
 				type="file"
 			/>
 		</div>
+		<button
+			class="flex gap-2 items-center hover:underline focus:underline p-2 bg-orange-300 text-xs mt-4 rounded-md"
+			on:click={initImageUpload}
+			type="button"
+		>
+			Upload new photo
+		</button>
 	</div>
 	<hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700" />
 	<div>
-		<!--	<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="message"-->
-		<!--		>About:</label-->
-		<!--	>-->
-		<!--	<textarea-->
-		<!--		bind:value-->
-		<!--		class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"-->
-		<!--		id="message"-->
-		<!--		placeholder="Write your thoughts here..."-->
-		<!--		rows="10"-->
-		<!--	></textarea>-->
-		<button class="flex gap-2 items-center hover:underline focus:underline">
-			<IconEdit />
-			<span class="text-lg font-semibold">About:</span>
-		</button>
-		<div class="flex flex-col gap-3 mt-2">{@html about}</div>
+		<h2 class="text-lg font-semibold">About:</h2>
+		<TipTap bind:content={about} class="mt-5" />
 	</div>
-	<!--	<div class="mt-6 flex gap-4">-->
-	<!--		<button-->
-	<!--			class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"-->
-	<!--			on:click={reset}-->
-	<!--			type="button"-->
-	<!--		>-->
-	<!--			Cancel-->
-	<!--		</button>-->
-	<!--		<button-->
-	<!--			class="disabled:opacity-50 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"-->
-	<!--			disabled={!isEditMode}-->
-	<!--			type="submit"-->
-	<!--		>-->
-	<!--			Save-->
-	<!--		</button>-->
-	<!--	</div>-->
+	<div class="mt-4 flex gap-4">
+		<button
+			type="submit"
+			class="py-2 px-4 bg-blue-200 disabled:opacity-30 disabled:cursor-not-allowed"
+			disabled={!isDirty}>Save</button
+		>
+	</div>
 </form>

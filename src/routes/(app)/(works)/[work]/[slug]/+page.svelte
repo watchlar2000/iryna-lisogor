@@ -1,12 +1,11 @@
 <script lang="ts">
 	import ProjectView from '$lib/components/ProjectView.svelte';
-	import type { Project } from '$lib/types/index.ts';
+	import type { ProjectWithImages } from '$lib/types/projects.ts';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	$: project = data.projects[0] as Project;
+	$: project = data.project as ProjectWithImages[];
 </script>
 
-<!-- <pre>{JSON.stringify(data.projects[0], null, 2)}</pre> -->
-<ProjectView {project} />
+<ProjectView project={project[0]} />

@@ -22,7 +22,7 @@ const worksValues = [
 const author = {
 	id: 1,
 	name: 'Iryna',
-	surname: 'Lisohor',
+	surname: 'Lisogor',
 	photoUrl:
 		'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/profile-photo-6570f3ea-234e-4b53-9f9e-ad0ef07e4c83',
 	about: `
@@ -65,37 +65,37 @@ const projectsValues = [
 
 const imagesValues = [
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/photo_2023-04-06_16-34-06.jpg',
+		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/4kshrek-animationscreencaps.com-2168.jpg',
 		alt: 'test',
 		isCoverImage: true,
 		projectId: 1
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/photo_2023-04-06_16-34-08.jpg',
+		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/4kshrek-animationscreencaps.com-3464.jpg',
 		alt: 'test',
 		isCoverImage: false,
 		projectId: 1
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/photo_2023-04-06_16-34-09.jpg',
+		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/4kshrek-animationscreencaps.com-394.jpg',
 		alt: 'matilda 1',
 		isCoverImage: true,
 		projectId: 2
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/photo_2023-04-06_16-34-12.jpg',
+		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-1622.jpg',
 		alt: 'matilda 2',
 		isCoverImage: false,
 		projectId: 2
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-3107.jpg',
+		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-1779.jpg',
 		alt: 'matilda 2',
 		isCoverImage: true,
 		projectId: 3
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-3484.jpg',
+		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-3107.jpg',
 		alt: 'matilda 2',
 		isCoverImage: false,
 		projectId: 3

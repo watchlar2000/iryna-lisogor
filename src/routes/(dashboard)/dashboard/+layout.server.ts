@@ -1,8 +1,10 @@
-import { db } from '$lib/server/db';
-import { works } from '$lib/server/schema';
+import { routing } from '$lib/api';
+import type { LayoutServerLoad } from './$types';
 
-export async function load() {
-	return {
-		works: await db.select().from(works)
-	};
-}
+export const load: LayoutServerLoad = async () => {
+	const { project, work } = routing;
+	const projects = await project.read();
+	const works = await work.read();
+
+	return { projects, works };
+};

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Image as ImageType, ProjectWithImages } from '$lib/types/index.ts';
+	import type { Image as ImageType } from '$lib/types/common.ts';
+	import type { ProjectWithImages } from '$lib/types/projects.ts';
 	import { Image } from '@unpic/svelte';
 
 	export let project: ProjectWithImages;
@@ -31,12 +32,16 @@
 	<meta content={project.title} name={project.description} />
 </svelte:head>
 
-<section class="w-full flex flex-col gap-8">
-	<h1 class="text-4xl">{project.title}</h1>
-	<!-- <pre>{JSON.stringify(images, null, 4)}</pre> -->
-	<Image src={cover?.url} layout="constrained" aspectRatio={1} alt={cover?.alt} />
-	<h2 class="text-xl">{project.description}</h2>
-	{#each nonCover as image}
-		<Image src={image.url} layout="constrained" aspectRatio={1} alt={image.alt} />
-	{/each}
-</section>
+<div class="flow">
+	<div class="wrapper heading" data-wrapper-type="inner">
+		<h1>{project.title}</h1>
+	</div>
+
+	<div class="wrapper flow">
+		<p data-wrapper-type="inner">{project.description}</p>
+		<Image src={cover?.url} layout="constrained" aspectRatio={1.5} alt={cover?.alt} />
+		{#each nonCover as image}
+			<Image src={image.url} layout="constrained" aspectRatio={1.5} alt={image.alt} />
+		{/each}
+	</div>
+</div>
