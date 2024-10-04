@@ -6,13 +6,23 @@
 
 	// const MOBILE_MENU_CLOSE_WIDTH = 900;
 
-	type Placement = 'left' | 'right' | 'top' | 'bottom';
-
 	export let open: boolean = false;
 	export let placement: Placement = 'left';
-	export let size: string = '25ch';
 
 	const dispatch = createEventDispatcher();
+
+	const isPanelVertical = placement === 'top' || placement === 'bottom';
+
+	type Placement = 'left' | 'right' | 'top' | 'bottom';
+
+	export let size: string = isPanelVertical ? '25ch' : '40ch';
+
+	const transitionConfig = {
+		duration: 250,
+		// delay: 100,
+		easing: quintOut,
+		axis: isPanelVertical ? 'y' : 'x'
+	};
 
 	$: style = `--size: ${size};`;
 
@@ -55,8 +65,8 @@
 	<div
 		class="panel {placement}"
 		class:size
-		transition:slide={{ duration: 250, easing: quintOut, axis: 'y' }}
 		data-wrapper-type="inner"
+		transition:slide={transitionConfig}
 	>
 		<slot />
 	</div>
@@ -70,7 +80,6 @@
 		height: 100%;
 		width: 100%;
 		z-index: -1;
-		overflow: auto;
 	}
 
 	.drawer.open {
@@ -90,10 +99,19 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background: var(--color-light);
+		background: var(--color-global-bg);
 		z-index: 3;
 		overflow: auto;
 	}
+
+	/* .panel__inner {
+		position: absolute;
+		top: 200px;
+		width: 100%;
+		height: 100%;
+		background-color: red !important;
+		overflow: auto;
+	} */
 
 	.panel.left {
 		left: 0;

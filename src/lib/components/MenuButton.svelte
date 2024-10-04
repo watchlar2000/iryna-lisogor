@@ -35,10 +35,6 @@
 </button>
 
 <style>
-	:root {
-		--transition-duration: 300ms;
-	}
-
 	button {
 		display: flex;
 		align-items: center;

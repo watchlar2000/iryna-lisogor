@@ -33,7 +33,7 @@
 
 <style>
 	.auto-grid {
-		--auto-grid-min-size: 25rem;
+		--auto-grid-min-size: 20rem;
 		--auto-grid-gap: 1.75em;
 	}
 </style>

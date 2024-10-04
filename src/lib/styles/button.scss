@@ -33,8 +33,8 @@ button.button {
 	--button-gap: 0.5em;
 	--button-bg: var(--color-dark);
 	--button-color: #fff;
-	--button-hover-bg: var(--color-dark-transparent);
-	--button-focus-bg: var(--color-light-gray, var(--button-hover-bg));
+	--button-hover-bg: var(--color-dark-transparent, --color-light-gray);
+	--button-focus-bg: var(--button-hover-bg);
 	--button-hover-color: var(--color-light);
 	--button-border-width: 3px;
 	--button-border-style: solid;
@@ -90,32 +90,3 @@ button.button {
 		--button-radius: 0;
 	}
 }
-
-/* a.button,
-button.button {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0.25em 0.75em;
-	min-width: 10ch;
-	min-height: 44px;
-	text-align: center;
-	line-height: 1.1;
-
-	transition: 120ms all cubic-bezier(0.075, 0.82, 0.165, 1);
-
-	.button:hover {
-		background-color: scale-color(grey, $lightness: -20%);
-	}
-
-	.button:focus {
-		outline-style: solid;
-		outline-color: transparent;
-		box-shadow: 0 0 0 4px scale-color(grey, $lightness: -35%);
-	}
-
-	.button:hover,
-	.button:active {
-		background-color: scale-color(grey, $lightness: -20%);
-	}
-} */

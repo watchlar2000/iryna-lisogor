@@ -16,9 +16,12 @@
 </ul>
 
 <style lang="scss">
+	.cluster {
+		--space: 0.2rem;
+	}
 	a {
 		--outline-offset: 0;
-		--icon-width: var(--size-step-5);
+		--icon-width: var(--size-step-6);
 
 		display: block;
 		padding: var(--space-s);
