@@ -19,5 +19,6 @@
 
 <!--	<main class="mt-7 max-w-[900px] bg-amber-600">-->
 <slot />
+
 <!--	</main>-->
 <!--</div>-->

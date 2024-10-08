@@ -18,7 +18,7 @@
 	export let size: string = isPanelVertical ? '25ch' : '40ch';
 
 	const transitionConfig = {
-		duration: 250,
+		duration: 300,
 		// delay: 100,
 		easing: quintOut,
 		axis: isPanelVertical ? 'y' : 'x'
@@ -60,6 +60,7 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 <aside class="drawer" class:open {style}>
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="overlay" on:click={handleClickAway} />
 
 	<div
@@ -103,15 +104,6 @@
 		z-index: 3;
 		overflow: auto;
 	}
-
-	/* .panel__inner {
-		position: absolute;
-		top: 200px;
-		width: 100%;
-		height: 100%;
-		background-color: red !important;
-		overflow: auto;
-	} */
 
 	.panel.left {
 		left: 0;

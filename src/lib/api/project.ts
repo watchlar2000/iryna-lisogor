@@ -1,4 +1,4 @@
-import { mapRowsToProjectsWithImages } from '$lib/helper/api';
+import { mapRowsToProjectsWithImages } from '$lib/helpers/api';
 import { api } from '$lib/server/db';
 import { images, projects } from '$lib/server/schema';
 import type { ProjectReadParam, ProjectWithImages, Row } from '$lib/types/projects';

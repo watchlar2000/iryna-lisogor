@@ -3,11 +3,15 @@ import { type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { initRouting, isRoutingReady, start } from '$lib/api';
+import { isRoutingReady, start } from '$lib/api';
 
 const ROUTE = {
 	home: '/',
-	auth: '/auth',
+	auth: {
+		base: '/auth',
+		login: '/auth/login',
+		logout: '/auth/login'
+	},
 	dashboard: '/dashboard'
 };
 
@@ -74,11 +78,16 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	event.locals.session = session;
 	event.locals.user = user;
 
-	if (!event.locals.session && event.url.pathname.startsWith(ROUTE.dashboard)) {
-		redirect(303, ROUTE.auth);
+	const urlPathName = event.url.pathname;
+
+	if (
+		(!event.locals.session && urlPathName.startsWith(ROUTE.dashboard)) ||
+		urlPathName === ROUTE.auth.base
+	) {
+		redirect(303, ROUTE.auth.login);
 	}
 
-	if (event.locals.session && event.url.pathname === '/auth') {
+	if (event.locals.session && urlPathName.startsWith(ROUTE.auth.base)) {
 		redirect(303, ROUTE.dashboard);
 	}
 

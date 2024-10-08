@@ -1,9 +1,14 @@
 :root {
-	--color-base: #f8f8f8;
-	--color-dark: #232323;
-	--color-dark-transparent: #232323ce;
-	--color-light: #fcfcfc;
-	--color-light-gray: #d9d9d9;
+	--color-base: hsl(0, 0%, 97%);
+	--color-dark: hsl(0, 0%, 14%);
+	--color-dark-transparent: hsla(0, 0%, 14%, 0.8);
+	--color-light: hsl(0, 0%, 99%);
+	--color-light-gray: hsl(0, 0%, 75%);
+
+	--color-primary: hsl(39, 100%, 50%);
+	--color-primary-glare: hsl(39, 100%, 60%);
+
+	--color-warning: hsl(4, 80%, 50%);
 
 	--color-global-bg: var(--color-base);
 	--color-global-text: var(--color-dark);
@@ -26,8 +31,8 @@
 	// --size-max: 4rem;
 	// --size-contain: 60rem;
 
-	--font-base: 'Urbanist', system-ui;
-	--font-ubuntu: 'Ubuntu', system-ui;
+	--font-base: 'Urbanist', sans-serif;
+	--font-ubuntu: 'Ubuntu', sans-serif;
 
 	// --step--1: clamp(0.91rem, calc(0.88rem + 0.03vw), 0.89rem);
 	// --step-0: clamp(1rem, calc(0.91rem + 0.45vw), 1.25rem);

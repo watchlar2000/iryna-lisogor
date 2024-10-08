@@ -1,8 +1,10 @@
 .input {
 	--input-border: var(--color-dark);
-	--input-focus-h: 245;
+	--input-focus-h: 39;
 	--input-focus-s: 100%;
 	--input-focus-l: 42%;
+
+	appearance: none;
 
 	font-size: 16px;
 	font-size: max(16px, 1em);
@@ -16,25 +18,25 @@
 }
 
 .input:not(textarea) {
-	line-height: 1;
-	height: 2.25rem;
+	line-height: inherit;
+	height: 2em;
 }
 
 .input[type='file'] {
-	font-size: 0.9em;
+	font-size: inherit;
 	padding-top: 0.35rem;
 }
 
 .input[readonly] {
 	border-style: dotted;
 	cursor: not-allowed;
-	color: #777;
+	color: var(--color-gray);
 }
 
 .input[disabled] {
-	--input-border: #ccc;
+	--input-border: hsl(0, 0%, 60%);
 
-	background-color: #eee;
+	background-color: hsl(0, 0%, 75%);
 	cursor: not-allowed;
 }
 
@@ -42,9 +44,9 @@ textarea.input {
 	resize: vertical;
 }
 
-.input:focus {
-	border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
-	box-shadow: 0 0 0 3px
-		hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
-	outline: 3px solid transparent;
-}
+// .input:focus {
+// 	border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+// 	box-shadow: 0 0 0 3px
+// 		hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
+// 	outline: 3px solid transparent;
+// }
