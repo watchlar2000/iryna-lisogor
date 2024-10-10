@@ -1,58 +1,27 @@
 :root {
-	--color-base: hsl(0, 0%, 97%);
+	/* Color */
+	--color-base: hsl(0, 0%, 92%);
 	--color-dark: hsl(0, 0%, 14%);
 	--color-dark-transparent: hsla(0, 0%, 14%, 0.8);
-	--color-light: hsl(0, 0%, 99%);
-	--color-light-gray: hsl(0, 0%, 75%);
-
-	--color-primary: hsl(39, 100%, 50%);
-	--color-primary-glare: hsl(39, 100%, 60%);
-
-	--color-warning: hsl(4, 80%, 50%);
+	--color-light: hsl(0, 0%, 85%);
+	--color-light-gray: hsl(0, 0%, 60%);
+	--color-primary: hsl(39, 100%, 55%);
+	--color-primary-glare: hsl(39, 100%, 40%);
+	--color-warning: hsl(353, 100%, 35%);
+	--color-success: hsl(149, 100%, 25%);
+	--color-link: hsl(220, 90%, 40%);
 
 	--color-global-bg: var(--color-base);
 	--color-global-text: var(--color-dark);
 
 	--gutter-wrapper-inner: 1rem;
-
 	--radius: 0.25rem;
-
 	--text-max-width: 50ch;
+	--transition-duration: 125ms;
 
-	--transition-duration: 250ms;
-
-	// --size-300: 0.8rem;
-	// --size-400: 1rem;
-	// --size-500: 1.25rem;
-	// --size-600: 1.56rem;
-	// --size-700: 1.95rem;
-	// --size-800: 2.44rem;
-	// --size-900: 3.05rem;
-	// --size-max: 4rem;
-	// --size-contain: 60rem;
-
+	/* Font */
 	--font-base: 'Urbanist', sans-serif;
 	--font-ubuntu: 'Ubuntu', sans-serif;
-
-	// --step--1: clamp(0.91rem, calc(0.88rem + 0.03vw), 0.89rem);
-	// --step-0: clamp(1rem, calc(0.91rem + 0.45vw), 1.25rem);
-	// --step-1: clamp(1.13rem, calc(0.91rem + 1.09vw), 1.73rem);
-	// --step-2: clamp(1.27rem, calc(0.86rem + 2.03vw), 2.38rem);
-	// --step-3: clamp(1.42rem, calc(0.74rem + 3.4vw), 3.29rem);
-	// --step-4: clamp(1.6rem, calc(0.53rem + 5.35vw), 4.55rem);
-	// --step-5: clamp(1.8rem, calc(0.17rem + 8.14vw), 6.28rem);
-	// --step-6: clamp(2.03rem, calc(-0.39rem + 12.08vw), 8.67rem);
-	// --step-7: clamp(2.28rem, calc(-1.24rem + 17.63vw), 11.98rem);
-
-	// --step--1: clamp(0.8rem, 0.2944rem + 2.528vw, 1.8744rem);
-	// --step-0: clamp(1rem, 0.5294rem + 2.3529vw, 2rem);
-	// --step-1: clamp(1.25rem, 0.834rem + 2.08vw, 2.134rem);
-	// --step-2: clamp(1.5625rem, 1.2263rem + 1.6811vw, 2.277rem);
-	// --step-3: clamp(1.9531rem, 1.7289rem + 1.121vw, 2.4295rem);
-	// --step-4: clamp(2.4414rem, 2.3704rem + 0.3551vw, 2.5923rem);
-	// --step-5: clamp(2.766rem, 3.1862rem + -0.6724vw, 3.0518rem);
-	// --step-6: clamp(2.9513rem, 4.221rem + -2.0315vw, 3.8147rem);
-	// --step-7: clamp(3.1491rem, 5.5304rem + -3.8101vw, 4.7684rem);
 
 	--size-step-8: clamp(2.3125rem, 0.1313rem + 10.906vi, 10.4375rem);
 	--size-step-7: clamp(2.0625rem, 0.7706rem + 6.4597vi, 6.875rem);

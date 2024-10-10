@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import { fly, slide } from 'svelte/transition';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
@@ -24,10 +26,10 @@
 			/>
 		</label>
 		{#if form && !form.success}
-			<div class="flow">
+			<div class="error__wrapper flow" in:fly={{ y: 20 }} out:slide>
 				<h4 class="error__header">{form?.message}</h4>
-				<p class="error__content">
-					<a href="/">Click here</a> to go to the main website.
+				<p>
+					<a href="/" class="link">Click here</a> to go to the main website.
 				</p>
 			</div>
 		{/if}
@@ -42,7 +44,7 @@
 		max-width: 100%;
 		display: grid;
 		place-content: center;
-		background-color: hsla(39, 100%, 50%, 0.15);
+		background-color: var(--color-global-bg);
 	}
 
 	form {
@@ -63,11 +65,17 @@
 		width: 100%;
 	}
 
-	.error__content {
-		--flow-space: 0.25em;
+	.error__wrapper {
+		& > * {
+			--flow-space: 0.25em;
+		}
 
-		a {
-			display: inline-block;
+		h4 {
+			font-size: var(--size-step-0);
+		}
+
+		p {
+			font-size: var(--text-size-meta);
 		}
 	}
 </style>

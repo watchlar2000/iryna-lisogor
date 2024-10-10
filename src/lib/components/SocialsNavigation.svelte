@@ -5,6 +5,7 @@
 	export let list: SocialLink[];
 </script>
 
+<h2 class="visually-hidden">List of social media links including instagram, linkedin, and email</h2>
 <ul role="list" class="cluster">
 	{#each list as { href, name } (href)}
 		<li>
@@ -24,7 +25,12 @@
 		--icon-width: var(--size-step-6);
 
 		display: block;
-		padding: var(--space-s);
+		padding-inline: var(--space-s);
+		padding-block: 0;
+
+		@include respond-to('m') {
+			padding-block: var(--space-s);
+		}
 
 		> :global(.icon) {
 			width: var(--size-step-5);

@@ -9,7 +9,7 @@
 	import { transformWorkOptions } from '$lib/utils';
 
 	const workMenuItems = transformWorkOptions(works);
-	let open = true;
+	let open = false;
 
 	const toggleDrawer = () => {
 		open = !open;

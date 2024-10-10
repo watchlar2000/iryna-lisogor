@@ -1,52 +1,61 @@
 .input {
-	--input-border: var(--color-dark);
-	--input-focus-h: 39;
-	--input-focus-s: 100%;
-	--input-focus-l: 42%;
+	--_color: var(--input-color, inherit);
+	--_padding-inline: var(--input-padding-inline, 1.25ch);
+	--_padding-block: var(--input-padding-block, 1.75ch);
+	--_bg: var(--input-bg, transparent);
+	--_border-radius: var(--input-border-radius, 0.5em);
+	--_border-width: var(--input-border-width, 3px);
+	--_border-color: var(--_input-border-color, #242424);
+	--_border-style: var(--input-border-style, solid);
+	--_transition-duration: var(--input-transition-duration, 0);
+	--_transition-property: var(--input-transition-property, all);
+	--_transition-timing-func: var(--input-transition-timing-func, none);
 
 	appearance: none;
-
-	font-size: 16px;
-	font-size: max(16px, 1em);
-	font-family: inherit;
-	padding: 0.25em 0.5em;
-	background-color: var(--color-light);
-	border: 2px solid var(--input-border);
-	border-radius: 4px;
-
-	transition: 180ms box-shadow ease-in-out;
-}
-
-.input:not(textarea) {
-	line-height: inherit;
-	height: 2em;
-}
-
-.input[type='file'] {
+	color: var(--_color);
 	font-size: inherit;
-	padding-top: 0.35rem;
-}
+	font-family: inherit;
+	padding-inline: var(--_padding-inline);
+	padding-block: var(--_padding-block);
+	background-color: var(--_bg);
+	border-width: var(--_border-width);
+	border-color: var(--_border-color);
+	border-style: var(--_border-style);
+	border-radius: var(--_border-radius);
+	transition: var(--_transition-duration);
+	transition-property: var(--_transition-property);
+	transition-timing-function: var(--_transition-timing-func);
 
-.input[readonly] {
-	border-style: dotted;
-	cursor: not-allowed;
-	color: var(--color-gray);
-}
+	&[data-input-radius='hard'] {
+		--_border-radius: 0;
+	}
 
-.input[disabled] {
-	--input-border: hsl(0, 0%, 60%);
+	&:not(textarea) {
+		line-height: inherit;
+		height: 2em;
+	}
 
-	background-color: hsl(0, 0%, 75%);
-	cursor: not-allowed;
+	&[type='file'] {
+		font-size: inherit;
+		padding-top: 0.35em;
+	}
+
+	&[readonly] {
+		--_color: hsl(0, 0%, 60%);
+
+		border-style: dotted;
+		cursor: not-allowed;
+		color: var(--_color);
+	}
+
+	&[disabled] {
+		--_border-color: hsl(0, 0%, 60%);
+		--_bg: hsl(0, 0%, 75%);
+
+		cursor: not-allowed;
+	}
 }
 
 textarea.input {
 	resize: vertical;
 }
-
-// .input:focus {
-// 	border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
-// 	box-shadow: 0 0 0 3px
-// 		hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
-// 	outline: 3px solid transparent;
-// }

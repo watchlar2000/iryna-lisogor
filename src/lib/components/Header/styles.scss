@@ -1,13 +1,18 @@
 .wrapper__drawer {
 	padding: var(--space-m) 0;
 	display: flex;
+	flex-wrap: nowrap;
 	flex-direction: column;
 	height: 100%;
+
+	.header__nav-socials {
+		margin-top: auto;
+	}
 }
 
 .wrapper__drawer-panel {
 	width: 100%;
-	margin: 4em 0;
+	margin: 1.5em 0;
 
 	ul {
 		text-align: center;
@@ -29,23 +34,27 @@
 	> :global(.header__menu),
 	:global(.drawer__menu) {
 		display: flex;
-		--button-color: inherit;
-		--button-hover-color: inherit;
-		--button-bg: none;
-		--button-hover-bg: transparent;
-		--button-padding: var(--space-xs);
-		--button-outline-width: 4px;
-		--button-outline-style: dotted;
-		--button-outline-offset: 0;
-		--button-border-width: 0;
-		--button-gap: 0;
-		--button-border-color: orange;
+		--_color: inherit;
+		--_hover-bg: inherit;
+		--_hover-color: inherit;
+		--_bg: transparent;
+		--_focus-bg: transparent;
+		--_padding-inline: var(--space-xs);
+		--_padding-block: var(--space-xs);
+
+		// --_outline-width: 4px;
+		// --_outline-style: dotted;
+		--_outline-offset: 0;
+		--_border-width: 0;
+		--_gap: 0;
+		--_border-color: var(--color-primary);
 
 		font-weight: normal;
 		font-size: var(--size-step-3);
 
 		@include respond-to('xs') {
-			--button-padding: var(--space-s);
+			--_padding-inline: var(--space-s);
+			--_padding-block: var(--space-s);
 		}
 	}
 }
@@ -116,10 +125,6 @@ nav li {
 		outline: none;
 		background-color: transparent;
 	}
-}
-
-.header__nav-socials {
-	margin-top: auto;
 }
 
 .dropdown {
