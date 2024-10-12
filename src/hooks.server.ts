@@ -105,9 +105,10 @@ const checkIfRouteApiReady: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-export const handleError: HandleServerError = async () => {
+export const handleError: HandleServerError = async ({ error, event, status, message }) => {
+	const d = { error, event, status, message };
 	return {
-		message: 'Whoops!'
+		message: JSON.stringify(d, null, 4)
 	};
 };
 
