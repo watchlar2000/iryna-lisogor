@@ -17,8 +17,8 @@
 	on:click={onClick}
 	aria-expanded={open}
 	aria-label={ariaLabel}
-	class={$$restProps.class || ''}
-	{...$$restProps}
+	class={`${$$restProps.class || ''} button`}
+	data-button-variant="menu"
 >
 	<svg class:open viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" {width}>
 		<path
@@ -36,12 +36,13 @@
 
 <style>
 	button {
-		display: flex;
-		align-items: center;
+		padding-right: var(--space-s);
 	}
 
 	svg {
-		height: 1.75lh;
+		--_icon-height: 1.5lh;
+
+		height: var(--_icon-height);
 		transition: transform var(--transition-duration);
 	}
 

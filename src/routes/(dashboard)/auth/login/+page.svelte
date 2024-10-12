@@ -1,15 +1,30 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import { fly, slide } from 'svelte/transition';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
 
+	let sending: boolean = false;
+
 	$: console.log({ form });
 </script>
 
 <div class="container wrapper">
-	<form action="?/login" class="flow" method="POST">
+	<form
+		action="?/login"
+		class="flow"
+		method="POST"
+		use:enhance={() => {
+			sending = true;
+			return ({ update }) => {
+				update({ invalidateAll: true }).finally(() => {
+					sending = false;
+				});
+			};
+		}}
+	>
 		<label class="flow" for="email"
 			>Email address
 			<input autocomplete="email" class="input" id="email" name="email" type="email" required />
@@ -33,7 +48,7 @@
 				</p>
 			</div>
 		{/if}
-		<button class="button" type="submit"> Log in </button>
+		<button class="button" type="submit"> {sending ? '...' : 'Log in'} </button>
 	</form>
 </div>
 

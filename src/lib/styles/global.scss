@@ -73,12 +73,13 @@ p {
 	--_outline-offset: var(--outline-offset, 0.4em);
 	--_outline-width: var(--outline-width, 3px);
 	--_outline-style: var(--outline-style, solid);
-	// --_transition-duration: var(--transition-duration, 125ms);
 
 	outline-offset: var(--_outline-offset);
 	outline: var(--_outline-width) var(--_outline-style) var(--color-primary);
+}
 
-	// transition: var(--_transition-duration) all ease-in-out;
+:where(a):is(:focus, :focus-visible) {
+	--_outline-offset: 2px;
 }
 
 :is(h1, h2, h3, h4) em {

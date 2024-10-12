@@ -50,10 +50,9 @@
 			</li>
 		</ul>
 	</nav>
-	<div class="menu-button__wrapper">
+	<div class="header__menu-button">
 		<MenuButton
-			class="button header__menu"
-			data-button-radius="hard"
+			data-button-radius="menu"
 			on:click={() => {
 				toggleDrawer();
 			}}
@@ -63,18 +62,7 @@
 </header>
 {#if open}
 	<DrawerMenu {open} on:clickAway={toggleDrawer} placement="right">
-		<div class="wrapper__drawer">
-			<div class="wrapper menu-button__wrapper">
-				<MenuButton
-					class="button drawer__menu"
-					data-button-radius="hard"
-					on:click={() => {
-						toggleDrawer();
-					}}
-					{open}
-				/>
-			</div>
-
+		<div class="wrapper__drawer cluster">
 			<nav
 				aria-label="Mobile main navigation"
 				class="wrapper wrapper__drawer-panel"

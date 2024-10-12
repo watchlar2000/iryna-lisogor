@@ -1,9 +1,13 @@
-.wrapper__drawer {
-	padding: var(--space-m) 0;
-	display: flex;
-	flex-wrap: nowrap;
-	flex-direction: column;
+.wrapper__drawer.cluster {
+	--_direction: column;
+	--_wrap: nowrap;
+
+	padding: 6rem 0 1.5rem;
 	height: 100%;
+
+	.drawer__menu-button {
+		align-self: flex-end;
+	}
 
 	.header__nav-socials {
 		margin-top: auto;
@@ -12,7 +16,7 @@
 
 .wrapper__drawer-panel {
 	width: 100%;
-	margin: 1.5em 0;
+	overflow-y: scroll;
 
 	ul {
 		text-align: center;
@@ -24,38 +28,12 @@
 	}
 }
 
-.menu-button__wrapper {
+.header__menu-button {
 	align-self: self-start;
+	z-index: 100;
 
 	@include respond-to('m') {
 		display: none;
-	}
-
-	> :global(.header__menu),
-	:global(.drawer__menu) {
-		display: flex;
-		--_color: inherit;
-		--_hover-bg: inherit;
-		--_hover-color: inherit;
-		--_bg: transparent;
-		--_focus-bg: transparent;
-		--_padding-inline: var(--space-xs);
-		--_padding-block: var(--space-xs);
-
-		// --_outline-width: 4px;
-		// --_outline-style: dotted;
-		--_outline-offset: 0;
-		--_border-width: 0;
-		--_gap: 0;
-		--_border-color: var(--color-primary);
-
-		font-weight: normal;
-		font-size: var(--size-step-3);
-
-		@include respond-to('xs') {
-			--_padding-inline: var(--space-s);
-			--_padding-block: var(--space-s);
-		}
 	}
 }
 
