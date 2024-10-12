@@ -105,13 +105,17 @@
 	}
 }
 
+.header__nav-socials {
+	align-self: stretch;
+}
+
 nav li {
 	a,
 	.dropdown__title {
 		text-decoration: none;
 		text-align: center;
 		display: inline-block;
-		padding: 0.5em 1em;
+		padding: 0.5em;
 	}
 
 	a:hover,
@@ -155,10 +159,12 @@ nav li {
 }
 
 .dropdown__menu > li {
-	max-width: 20ch;
+	max-width: 25ch;
+	display: flex;
+	flex-direction: column;
 
 	a {
-		width: max-content;
+		min-width: max-content;
 	}
 }
 

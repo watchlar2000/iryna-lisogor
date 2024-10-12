@@ -6,7 +6,7 @@
 
 <footer class="wrapper">
 	<div class="footer__socials-nav">
-		<SocialsNavigation list={socialLinksList} />
+		<SocialsNavigation list={socialLinksList} iconHeight="2rem" />
 	</div>
 	<p>
 		All artistic content Copyright &#169;<br />
@@ -22,9 +22,7 @@
 	}
 
 	.footer__socials-nav {
-		display: flex;
-		justify-content: center;
-		margin-bottom: var(--space-s);
+		margin-bottom: var(--space-m);
 
 		@include respond-to('m') {
 			display: none;

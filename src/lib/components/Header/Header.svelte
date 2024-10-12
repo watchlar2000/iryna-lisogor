@@ -9,7 +9,7 @@
 	import { transformWorkOptions } from '$lib/utils';
 
 	const workMenuItems = transformWorkOptions(works);
-	let open = false;
+	let open = true;
 
 	const toggleDrawer = () => {
 		open = !open;
@@ -110,7 +110,7 @@
 				</ul>
 			</nav>
 			<div class="header__nav-socials wrapper">
-				<SocialsNavigation list={socialLinksList} --svg-height="4rem" />
+				<SocialsNavigation list={socialLinksList} iconHeight="2rem" />
 			</div>
 		</div>
 	</DrawerMenu>

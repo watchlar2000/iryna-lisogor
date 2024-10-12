@@ -3,14 +3,15 @@
 	import type { SocialLink } from '$lib/types/socials';
 
 	export let list: SocialLink[];
+	export let iconHeight: string = 'var(--text-size-heading-4)';
 </script>
 
 <h2 class="visually-hidden">List of social media links including instagram, linkedin, and email</h2>
 <ul role="list" class="cluster">
 	{#each list as { href, name } (href)}
 		<li>
-			<a {href} target="_blank" class="button">
-				<Icon {name} class="icon" />
+			<a {href} target="_blank">
+				<Icon {name} height={iconHeight} />
 			</a>
 		</li>
 	{/each}
@@ -18,23 +19,20 @@
 
 <style lang="scss">
 	.cluster {
-		--space: 0.2rem;
-	}
-	a {
+		--_column-gap: var(--space-xs);
 		--outline-offset: 0;
-		--icon-width: var(--size-step-6);
 
-		display: block;
-		padding-inline: var(--space-s);
-		padding-block: 0;
+		height: 100%;
 
-		@include respond-to('m') {
-			padding-block: var(--space-s);
+		li {
+			height: 100%;
 		}
 
-		> :global(.icon) {
-			width: var(--size-step-5);
-			pointer-events: none;
+		a {
+			display: grid;
+			height: 100%;
+			padding-inline: var(--space-s);
+			padding-block: var(--space-s);
 		}
 	}
 </style>

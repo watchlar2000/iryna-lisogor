@@ -17,10 +17,6 @@ body {
 	overflow-x: hidden;
 }
 
-a {
-	color: currentColor;
-}
-
 body[data-scroll-locked] {
 	overflow: hidden !important;
 	overscroll-behavior: contain;
@@ -47,8 +43,14 @@ body[data-scroll-locked] {
 	}
 }
 
-img {
-	height: auto;
+a {
+	color: currentColor;
+}
+
+img,
+picture {
+	max-width: 100%;
+	display: block;
 }
 
 p {
@@ -67,13 +69,14 @@ p {
 	}
 }
 
-:where(input, button, a):is(:active, :focus, :focus-visible) {
-	--_outline-offset: var(--outline-offset, 0.125em);
-	--_outline-width: var(--outline-width, 2px);
-	--_transition-duration: var(--transition-duration, 125ms);
+:where(input, button, a):is(:focus, :focus-visible) {
+	--_outline-offset: var(--outline-offset, 0.4em);
+	--_outline-width: var(--outline-width, 3px);
+	--_outline-style: var(--outline-style, solid);
+	// --_transition-duration: var(--transition-duration, 125ms);
 
 	outline-offset: var(--_outline-offset);
-	outline: var(--_outline-width) solid var(--color-primary);
+	outline: var(--_outline-width) var(--_outline-style) var(--color-primary);
 
 	// transition: var(--_transition-duration) all ease-in-out;
 }
@@ -114,8 +117,10 @@ h4 {
 }
 
 svg {
+	--_icon-height: var(--icon-height, 1em);
+
 	display: inline-block;
-	height: var(--svg-height, 1.75rem);
+	height: var(--_icon-height);
 	width: auto;
 }
 

@@ -81,6 +81,7 @@
 		height: 100%;
 		width: 100%;
 		z-index: -1;
+		overflow-y: scroll;
 	}
 
 	.drawer.open {
@@ -102,7 +103,7 @@
 		height: 100%;
 		background: var(--color-global-bg);
 		z-index: 3;
-		overflow: auto;
+		overflow-y: scroll;
 	}
 
 	.panel.left {

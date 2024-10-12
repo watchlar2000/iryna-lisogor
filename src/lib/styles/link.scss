@@ -1,11 +1,13 @@
 a.link {
 	--_color: var(--link-color, currentColor);
-	--_weight: var(--link-weight, 700);
+	--_weight: var(--link-weight, normal);
 	--_color-accent: var(--color-primary-glare, hsl(220, 95%, 48%));
 
+	position: relative;
 	color: var(--_color);
 	font-weight: var(--_weight);
 	text-decoration: none;
+	font-weight: 500;
 
 	&:is(:hover, :focus) {
 		color: var(--_color-accent);

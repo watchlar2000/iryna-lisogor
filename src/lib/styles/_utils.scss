@@ -39,12 +39,20 @@
 }
 
 .cluster {
+	--_direction: var(--cluster-direction, row);
+	--_wrap: var(--cluster-wrap, wrap);
+	--_column-gap: var(--cluster-column-gap, var(--gutter, var(--space-s-m)));
+	--_row-gap: var(--cluster-row-gap, var(--gutter, var(--space-s-m)));
+	--_horizontal-alignment: var(--cluster-horizontal-alignment, flex-start);
+	--_vertical-alignment: var(--cluster-vertical-alignment, center);
+
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-items: center;
-	gap: var(--space, 0.5rem);
-	// margin: calc(var(--space) / 2 * -1);
+	flex-direction: var(--_direction);
+	flex-wrap: var(--_wrap);
+	column-gap: var(--_column-gap);
+	row-gap: var(--_row-gap);
+	justify-content: var(--_horizontal-alignment);
+	align-items: var(--_vertical-alignment);
 }
 
 // .cluster > * > * {

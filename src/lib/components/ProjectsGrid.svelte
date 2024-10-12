@@ -31,9 +31,13 @@
 	{/if}
 </div>
 
-<style>
+<style lang="scss">
 	.auto-grid {
 		--auto-grid-min-size: 20rem;
 		--auto-grid-gap: 1.75em;
+
+		a {
+			display: block;
+		}
 	}
 </style>
