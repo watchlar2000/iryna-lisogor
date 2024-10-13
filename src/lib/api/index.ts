@@ -1,11 +1,8 @@
 // import fsp from 'node:fs/promises';
 // import path from 'node:path';
-import type { AuthorAPI } from './author.ts';
-import { author } from './author.ts';
-import type { ProjectAPI } from './project.ts';
-import { project } from './project.ts';
-import type { WorkAPI } from './work.ts';
-import { work } from './work.ts';
+import { author, type AuthorAPI } from './author.ts';
+import { project, type ProjectAPI } from './project.ts';
+import { work, type WorkAPI } from './work.ts';
 
 // const apiPath = path.join(process.cwd(), './src/lib/api');
 
@@ -24,25 +21,25 @@ export const routing: API = {
 	work
 } as API;
 
-export let isRoutingReady: boolean = true;
+// export let isRoutingReady: boolean = true;
 
-const prepareRouting = async () => {
-	// const files = await fsp.readdir(apiPath);
-	// for (const file of files) {
-	// 	if (!file.endsWith('.ts') || file === 'index.ts') continue;
-	// 	const filePath = path.join(apiPath, file);
-	// 	const serviceName = path.basename(file, '.ts') as apiKey;
-	// 	const action = await import(/* @vite-ignore */ filePath);
-	// 	routing[serviceName] = action[serviceName];
-	// }
-};
+// const prepareRouting = async () => {
+// 	const files = await fsp.readdir(apiPath);
+// 	for (const file of files) {
+// 		if (!file.endsWith('.ts') || file === 'index.ts') continue;
+// 		const filePath = path.join(apiPath, file);
+// 		const serviceName = path.basename(file, '.ts') as apiKey;
+// 		const action = await import(/* @vite-ignore */ filePath);
+// 		routing[serviceName] = action[serviceName];
+// 	}
+// };
 
-export const start = async () => {
-	try {
-		await prepareRouting();
-		isRoutingReady = true;
-	} catch (error) {
-		isRoutingReady = false;
-		throw error;
-	}
-};
+// export const start = async () => {
+// 	try {
+// 		await prepareRouting();
+// 		isRoutingReady = true;
+// 	} catch (error) {
+// 		isRoutingReady = false;
+// 		throw error;
+// 	}
+// };

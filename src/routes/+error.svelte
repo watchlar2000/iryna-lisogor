@@ -4,6 +4,6 @@
 
 <div>
 	<h1>Error</h1>
-	<p>{JSON.stringify($page.error, null, 2)}</p>
+	<p>{$page.error}</p>
 	<a href="/">Go home</a>
 </div>
