@@ -18,10 +18,9 @@
 		method="POST"
 		use:enhance={() => {
 			sending = true;
-			return ({ update }) => {
-				update({ invalidateAll: true }).finally(() => {
-					sending = false;
-				});
+			return async ({ update }) => {
+				await update({ invalidateAll: true });
+				sending = false;
 			};
 		}}
 	>

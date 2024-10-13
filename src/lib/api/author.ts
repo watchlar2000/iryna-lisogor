@@ -1,6 +1,7 @@
 import { api } from '$lib/server/db';
 import { authors } from '$lib/server/schema';
 import type { Author } from '$lib/types/common';
+// import { error } from '@sveltejs/kit';
 // import type { Author, AuthorPayload } from '$lib/types/index.ts';
 // import { eq, sql } from 'drizzle-orm';
 
@@ -11,22 +12,24 @@ type AuthorReadParam = {
 };
 
 export interface AuthorAPI {
-	read(params?: AuthorReadParam): Promise<Author[] | Author>;
+	read(params?: AuthorReadParam): Promise<Author[]>;
 }
-
-// put(params: { payload: Partial<AuthorPayload>; id: number }): Promise<void>;
 
 export const author: AuthorAPI = {
 	async read(params) {
 		const { id } = params ?? {};
 		const read = authorApi.read;
+		let data: Author[];
 
 		if (id) {
-			const data = await read({ id });
-			return data[0] as Author;
+			data = (await read({ id })) as Author[];
+		} else {
+			data = (await read()) as Author[];
 		}
 
-		return (await read()) as Author[];
+		if (!data.length) throw new Error('No author data found');
+
+		return data;
 	}
 };
 

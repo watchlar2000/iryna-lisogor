@@ -1,3 +1,9 @@
-<div class="min-h-screen bg-slate-50">
-	<slot />
+<div class="">
+	<aside class="sidenav">Hello world</aside>
+	<main>
+		<slot />
+	</main>
 </div>
+
+<style lang="scss">
+</style>

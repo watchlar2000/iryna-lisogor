@@ -6,7 +6,7 @@ import { work, type WorkAPI } from './work.ts';
 
 // const apiPath = path.join(process.cwd(), './src/lib/api');
 
-export interface API {
+interface API {
 	project: ProjectAPI;
 	author: AuthorAPI;
 	work: WorkAPI;

@@ -82,7 +82,8 @@ const authGuard: Handle = async ({ event, resolve }) => {
 // 	return resolve(event);
 // };
 
-export const handleError: HandleServerError = async () => {
+export const handleError: HandleServerError = async ({ error }) => {
+	console.log({ error });
 	return {
 		message: 'Something went wrong'
 	};

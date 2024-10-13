@@ -5,9 +5,7 @@
 
 	export let data: PageData;
 
-	$: console.log(data.supabase);
-
-	$: author = data.author as Author;
+	$: author = data.author[0] as Author;
 </script>
 
 <svelte:head>
