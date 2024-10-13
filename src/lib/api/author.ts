@@ -1,6 +1,7 @@
 import { api } from '$lib/server/db';
 import { authors } from '$lib/server/schema';
 import type { Author } from '$lib/types/common';
+import { error } from '@sveltejs/kit';
 // import { error } from '@sveltejs/kit';
 // import type { Author, AuthorPayload } from '$lib/types/index.ts';
 // import { eq, sql } from 'drizzle-orm';
@@ -27,7 +28,7 @@ export const author: AuthorAPI = {
 			data = (await read()) as Author[];
 		}
 
-		if (!data.length) throw new Error('No author data found');
+		if (!data.length) throw error(404, 'No author data found');
 
 		return data;
 	}

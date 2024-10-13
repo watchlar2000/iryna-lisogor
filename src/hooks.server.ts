@@ -1,7 +1,13 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+import * as Sentry from '@sentry/sveltekit';
 import { createServerClient } from '@supabase/ssr';
 import { type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+
+Sentry.init({
+	dsn: 'https://81e1f62c5f279802528d829f0eb0e606@o4508116723040256.ingest.de.sentry.io/4508116726120528',
+	tracesSampleRate: 1.0
+});
 
 const ROUTE = {
 	home: '/',
@@ -82,8 +88,15 @@ const authGuard: Handle = async ({ event, resolve }) => {
 // 	return resolve(event);
 // };
 
-export const handleError: HandleServerError = async ({ error }) => {
+export const handleError: HandleServerError = async ({ error, event, status }) => {
 	console.log({ error });
+
+	const errorId = crypto.randomUUID();
+
+	Sentry.captureException(error, {
+		extra: { event, errorId, status }
+	});
+
 	return {
 		message: 'Something went wrong'
 	};
