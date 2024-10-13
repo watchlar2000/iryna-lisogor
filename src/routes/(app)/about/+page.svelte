@@ -5,6 +5,8 @@
 
 	export let data: PageData;
 
+	$: console.log(data.supabase);
+
 	$: author = data.author as Author;
 </script>
 
@@ -38,9 +40,5 @@
 	.article__photo {
 		margin-inline: auto;
 		width: 50%;
-	}
-
-	.wrapper[data-wrapper-type='inner'] {
-		// background-color: red;
 	}
 </style>

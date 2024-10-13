@@ -1,9 +1,7 @@
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import { createServerClient } from '@supabase/ssr';
 import { type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { isRoutingReady, start } from '$lib/api';
 
 const ROUTE = {
 	home: '/',
@@ -84,10 +82,9 @@ const authGuard: Handle = async ({ event, resolve }) => {
 // 	return resolve(event);
 // };
 
-export const handleError: HandleServerError = async ({ error, event, status, message }) => {
-	const d = { error, event, status, message };
+export const handleError: HandleServerError = async () => {
 	return {
-		message: JSON.stringify(d, null, 4)
+		message: 'Something went wrong'
 	};
 };
 
