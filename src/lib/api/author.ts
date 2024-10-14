@@ -16,7 +16,7 @@ export interface AuthorAPI {
 	read(params?: AuthorReadParam): Promise<Author[]>;
 }
 
-export const author: AuthorAPI = {
+export default {
 	async read(params) {
 		const { id } = params ?? {};
 		const read = authorApi.read;
@@ -32,7 +32,7 @@ export const author: AuthorAPI = {
 
 		return data;
 	}
-};
+} as AuthorAPI;
 
 // export default (db: DatabaseType): AuthorAPI => ({
 // 	get({ id }) {

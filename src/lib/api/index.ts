@@ -29,8 +29,8 @@ const prepareRouting = async () => {
 		if (!file.endsWith('.ts') || file === 'index.ts') continue;
 		const filePath = path.join(apiPath, file);
 		const serviceName = path.basename(file, '.ts') as apiKey;
-		const action = await import(/* @vite-ignore */ filePath);
-		routing[serviceName] = action[serviceName];
+		const action = (await import(/* @vite-ignore */ filePath)).default;
+		routing[serviceName] = action;
 	}
 };
 

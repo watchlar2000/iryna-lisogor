@@ -8,8 +8,8 @@ export interface WorkAPI {
 	read(): Promise<Work[]>;
 }
 
-export const work: WorkAPI = {
+export default {
 	async read() {
 		return (await workApi.read()) as Work[];
 	}
-};
+} as WorkAPI;
