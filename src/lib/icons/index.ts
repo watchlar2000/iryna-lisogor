@@ -1,5 +1,6 @@
 import AppMenu from './app-menu.svg?raw';
 import Email from './email.svg?raw';
+import Home from './home.svg?raw';
 import Instagram from './instagram.svg?raw';
 import Linkedin from './linkedin.svg?raw';
 
@@ -19,5 +20,9 @@ export const icons = {
 	appMenu: {
 		alt: 'burger menu icon',
 		src: AppMenu
+	},
+	home: {
+		alt: 'home icon',
+		src: Home
 	}
 } as const;

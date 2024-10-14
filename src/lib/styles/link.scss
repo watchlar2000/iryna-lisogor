@@ -1,16 +1,16 @@
 a.link {
 	--_color: var(--link-color, currentColor);
-	--_weight: var(--link-weight, normal);
-	--_color-accent: var(--color-primary-glare, hsl(220, 95%, 48%));
+	--_weight: var(--link-weight, 500);
+	--_color-accent: var(--color-primary, hsl(220, 95%, 48%));
+
+	--_outline-offset: 0.15em;
 
 	position: relative;
 	color: var(--_color);
 	font-weight: var(--_weight);
-	text-decoration: none;
-	font-weight: 500;
+	text-decoration-color: var(--_color-accent);
 
-	&:is(:hover, :focus) {
+	&:is(:hover) {
 		color: var(--_color-accent);
-		text-decoration: underline;
 	}
 }

@@ -23,7 +23,7 @@
 			<li class="dropdown">
 				<button
 					type="button"
-					class="dropdown__title"
+					class="dropdown__title link"
 					aria-expanded="false"
 					aria-controls="id-works-menu"
 				>
@@ -73,7 +73,7 @@
 					<li class="dropdown">
 						<button
 							type="button"
-							class="dropdown__title"
+							class="dropdown__title link"
 							aria-expanded="false"
 							aria-controls="id-works-menu-mobile"
 						>

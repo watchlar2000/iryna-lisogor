@@ -17,7 +17,7 @@
 </script>
 
 <div class="flex w-full min-h-screen bg-slate-50">
-	<aside class="flex flex-col justify-between items-start w-[250px] p-6 bg-slate-300 fixed h-full">
+	<!-- <aside class="flex flex-col justify-between items-start w-[250px] p-6 bg-slate-300 fixed h-full">
 		<div>
 			<h1 class="text-3xl">Admin panel</h1>
 			<ul class="flex flex-col gap-4 mt-6">
@@ -41,7 +41,7 @@
 		>
 			Sign out
 		</button>
-	</aside>
+	</aside> -->
 	<main class="w-full min-h-full ml-[250px]">
 		<div class="p-8">
 			<slot />

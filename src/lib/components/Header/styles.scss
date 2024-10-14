@@ -50,7 +50,7 @@
 }
 
 .header__logo {
-	--outline-offset: 0;
+	--_outline-offset: 0;
 
 	font-size: var(--text-logo);
 	line-height: 1.1;
@@ -94,17 +94,19 @@ nav li {
 		text-align: center;
 		display: inline-block;
 		padding: 0.5em;
+		font-weight: 500;
 	}
 
 	a:hover,
 	.dropdown__title:hover {
 		text-decoration: underline;
+		text-decoration-thickness: 0.1rem;
 	}
 
 	a:focus,
 	.dropdown__title:focus {
-		text-decoration: underline;
-		outline: none;
+		--_outline-offset: -0.4em;
+
 		background-color: transparent;
 	}
 }
@@ -132,6 +134,7 @@ nav li {
 	transform-origin: top;
 	opacity: 1;
 	transition: 0.15s all ease-in;
+	top: 2.7em;
 	left: 50%;
 	transform: rotateX(-90deg) translate(-50%);
 }
@@ -156,7 +159,7 @@ nav li {
 		content: '';
 		border: 0.6em solid transparent;
 		border-top-color: var(--color-light-gray);
-		bottom: -0.6em;
+		bottom: -0.8em;
 		left: 50%;
 		transform: translateX(-50%) scaleY(1);
 		transform-origin: center 0.3em;

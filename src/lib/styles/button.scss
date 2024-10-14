@@ -29,6 +29,7 @@ button {
 	appearance: none;
 }
 
+a.button,
 button.button {
 	/* Configuration */
 	--_padding-inline: var(--button-padding-inline, 1.25em);
@@ -98,13 +99,13 @@ button.button {
 	// 	transform: scale(0.95);
 	// }
 
-	/* Variants */
+	/* Exceptions */
 	&[data-button-radius='hard'] {
-		--button-radius: 0;
+		--_radius: 0;
 	}
 
 	&[data-button-variant='menu'] {
-		--button-radius: 0;
+		--_radius: 0;
 		--_padding-inline: 0;
 		--_padding-block: 0;
 		--_gap: 0;
@@ -115,8 +116,24 @@ button.button {
 		--_hover-color: inherit;
 		--_border-width: 0;
 		--_border-style: var(--button-border-style, solid);
-		--_border-color: var(--color-primary);
+		--button-outline-width: 2px;
 		--_font-weight: normal;
 		--_font-size: var(--text-size-heading-3);
+	}
+
+	&[data-button-variant='dashboard-link'] {
+		--_radius: 0;
+		--_padding-inline: var(--space-s);
+		--_padding-block: var(--space-xs);
+		--_gap: 0;
+		--_bg: var(--color-light-gray);
+		--_color: var(--color-dark);
+		--_hover-bg: var(--color-primary);
+		--_focus-bg: var(--_hover-bg);
+		--_hover-color: var(--color-dark);
+		--_border-width: 0;
+		--_border-style: var(--button-border-style, solid);
+		--_font-weight: 500;
+		--_font-size: var(--text-size-meta);
 	}
 }

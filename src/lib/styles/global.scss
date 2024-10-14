@@ -47,6 +47,13 @@ a {
 	color: currentColor;
 }
 
+a,
+button.link {
+	text-decoration-thickness: 0.1rem;
+	text-underline-offset: 0.4ex;
+	text-decoration-skip-ink: auto;
+}
+
 img,
 picture {
 	max-width: 100%;
@@ -71,15 +78,16 @@ p {
 
 :where(input, button, a):is(:focus, :focus-visible) {
 	--_outline-offset: var(--outline-offset, 0.4em);
-	--_outline-width: var(--outline-width, 3px);
+	--_outline-width: var(--outline-width, 2px);
 	--_outline-style: var(--outline-style, solid);
+	--_outline-color: var(--color-dark, #242424);
 
 	outline-offset: var(--_outline-offset);
-	outline: var(--_outline-width) var(--_outline-style) var(--color-primary);
+	outline: var(--_outline-width) var(--_outline-style) var(--_outline-color);
 }
 
 :where(a):is(:focus, :focus-visible) {
-	--_outline-offset: 2px;
+	// --_outline-offset: 0.4em;
 }
 
 :is(h1, h2, h3, h4) em {
