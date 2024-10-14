@@ -15,7 +15,7 @@ interface API {
 
 type apiKey = keyof API;
 
-export const routing: API = {
+export const routing: Partial<API> = {
 	// author,
 	// project,
 	// work
