@@ -15,7 +15,7 @@ const withImages = <T extends PgSelect>(qb: T) => {
 	return qb.leftJoin(images, eq(projects.id, images.projectId));
 };
 
-export default {
+export const project: ProjectAPI = {
 	async read(params) {
 		const { id, work, slug } = params ?? {};
 		const read = projectApi.read;
@@ -35,4 +35,4 @@ export default {
 		const rows = (await withImages(query)) as Row[];
 		return mapRowsToProjectsWithImages(rows);
 	}
-} as ProjectAPI;
+};

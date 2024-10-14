@@ -1,12 +1,12 @@
+import { PRIVATE_SENTRY_DSN } from '$env/static/private';
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { isRoutingReady, start } from '$lib/api';
 import * as Sentry from '@sentry/sveltekit';
 import { createServerClient } from '@supabase/ssr';
-import { error, type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
+import { type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 Sentry.init({
-	dsn: 'https://81e1f62c5f279802528d829f0eb0e606@o4508116723040256.ingest.de.sentry.io/4508116726120528',
+	dsn: PRIVATE_SENTRY_DSN,
 	tracesSampleRate: 1.0
 });
 
@@ -78,15 +78,15 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-const checkIfRouteApiReady: Handle = async ({ event, resolve }) => {
-	try {
-		if (!isRoutingReady) await start();
-		return resolve(event);
-	} catch (err) {
-		console.error(err);
-		throw error(503, 'Route API is not built');
-	}
-};
+// const checkIfRouteApiReady: Handle = async ({ event, resolve }) => {
+// 	try {
+// 		if (!isRoutingReady) await start();
+// 		return resolve(event);
+// 	} catch (err) {
+// 		console.error(err);
+// 		throw error(503, 'Route API is not built');
+// 	}
+// };
 
 export const handleError: HandleServerError = async ({ error, event, status }) => {
 	console.log({ error });
@@ -102,4 +102,4 @@ export const handleError: HandleServerError = async ({ error, event, status }) =
 	};
 };
 
-export const handle: Handle = sequence(checkIfRouteApiReady, supabase, authGuard);
+export const handle: Handle = sequence(supabase, authGuard);
