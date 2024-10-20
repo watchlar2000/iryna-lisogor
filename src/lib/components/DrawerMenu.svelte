@@ -2,7 +2,7 @@
 	import { toggleScrollLock } from '$lib/helpers/togglecrollLock';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { quintOut } from 'svelte/easing';
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 
 	// const MOBILE_MENU_CLOSE_WIDTH = 900;
 
@@ -61,7 +61,7 @@
 
 <aside class="drawer" class:open {style}>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="overlay" on:click={handleClickAway} />
+	<div class="overlay" on:click={handleClickAway} transition:fade={transitionConfig} />
 
 	<div
 		class="panel {placement}"
