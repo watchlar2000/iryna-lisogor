@@ -1,32 +1,31 @@
+import { HTTP_STATUS } from '$lib/constants/HttpStatusCode';
+import { BaseError } from '$lib/errors/BaseError';
 import { api } from '$lib/server/db';
 import { authors } from '$lib/server/schema';
 import type { Author } from '$lib/types/common';
-import { error } from '@sveltejs/kit';
 
 const authorApi = api(authors);
 
-type AuthorReadParam = {
+type ReadParam = {
 	id: number;
 };
 
 export interface AuthorAPI {
-	read(params?: AuthorReadParam): Promise<Author[]>;
+	read(params?: ReadParam): Promise<Author[]>;
 }
 
 export const author: AuthorAPI = {
 	async read(params) {
 		const { id } = params ?? {};
-		const read = authorApi.read;
-		let data: Author[];
+		const idParam = id ? { id } : {};
+		const data = await authorApi.read(idParam);
 
-		if (id) {
-			data = (await read({ id })) as Author[];
-		} else {
-			data = (await read()) as Author[];
-		}
+		if (!data.length)
+			throw new BaseError({
+				status: HTTP_STATUS.NOT_FOUND,
+				message: 'No author data found'
+			});
 
-		if (!data.length) throw error(404, 'No author data found');
-
-		return data;
+		return data as Author[];
 	}
 };

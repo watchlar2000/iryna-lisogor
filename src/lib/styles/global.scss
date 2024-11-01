@@ -76,18 +76,14 @@ p {
 	}
 }
 
-:where(input, button, a):is(:focus, :focus-visible) {
+:where(button, a, input):is(:focus, :focus-visible) {
 	--_outline-offset: var(--outline-offset, 0.4em);
 	--_outline-width: var(--outline-width, 2px);
 	--_outline-style: var(--outline-style, solid);
-	--_outline-color: var(--color-dark, #242424);
+	--_outline-color: var(--outline-color, #242424);
 
 	outline-offset: var(--_outline-offset);
 	outline: var(--_outline-width) var(--_outline-style) var(--_outline-color);
-}
-
-:where(a):is(:focus, :focus-visible) {
-	// --_outline-offset: 0.4em;
 }
 
 :is(h1, h2, h3, h4) em {

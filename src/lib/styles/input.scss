@@ -11,6 +11,10 @@
 	--_transition-property: var(--input-transition-property, all);
 	--_transition-timing-func: var(--input-transition-timing-func, none);
 
+	--outline-color: orange;
+	--outline-width: 5px;
+	--outline-offset: 0px;
+
 	appearance: none;
 	color: var(--_color);
 	font-size: inherit;

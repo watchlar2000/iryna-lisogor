@@ -18,9 +18,9 @@
 		isDirty = about !== aboutHTML;
 	}
 
-	let isDirty: boolean = false;
+	let isDirty = false;
 	let inputFile: HTMLElement;
-	let updatedPhotoUrl: string | null = null;
+	let updatedPhotoUrl = '';
 
 	const initImageUpload = () => {
 		inputFile.click();
@@ -97,55 +97,59 @@ use:enhance={() => {
 }}
 -->
 <div class="flow">
-	<h1 class="">About page</h1>
+	<h2>About page</h2>
 	<!-- {#if formLoading}
 	<p>Server is running...</p>
 {/if} -->
 	<form
-		class=""
 		enctype="multipart/form-data"
 		method="POST"
 		action="?/about"
 		on:change={handleChange}
 		on:submit|preventDefault={handleSubmit}
+		class="flow"
 	>
-		<div>
-			<h2 class="text-lg font-semibold">Profile photo:</h2>
-			<div class="mt-2 max-w-[400px]">
+		<section class="flow">
+			<h4>Profile photo:</h4>
+			<div class="wrapper__image">
 				<Image
 					alt="Iryna Lisogor profile photo"
-					aspectRatio={1.5}
+					aspectRatio={1}
 					layout="constrained"
-					src={updatedPhotoUrl ?? photoUrl}
-				/>
-				<input
-					accept="image/*"
-					bind:this={inputFile}
-					class="hidden"
-					id="photoFile"
-					name="photoFile"
-					type="file"
+					src={updatedPhotoUrl ? updatedPhotoUrl : photoUrl}
 				/>
 			</div>
-			<button
-				class="flex gap-2 items-center hover:underline focus:underline p-2 bg-orange-300 text-xs mt-4 rounded-md"
-				on:click={initImageUpload}
-				type="button"
-			>
-				Upload new photo
-			</button>
-		</div>
-		<hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700" />
-		<div>
-			<h2 class="text-lg font-semibold">About:</h2>
-			<TipTap bind:content={about} class="mt-5" />
-		</div>
-		<div class="mt-4 flex gap-4">
-			<button
-				type="submit"
-				class="py-2 px-4 bg-blue-200 disabled:opacity-30 disabled:cursor-not-allowed"
-				disabled={!isDirty}>Save</button
-			>
-		</div>
+			<div class="hidden">
+				<input accept="image/*" bind:this={inputFile} id="photoFile" name="photoFile" type="file" />
+			</div>
+			<button on:click={initImageUpload} type="button" class="button"> Upload new photo </button>
+		</section>
+		<section class="flow">
+			<h4>About:</h4>
+			<TipTap bind:content={about} />
+		</section>
+		<button type="submit" class="button" disabled={!isDirty}>Save</button>
 	</form>
 </div>
+
+<style lang="scss">
+	.wrapper__image {
+		// display: grid;
+		// place-content: center;
+		// margin-inline: auto;
+		width: 100%;
+		max-width: 20ch;
+
+		button {
+			margin-inline: auto;
+		}
+	}
+
+	form {
+		--_flow-space: 1.5em;
+
+		& > * {
+			--_flow-space: 2.5em;
+		}
+	}
+</style>

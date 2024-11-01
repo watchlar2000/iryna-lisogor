@@ -1,11 +1,9 @@
 <script lang="ts">
-	import type { Author } from '$lib/types/common';
 	import { Image } from '@unpic/svelte';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
+	export let data;
 
-	$: author = data.author[0] as Author;
+	$: author = data.author[0];
 </script>
 
 <svelte:head>

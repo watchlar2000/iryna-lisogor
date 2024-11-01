@@ -4,7 +4,9 @@ import type { Session, SupabaseClient, User } from '@supabase/supabase-js';
 // for information about these interfaces
 declare global {
 	namespace App {
-		// interface Error {}
+		interface Error {
+			message: string;
+		}
 		interface Locals {
 			supabase: SupabaseClient;
 			safeGetSession: () => Promise<{

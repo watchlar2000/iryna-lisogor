@@ -1,7 +1,10 @@
+import { HTTP_STATUS } from '$lib/constants/HttpStatusCode';
+import { BaseError } from '$lib/errors/BaseError';
 import { mapRowsToProjectsWithImages } from '$lib/helpers/api';
 import { api } from '$lib/server/db';
 import { images, projects } from '$lib/server/schema';
-import type { ProjectReadParam, ProjectWithImages, Row } from '$lib/types/projects';
+import type { ProjectReadParam, ProjectWithImages } from '$lib/types/projects';
+import { error } from '@sveltejs/kit';
 import { eq, SQL } from 'drizzle-orm';
 import type { PgSelect } from 'drizzle-orm/pg-core';
 
@@ -18,21 +21,21 @@ const withImages = <T extends PgSelect>(qb: T) => {
 export const project: ProjectAPI = {
 	async read(params) {
 		const { id, work, slug } = params ?? {};
-		const read = projectApi.read;
-
-		if (id) {
-			const query = read({ id }).$dynamic();
-			const rows = (await withImages(query)) as Row[];
-			return mapRowsToProjectsWithImages(rows);
-		}
-
+		const idParam = id ? { id } : {};
 		const where: SQL[] = [];
 
 		if (work) where.push(eq(projects.work, work));
 		if (slug) where.push(eq(projects.slug, slug));
 
-		const query = read({ where }).$dynamic();
-		const rows = (await withImages(query)) as Row[];
+		const query = projectApi.read({ where, ...idParam }).$dynamic();
+		const rows = await withImages(query);
+
+		if (!rows.length)
+			throw new BaseError({
+				status: HTTP_STATUS.NOT_FOUND,
+				message: 'No project data found'
+			});
+
 		return mapRowsToProjectsWithImages(rows);
 	}
 };

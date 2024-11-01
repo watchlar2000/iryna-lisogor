@@ -6,7 +6,9 @@
 }
 
 .flow > * + * {
-	margin-block-start: var(--flow-space, 1em);
+	--_flow-space: var(--flow-space, 1em);
+
+	margin-block-start: var(--_flow-space);
 }
 
 .wrapper {
@@ -32,6 +34,10 @@
 	position: absolute;
 	width: 1px;
 	white-space: nowrap;
+}
+
+.hidden {
+	display: none;
 }
 
 .radius {

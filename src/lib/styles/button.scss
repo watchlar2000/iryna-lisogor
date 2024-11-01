@@ -134,6 +134,22 @@ button.button {
 		--_border-width: 0;
 		--_border-style: var(--button-border-style, solid);
 		--_font-weight: 500;
-		--_font-size: var(--text-size-meta);
+		--_font-size: var(--size-step--3);
+	}
+
+	&[data-button-variant='control'] {
+		--_radius: 0;
+		--_padding-inline: var(--space-xs);
+		--_padding-block: var(--space-xs);
+		--_gap: 0;
+		--_bg: var(--color-light);
+		--_color: var(--color-dark);
+		--_hover-bg: var(--color-primary);
+		--_focus-bg: var(--_hover-bg);
+		--_hover-color: var(--color-dark);
+		--_border-width: 0;
+		--_border-style: var(--button-border-style, solid);
+		--_font-weight: 500;
+		--_font-size: var(--size-step--3);
 	}
 }

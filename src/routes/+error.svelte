@@ -1,11 +1,13 @@
 <script>
 	import { page } from '$app/stores';
+
+	$: ({ status, error } = $page);
 </script>
 
 <div class="wrapper">
 	<div class="wrapper__content flow">
-		<h2>{$page.status}</h2>
-		<p>{$page.error?.message}</p>
+		<h2>{status}</h2>
+		<p>{error?.message}</p>
 		<a href="/" class="link">Click to go home</a>
 	</div>
 </div>

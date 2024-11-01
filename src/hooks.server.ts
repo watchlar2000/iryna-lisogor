@@ -1,23 +1,21 @@
-import { PRIVATE_SENTRY_DSN } from '$env/static/private';
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import * as Sentry from '@sentry/sveltekit';
+import { HTTP_STATUS } from '$lib/constants/HttpStatusCode';
+import { captureException } from '$lib/server/sentry';
 import { createServerClient } from '@supabase/ssr';
 import { type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-Sentry.init({
-	dsn: PRIVATE_SENTRY_DSN,
-	tracesSampleRate: 1.0
-});
-
 const ROUTE = {
 	home: '/',
 	auth: {
-		base: '/auth',
+		root: '/auth',
 		login: '/auth/login',
-		logout: '/auth/login'
+		logout: '/auth/logout'
 	},
-	dashboard: '/dashboard'
+	dashboard: {
+		root: '/dashboard',
+		projects: '/dashboard/projects'
+	}
 };
 
 const supabase: Handle = async ({ event, resolve }) => {
@@ -65,40 +63,25 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	const urlPathName = event.url.pathname;
 
 	if (
-		(!event.locals.session && urlPathName.startsWith(ROUTE.dashboard)) ||
-		urlPathName === ROUTE.auth.base
+		(!event.locals.session && urlPathName.startsWith(ROUTE.dashboard.root)) ||
+		urlPathName === ROUTE.auth.root
 	) {
 		redirect(303, ROUTE.auth.login);
 	}
 
-	if (event.locals.session && urlPathName.startsWith(ROUTE.auth.base)) {
-		redirect(303, ROUTE.dashboard);
+	if (event.locals.session && urlPathName.startsWith(ROUTE.auth.root)) {
+		redirect(303, ROUTE.dashboard.projects);
 	}
 
 	return resolve(event);
 };
 
-// const checkIfRouteApiReady: Handle = async ({ event, resolve }) => {
-// 	try {
-// 		if (!isRoutingReady) await start();
-// 		return resolve(event);
-// 	} catch (err) {
-// 		console.error(err);
-// 		throw error(503, 'Route API is not built');
-// 	}
-// };
-
 export const handleError: HandleServerError = async ({ error, event, status }) => {
-	console.log({ error });
-
-	const errorId = crypto.randomUUID();
-
-	Sentry.captureException(error, {
-		extra: { event, errorId, status }
-	});
+	console.error({ error, status });
+	captureException({ error, event, status });
 
 	return {
-		message: 'Something went wrong'
+		message: status === HTTP_STATUS.NOT_FOUND ? 'Page not found' : 'Something went wrong'
 	};
 };
 

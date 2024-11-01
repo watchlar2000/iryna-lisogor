@@ -9,9 +9,10 @@ export type DatabaseType = PostgresJsDatabase<typeof schema>;
 const sql = postgres(DATABASE_URL, { prepare: false });
 export const db = drizzle(sql, { schema });
 
+type SQLCondition = SQL | ReturnType<typeof eq>;
 type ReadParam = {
 	id: number;
-	where: SQL[];
+	where: SQLCondition[];
 };
 
 type TableWithId = {
@@ -20,7 +21,7 @@ type TableWithId = {
 
 export const api = (table: Table & TableWithId) => ({
 	read({ id, where }: Partial<ReadParam> = {}) {
-		const filters = [];
+		const filters: SQLCondition[] = [];
 
 		if (id) filters.push(eq(table.id, id));
 
