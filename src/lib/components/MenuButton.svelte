@@ -17,8 +17,7 @@
 	on:click={onClick}
 	aria-expanded={open}
 	aria-label={ariaLabel}
-	class={`${$$restProps.class || ''} button`}
-	data-button-variant="menu"
+	class={`button ${$$restProps.class || ''}`}
 >
 	<svg class:open viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" {width}>
 		<path
@@ -36,14 +35,21 @@
 
 <style>
 	button {
-		padding-right: var(--space-s);
+		--button-border-width: 0px;
+		--button-bg: transparent;
+		--button-hover-bg: var(--color-surface-900);
+		--button-hover-color: currentColor;
+		--button-border-radius: 0px;
+
+		/* color: red; */
+		/* padding-right: var(--space-s); */
 	}
 
 	svg {
-		--_icon-height: 1.5lh;
+		--_icon-height: 3.5ch;
 
-		height: var(--_icon-height);
-		transition: transform var(--transition-duration);
+		/* height: var(--_icon-height); */
+		/* transition: transform var(--transition-duration); */
 	}
 
 	.top {

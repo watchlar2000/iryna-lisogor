@@ -3,7 +3,7 @@
 	--color-base: hsl(0, 0%, 92%);
 	--color-dark: hsl(0, 0%, 14%);
 	--color-dark-transparent: hsla(0, 0%, 14%, 0.8);
-	--color-light: hsl(0, 0%, 85%);
+	--color-light: hsl(0, 0%, 80%);
 	--color-light-gray: hsl(0, 0%, 60%);
 	--color-primary: hsl(39, 100%, 55%);
 	--color-primary-glare: hsl(39, 100%, 40%);
@@ -11,12 +11,30 @@
 	--color-success: hsl(149, 100%, 25%);
 	--color-link: hsl(220, 90%, 40%);
 
-	--color-global-bg: var(--color-base);
-	--color-global-text: var(--color-dark);
+	// Updated color names
+	/* Light mode */
+	--color-surface-900: hsl(0, 0%, 92%);
+	--color-surface-800: hsl(0, 0%, 80%);
+	--color-surface-600: hsl(0, 0%, 60%);
+	--color-dark-100: hsl(0, 0%, 14%);
+	--color-dark-300: hsl(0, 0%, 30%);
+	--color-dark-400: hsl(0, 0%, 40%);
+	--color-accent-500: hsl(39, 100%, 55%);
+	--color-accent-400: hsl(39, 100%, 40%);
+	--color-success-200: hsl(149, 100%, 25%);
+	--color-warning-300: hsl(353, 100%, 35%);
+	--color-warning-400: hsl(353, 100%, 40%);
+	--color-warning-900: hsl(353, 100%, 90%);
+	--color-link-400: hsl(214, 82%, 43%);
+	--color-link-500: hsl(220, 90%, 55%);
+	--color-link-800: hsl(220, 90%, 85%);
+
+	--color-global-bg: var(--color-surface-900);
+	--color-global-text: var(--color-dark-100);
 
 	--gutter-wrapper-inner: 1rem;
 	--radius: 0.25em;
-	--text-max-width: 50ch;
+	--text-max-width: 55ch;
 	--transition-duration: 125ms;
 
 	/* Font */
@@ -45,6 +63,8 @@
 	--text-size-heading-2: var(--size-step-4);
 	--text-size-heading-3: var(--size-step-3);
 	--text-size-heading-4: var(--size-step-2);
+	--text-size-heading-5: var(--size-step-1);
+	--text-size-heading-6: var(--size-step--2);
 	--text-size-prose: var(--text-size-base);
 	--text-logo: var(--size-step-6);
 

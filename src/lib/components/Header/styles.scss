@@ -28,60 +28,60 @@
 	}
 }
 
-.header__menu-button {
-	align-self: self-start;
-	z-index: 100;
+// .header__menu-button {
+// 	align-self: self-start;
+// 	z-index: 100;
 
-	@include respond-to('m') {
-		display: none;
-	}
-}
+// 	@include respond-to('m') {
+// 		display: none;
+// 	}
+// }
 
-.header {
-	margin-top: var(--space-m);
-	padding-inline: var(--gutter-wrapper-inner);
+// .header {
+// 	margin-top: var(--space-m);
+// 	padding-inline: var(--gutter-wrapper-inner);
 
-	display: flex;
-	gap: 1em 0.5em;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	align-items: center;
-}
+// 	display: flex;
+// 	gap: 1em 0.5em;
+// 	flex-wrap: wrap;
+// 	align-items: center;
+// 	justify-content: space-between;
+// 	align-items: center;
+// }
 
-.header__logo {
-	--_outline-offset: 0;
+// .header__logo {
+// 	--_outline-offset: 0;
 
-	font-size: var(--text-logo);
-	line-height: 1.1;
-	font-style: normal;
-	text-decoration: none;
+// 	font-size: var(--text-logo);
+// 	line-height: 1.1;
+// 	font-style: normal;
+// 	text-decoration: none;
 
-	width: min-content;
-	padding: 0.1em 0.25em;
-	text-transform: uppercase;
-	font-weight: normal;
-}
+// 	width: min-content;
+// 	padding: 0.1em 0.25em;
+// 	text-transform: uppercase;
+// 	font-weight: normal;
+// }
 
-.header__nav {
-	display: none;
+// .header__nav {
+// 	display: none;
 
-	@include respond-to('m') {
-		display: block;
-	}
+// 	@include respond-to('m') {
+// 		display: block;
+// 	}
 
-	ul {
-		display: grid;
-		align-items: center;
-		font-size: var(--size-step-2);
-		font-weight: normal;
-	}
+// 	ul {
+// 		display: grid;
+// 		align-items: center;
+// 		font-size: var(--size-step-2);
+// 		font-weight: normal;
+// 	}
 
-	> ul {
-		grid-auto-flow: column;
-		gap: 0.5em;
-	}
-}
+// 	> ul {
+// 		grid-auto-flow: column;
+// 		gap: 0.5em;
+// 	}
+// }
 
 .header__nav-socials {
 	align-self: stretch;
@@ -130,7 +130,7 @@ nav li {
 
 .dropdown__menu {
 	position: absolute;
-	background: var(--color-light-gray);
+	background: #f8f8f8;
 	transform-origin: top;
 	opacity: 1;
 	transition: 0.15s all ease-in;

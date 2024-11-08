@@ -7,6 +7,9 @@
 	import { clickOnAnchor } from '$lib/directives/clickOnAnchor';
 	import { WorkOption as works } from '$lib/types/common';
 	import { transformWorkOptions } from '$lib/utils';
+	import MainLogo from './MainLogo.svelte';
+	import MainNav from './MainNav.svelte';
+	import TestNav from './TestNav.svelte';
 
 	const workMenuItems = transformWorkOptions(works);
 	let open = false;
@@ -17,42 +20,22 @@
 </script>
 
 <header class="header">
-	<a href="/" class="header__logo">Iryna Lisogor</a>
+	<MainLogo />
+	<div class="header__nav">
+		<MainNav ariaLabel="main navigation">
+			<SocialsNavigation list={socialLinksList} />
+		</MainNav>
+	</div>
+
+	<!-- <MainLogo />
 	<nav aria-label="Main navigation" class="header__nav">
-		<ul role="list">
-			<li class="dropdown">
-				<button
-					type="button"
-					class="dropdown__title link"
-					aria-expanded="false"
-					aria-controls="id-works-menu"
-				>
-					works
-				</button>
-				<ul class="dropdown__menu" id="id-works-menu" role="list">
-					{#each workMenuItems as { title, slug } (slug)}
-						<li>
-							<a href={`/${slug}`}>
-								{title}
-							</a>
-						</li>
-					{/each}
-				</ul>
-			</li>
-			<li aria-current={$page.url.pathname === '/playground' ? 'page' : undefined}>
-				<a href="/playground"> playground </a>
-			</li>
-			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a href="/about"> about </a>
-			</li>
-			<li class="header__nav-socials">
-				<SocialsNavigation list={socialLinksList} />
-			</li>
-		</ul>
-	</nav>
+		<MainNav />
+		<div class="header__nav-socials">
+			<SocialsNavigation list={socialLinksList} />
+		</div>
+	</nav> -->
 	<div class="header__menu-button">
 		<MenuButton
-			data-button-radius="menu"
 			on:click={() => {
 				toggleDrawer();
 			}}
@@ -60,16 +43,18 @@
 		/>
 	</div>
 </header>
+
 {#if open}
 	<DrawerMenu {open} on:clickAway={toggleDrawer} placement="right">
 		<div class="wrapper__drawer cluster">
-			<nav
+			<!-- <nav
 				aria-label="Mobile main navigation"
 				class="wrapper wrapper__drawer-panel"
 				use:clickOnAnchor
 				on:clickOnAnchor={toggleDrawer}
-			>
-				<ul role="list" class="flow">
+			> -->
+			<MainNav ariaLabel="Mobile main navigation" />
+			<!-- <ul role="list" class="flow">
 					<li class="dropdown">
 						<button
 							type="button"
@@ -95,8 +80,8 @@
 					<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
 						<a href="/about"> about </a>
 					</li>
-				</ul>
-			</nav>
+				</ul> -->
+			<!-- </nav> -->
 			<div class="header__nav-socials wrapper">
 				<SocialsNavigation list={socialLinksList} iconHeight="2rem" />
 			</div>
@@ -105,5 +90,44 @@
 {/if}
 
 <style lang="scss">
-	@import './styles.scss';
+	.header {
+		margin-top: var(--space-m);
+		padding-inline: var(--gutter-wrapper-inner);
+
+		display: flex;
+		gap: 1em 0.5em;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.header__menu-button {
+		align-self: self-start;
+		z-index: 100;
+
+		@include respond-to('m') {
+			display: none;
+		}
+	}
+
+	.header__nav {
+		display: none;
+
+		@include respond-to('m') {
+			display: flex;
+		}
+
+		ul {
+			display: grid;
+			align-items: center;
+			font-size: var(--size-step-2);
+			font-weight: normal;
+		}
+
+		> ul {
+			grid-auto-flow: column;
+			gap: 0.5em;
+		}
+	}
 </style>

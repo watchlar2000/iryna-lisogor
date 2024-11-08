@@ -16,13 +16,14 @@
 
 <style lang="scss">
 	.wrapper {
-		font-size: var(--size-step--3);
+		font-size: var(--size-step--2);
 		margin: var(--space-l-3xl) auto var(--space-s);
 		text-align: center;
 	}
 
 	.footer__socials-nav {
 		margin-bottom: var(--space-m);
+		height: 8ch;
 
 		@include respond-to('m') {
 			display: none;

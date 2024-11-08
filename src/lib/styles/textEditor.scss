@@ -1,0 +1,30 @@
+.wrapper__editor {
+	--_outline-width: var(--editor-outline-width, 2px);
+	--_outline-style: var(--editor-outline-style, solid);
+	--_outline-color: var(--editor-outline-color, var(--color-link-500));
+	--_outline-offset: var(--editor-outline-offset, 0.25ex);
+
+	border: 2px solid var(--color-surface-800);
+	padding: var(--space-xs);
+	font-size: var(--text-size-meta);
+	border-radius: var(--radius);
+	transition:
+		background-color 125ms ease,
+		outline-offset 125ms ease;
+
+	&:focus {
+		outline-color: var(--color-surface-800);
+		background-color: var(--color-surface-900);
+	}
+
+	// &:focus-visible {
+	// 	outline-width: var(--_outline-width);
+	// 	outline-style: var(--_outline-style);
+	// 	outline-color: var(--_outline-color);
+	// 	outline-offset: var(--_outline-offset);
+	// }
+
+	p {
+		max-width: 100%;
+	}
+}

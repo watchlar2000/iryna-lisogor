@@ -3,18 +3,21 @@
 	import { type IconName } from '$lib/types/icons';
 
 	export let name: IconName;
-	export let height: string = '1em';
+	export let height: string = '2ch';
+	let className = '';
+	let styles = '';
+
+	export { className as class, styles as style };
 
 	let displayIcon = icons[name];
 </script>
 
-<!-- <div class={$$restProps.class || ''}> -->
-<div style="--icon-height: {height}">
+<span style="--icon-height: {height}; {styles}" class={className} {...$$restProps}>
 	{@html displayIcon.src}
-</div>
+</span>
 
 <style lang="scss">
-	div {
+	span {
 		display: flex;
 		justify-content: center;
 		align-items: center;

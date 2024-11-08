@@ -6,7 +6,19 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		alias: {
+			// $routes: 'src/routes',
+			// '$routes/*': 'src/routes/*',
+			// '$test-helpers': 'src/test-helpers',
+			// $constants: 'src/constants',
+			// $docs: 'src/docs',
+			// '$docs/*': 'src/docs/*',
+			// $components: 'src/docs/components',
+			// '$components/*': 'src/docs/components/*',
+			// $icons: 'src/docs/components/icons',
+			// '$icons/*': 'src/docs/components/icons/*',
+		}
 	}
 };
 

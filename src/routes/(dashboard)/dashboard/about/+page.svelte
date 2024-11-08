@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { applyAction, deserialize, enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
-	import TipTap from '$lib/components/TipTapEditor.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import TipTap from '$lib/components/RichTextEditor/TipTapEditor.svelte';
 	import type { Author } from '$lib/types/common';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { Image } from '@unpic/svelte';
@@ -97,7 +98,10 @@ use:enhance={() => {
 }}
 -->
 <div class="flow">
-	<h2>About page</h2>
+	<header class="cluster">
+		<h6>About page</h6>
+		<span class="timestamp">Last update: Nov 3 2024</span>
+	</header>
 	<!-- {#if formLoading}
 	<p>Server is running...</p>
 {/if} -->
@@ -110,46 +114,58 @@ use:enhance={() => {
 		class="flow"
 	>
 		<section class="flow">
-			<h4>Profile photo:</h4>
-			<div class="wrapper__image">
-				<Image
-					alt="Iryna Lisogor profile photo"
-					aspectRatio={1}
-					layout="constrained"
-					src={updatedPhotoUrl ? updatedPhotoUrl : photoUrl}
-				/>
+			<h5>Profile photo:</h5>
+			<div class="cluster">
+				<div class="wrapper__image cluster">
+					<Image
+						alt="Iryna Lisogor profile photo"
+						aspectRatio={1}
+						layout="constrained"
+						src={updatedPhotoUrl ? updatedPhotoUrl : photoUrl}
+					/>
+				</div>
+				<button on:click={initImageUpload} type="button" class="button-custom">
+					<Icon name="update" /> Change profile photo
+				</button>
 			</div>
 			<div class="hidden">
 				<input accept="image/*" bind:this={inputFile} id="photoFile" name="photoFile" type="file" />
 			</div>
-			<button on:click={initImageUpload} type="button" class="button"> Upload new photo </button>
 		</section>
 		<section class="flow">
-			<h4>About:</h4>
+			<h5>About:</h5>
 			<TipTap bind:content={about} />
 		</section>
-		<button type="submit" class="button" disabled={!isDirty}>Save</button>
+		<div class="cluster wrapper__form-controls">
+			<button type="submit" disabled={!isDirty}>Save</button>
+			{#if isDirty}
+				<button type="reset">Cancel</button>
+			{/if}
+		</div>
 	</form>
 </div>
 
 <style lang="scss">
 	.wrapper__image {
-		// display: grid;
-		// place-content: center;
-		// margin-inline: auto;
-		width: 100%;
-		max-width: 20ch;
-
-		button {
-			margin-inline: auto;
-		}
+		max-width: 15ch;
 	}
 
-	form {
-		--_flow-space: 1.5em;
+	header.cluster {
+		--_horizontal-alignment: space-between;
 
-		& > * {
-			--_flow-space: 2.5em;
-		}
+		width: 100%;
+	}
+
+	.wrapper__form-controls {
+		--_column-gap: 1ch;
+	}
+
+	.button-custom {
+		--button-bg: none;
+		--button-font-size: 0.875rem;
+		--button-font-weight: 500;
+		--button-padding-inline: 1.5ch;
+		--button-padding-block: 0.5ch;
+		--button-border-width: 0px;
 	}
 </style>

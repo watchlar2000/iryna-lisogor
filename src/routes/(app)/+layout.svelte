@@ -12,9 +12,11 @@
 <div class="app-wrapper">
 	<Header />
 	{#key pathname}
-		<main class="main" in:scale={{ start: 0.9, duration: 350, easing: cubicOut }}>
+		<!-- <main class="main" in:scale={{ start: 0.9, duration: 350, easing: cubicOut }}> -->
+		<main class="main">
 			<slot />
 		</main>
+		<!-- </main> -->
 	{/key}
 	<Footer />
 </div>

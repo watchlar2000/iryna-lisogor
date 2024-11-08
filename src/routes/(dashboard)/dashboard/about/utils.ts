@@ -3,7 +3,7 @@ export const readFileAsDataURL = (file: File): Promise<string> => {
 		const reader = new FileReader();
 
 		reader.onload = function (event: ProgressEvent<FileReader>) {
-			resolve(event.target.result as string);
+			resolve(event?.target.result as string);
 		};
 
 		reader.onerror = function (error) {

@@ -4,6 +4,7 @@
 @import 'button.scss';
 @import 'input.scss';
 @import 'link.scss';
+@import 'textEditor.scss';
 
 body {
 	background: var(--color-global-bg);
@@ -37,21 +38,6 @@ body[data-scroll-locked] {
 
 .main {
 	flex: 1 0 auto;
-
-	&:focus {
-		outline: none;
-	}
-}
-
-a {
-	color: currentColor;
-}
-
-a,
-button.link {
-	text-decoration-thickness: 0.1rem;
-	text-underline-offset: 0.4ex;
-	text-decoration-skip-ink: auto;
 }
 
 img,
@@ -61,33 +47,52 @@ picture {
 }
 
 p {
+	--_text-max-width: var(--text-max-width, 50ch);
+
 	margin-inline: auto;
-	max-width: var(--text-max-width, 50ch);
+	max-width: var(--_text-max-width);
 	font-family: var(--font-ubuntu);
 }
 
-.heading {
-	max-width: var(--text-max-width, 50ch);
+// :where(
+// 		button,
+// 		.button,
+// 		input[type='button'],
+// 		input[type='submit'],
+// 		input[type='reset'],
+// 		input[type='file'],
+// 		a
+// 	) {
+// 	--_outline-width: var(--button-outline-width, 3px);
+// 	--_outline-style: var(--button-outline-style, solid);
+// 	--_outline-color: var(--button-outline-color, var(--color-primary));
+// 	--_outline-offset: var(--button-outline-offset, 3px);
 
-	h1 {
-		line-height: 1.5;
-		display: inline;
-		background-color: var(--color-light-gray);
-	}
-}
+// 	&:focus {
+// 		outline-width: var(--_outline-width);
+// 		outline-style: var(--_outline-style);
+// 		outline-color: var(--_outline-color);
+// 		outline-offset: var(--_outline-offset);
+// 		background-color: var(--_focus-bg);
+// 		color: var(--_hover-color);
+// 	}
+// }
 
-:where(button, a, input):is(:focus, :focus-visible) {
-	--_outline-offset: var(--outline-offset, 0.4em);
-	--_outline-width: var(--outline-width, 2px);
-	--_outline-style: var(--outline-style, solid);
-	--_outline-color: var(--outline-color, #242424);
+// :where(a, button) {
+// 	:focus {
+// 		--_outline-offset: var(--outline-offset, 0.375em);
+// 		--_outline-width: var(--outline-width, 3px);
+// 		--_outline-style: var(--outline-style, solid);
+// 		--_outline-color: var(--outline-color, var(--color-surface-600));
 
-	outline-offset: var(--_outline-offset);
-	outline: var(--_outline-width) var(--_outline-style) var(--_outline-color);
-}
+// 		outline-offset: var(--_outline-offset);
+// 		outline: var(--_outline-width) var(--_outline-style) var(--_outline-color);
+// 	}
+// }
 
-:is(h1, h2, h3, h4) em {
+:is(h1, h2, h3, h4, h5, h6) em {
 	font-style: normal;
+	font-weight: 600;
 }
 
 ::selection {
@@ -97,7 +102,7 @@ p {
 
 h1 {
 	font-size: var(--text-size-heading-1);
-	font-weight: 500;
+	// font-weight: 500;
 }
 
 h1 + p {
@@ -105,14 +110,14 @@ h1 + p {
 }
 
 h2 {
-	--flow-space: 3rem;
+	// --flow-space: 3rem;
 
 	font-size: var(--text-size-heading-2);
-	font-weight: 500;
+	// font-weight: 500;
 }
 
 h3 {
-	--flow-space: 2rem;
+	// --flow-space: 2rem;
 
 	font-size: var(--text-size-heading-3);
 }
@@ -121,8 +126,16 @@ h4 {
 	font-size: var(--text-size-heading-4);
 }
 
+h5 {
+	font-size: var(--text-size-heading-5);
+}
+
+h6 {
+	font-size: var(--text-size-heading-6);
+}
+
 svg {
-	--_icon-height: var(--icon-height, 1em);
+	--_icon-height: var(--icon-height, 1ch);
 
 	display: inline-block;
 	height: var(--_icon-height);
@@ -133,4 +146,16 @@ svg {
 	&__header {
 		color: var(--color-warning);
 	}
+}
+
+.timestamp {
+	display: inline-block;
+	font-size: var(--size-step--3);
+	color: var(--color-surface-900);
+	background-color: var(--color-dark-400);
+	padding-inline: 1ch;
+	padding-block: 0.25ch;
+	border-radius: 0.75ch;
+	font-weight: 500;
+	user-select: none;
 }

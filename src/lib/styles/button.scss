@@ -1,57 +1,91 @@
-// a.button {
-// 	text-decoration: none;
+:where(
+		button,
+		.button,
+		input[type='button'],
+		input[type='submit'],
+		input[type='reset'],
+		input[type='file']
+	) {
+	/* Configuration */
+	// --_text-light: var(--button-bg-dark, var(--color-dark-100));
+	// --_text-dark: var(--button-bg-light, var(--color-surface-900));
+	--_text: var(--button-text, var(--color-dark-100));
 
-// 	&:active {
-// 		transform: scale(0.95);
-// 	}
-// }
+	// --_bg-light: var(--button-bg-light, var(--color-light));
+	// --_bg-dark: var(--button-bg-dark, var(--color-dark-100));
+	--_bg: var(--button-bg, var(--color-surface-800));
 
-button.button {
-	border: none;
-	background-color: transparent;
+	// --_hover-bg-light: var(--button-hover-bg, var(--color-dark-400));
+	--_hover-bg: var(--button-hover-bg, var(--color-dark-400));
+	// --_focus-bg-light: var(--button-hover-bg, var(--color-dark-300));
+	--_focus-bg: var(--button-hover-bg, var(--color-dark-300));
+	// --_hover-color-light: var(--button-hover-color, var(--color-surface-900));
+	--_hover-color: var(--button-hover-color, var(--color-surface-900));
+
+	--_border-radius: var(--button-border-radius, 1ch);
+	// --_border-light: var(--_bg-dark);
+	// --_border-dark: var(--_bg-light);
+	--_border-color: var(--button-border-color, var(--_bg));
+	--_border-width: var(--button-border-width, 2px);
+	--_border-style: var(--button-border-style, solid);
+
+	--_icon-size: var(--button-icon-size, 2ch);
+	--_icon-color: var(--buton-icon-color, var(--_text));
+
+	--_padding-inline: var(--button-padding-inline, var(--space-s));
+	--_padding-block: var(--button-padding-block, var(--space-xs));
+
+	--_transition-motion-reduce: ;
+	--_transition-motion-ok: transform var(--transition-duration) ease,
+		outline-offset var(--transition-duration) ease, background-color var(--transition-duration) ease;
+	--_transition: var(--_transition-motion-reduce);
+
+	--_gap: var(--button-gap, 1ch);
+	--_font-size: var(--button-font-size, var(--size-step--1));
+	--_font-weight: var(--button-font-weight, 600);
+
+	--_outline-width: var(--button-outline-width, 2px);
+	--_outline-style: var(--button-outline-style, solid);
+	--_outline-color: var(--button-outline-color, var(--color-link-500));
+	--_outline-offset: var(--button-outline-offset, 0px);
+
 	font-family: inherit;
-	padding: 0;
-	cursor: pointer;
-
-	@media screen and (-ms-high-contrast: active) {
-		border: 2px solid currentcolor;
-	}
-}
-
-button {
-	border: none;
-	background-color: transparent;
-	font-family: inherit;
-	font-size: inherit;
-	padding: 0;
-	cursor: pointer;
-
+	letter-spacing: inherit;
+	letter-spacing: 0.05ch;
+	line-height: 1.5;
 	appearance: none;
 }
 
-a.button,
-button.button {
-	/* Configuration */
-	--_padding-inline: var(--button-padding-inline, 1.25em);
-	--_padding-block: var(--button-padding-block, 0.75em);
-	--_gap: var(--button-gap, 0.5em);
-	--_bg: var(--button-bg, hsl(0, 0%, 15%));
-	--_color: var(--button-color, hsl(0, 0%, 95%));
-	--_hover-bg: var(--button-hover-bg, hsl(0, 0%, 24%));
-	--_focus-bg: var(--button-hover-bg, hsl(0, 0%, 30%));
-	--_hover-color: var(--button-hover-color, hsl(0, 0%, 99%));
-	--_border-width: var(--button-border-width, 3px);
-	--_border-style: var(--button-border-style, solid);
-	--_border-color: var(--_bg, var(--color-dark));
-	--_radius: var(--button-radius, 0.5em);
+@media (prefers-reduced-motion: no-preference) {
+	:where(
+			button,
+			.button,
+			input[type='button'],
+			input[type='submit'],
+			input[type='reset'],
+			input[type='file']
+		) {
+		--_transition: var(--_transition-motion-ok);
+	}
+}
 
-	--_font-weight: var(--button-font-weight, 700);
-	--_font-size: var(--button-font-size, 1em);
+// @media (prefers-color-scheme: dark) {
+// 	button {
+// 		--_bg: var(--_bg-dark);
+// 	}
+// }
 
-	--_outline-width: var(--button-outline-width, 3px);
-	--_outline-style: var(--button-outline-style, solid);
-	--_outline-color: var(--_border-color, var(--color-primary));
-	--_outline-offset: var(--button-outline-offset, 4px);
+:where(
+		button,
+		.button,
+		input[type='button'],
+		input[type='submit'],
+		input[type='reset'],
+		input[type='file']
+	) {
+	/* Colors */
+	background: var(--_bg);
+	color: var(--_text);
 
 	/* Layout and spacing */
 	display: inline-flex;
@@ -60,96 +94,82 @@ button.button {
 	padding-inline: var(--_padding-inline);
 	padding-block: var(--_padding-block);
 
-	/* Colours */
-	background: var(--_bg);
-	color: var(--_color);
-
 	/* Stroke and radius */
 	border-width: var(--_border-width);
 	border-style: var(--_border-style);
 	border-color: var(--_border-color);
-	border-radius: var(--_radius);
+	border-radius: var(--_border-radius);
+
+	transition: var(--_transition);
 
 	/* Typography */
-	text-decoration: none;
 	font-weight: var(--_font-weight);
 	font-size: var(--_font-size);
-	letter-spacing: 0.05ch;
-	font-family: inherit;
-	line-height: 1.2;
 
-	/* Interactive */
-	cursor: pointer;
 	text-align: center;
+	cursor: pointer;
+	touch-action: manipulation;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+}
 
-	&:hover {
-		background: var(--_hover-bg);
-		color: var(--_hover-color);
+:where(button, input[type='button'], input[type='submit'], input[type='reset'])
+	> :where(svg, [data-icon]) {
+	block-size: var(--_icon-size);
+	inline-size: var(--_icon-size);
+	stroke: var(--_icon-color);
+	// filter: drop-shadow(var(--_ink-shadow));
+
+	flex-shrink: 0;
+	fill: none;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+:where(button, .button, input):where(:not(:active)):focus-visible {
+	outline-width: var(--_outline-width);
+	outline-style: var(--_outline-style);
+	outline-color: var(--_outline-color);
+	outline-offset: var(--_outline-offset);
+}
+
+:where(button, .button, input[type='button'], input[type='submit'], input[type='reset']):where(
+		:not(:active):not([disabled]):hover
+	) {
+	background: var(--_hover-bg);
+	color: var(--_hover-color);
+}
+
+:where(button, .button, input[type='button'], input[type='submit'], input[type='reset']):where(
+		:not([disabled]):active
+	) {
+	transform: scale(0.95);
+}
+
+:where(button, .button, input[type='button'], input[type='submit'], input[type='reset'])[disabled] {
+	--_bg: none;
+
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+:where([type='reset']) {
+	--_text: var(--color-warning-400);
+	--_bg: var(--color-warning-900);
+	--_hover-bg: var(--color-warning-400);
+
+	&:focus-visible {
+		outline-color: var(--_text);
 	}
+}
 
-	&:focus {
-		outline-width: var(--_outline-width);
-		outline-style: var(--_outline-style);
-		outline-color: var(--_outline-color);
-		outline-offset: var(--_outline-offset);
-		background-color: var(--_focus-bg);
-	}
+:where([type='submit']) {
+	--_text: var(--color-link-400);
+	--_bg: var(--color-link-800);
+	--_hover-bg: var(--color-link-400);
 
-	// &:active {
-	// 	transform: scale(0.95);
-	// }
-
-	/* Exceptions */
-	&[data-button-radius='hard'] {
-		--_radius: 0;
-	}
-
-	&[data-button-variant='menu'] {
-		--_radius: 0;
-		--_padding-inline: 0;
-		--_padding-block: 0;
-		--_gap: 0;
-		--_bg: ;
-		--_color: inherit;
-		--_hover-bg: transparent;
-		--_focus-bg: transparent;
-		--_hover-color: inherit;
-		--_border-width: 0;
-		--_border-style: var(--button-border-style, solid);
-		--button-outline-width: 2px;
-		--_font-weight: normal;
-		--_font-size: var(--text-size-heading-3);
-	}
-
-	&[data-button-variant='dashboard-link'] {
-		--_radius: 0;
-		--_padding-inline: var(--space-s);
-		--_padding-block: var(--space-xs);
-		--_gap: 0;
-		--_bg: var(--color-light-gray);
-		--_color: var(--color-dark);
-		--_hover-bg: var(--color-primary);
-		--_focus-bg: var(--_hover-bg);
-		--_hover-color: var(--color-dark);
-		--_border-width: 0;
-		--_border-style: var(--button-border-style, solid);
-		--_font-weight: 500;
-		--_font-size: var(--size-step--3);
-	}
-
-	&[data-button-variant='control'] {
-		--_radius: 0;
-		--_padding-inline: var(--space-xs);
-		--_padding-block: var(--space-xs);
-		--_gap: 0;
-		--_bg: var(--color-light);
-		--_color: var(--color-dark);
-		--_hover-bg: var(--color-primary);
-		--_focus-bg: var(--_hover-bg);
-		--_hover-color: var(--color-dark);
-		--_border-width: 0;
-		--_border-style: var(--button-border-style, solid);
-		--_font-weight: 500;
-		--_font-size: var(--size-step--3);
+	&:focus-visible {
+		outline-color: var(--_text);
 	}
 }

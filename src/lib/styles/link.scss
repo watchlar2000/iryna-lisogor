@@ -1,15 +1,77 @@
-a.link {
-	--_color: var(--link-color, currentColor);
-	--_weight: var(--link-weight, 500);
-	--_color-accent: var(--color-primary, hsl(220, 95%, 48%));
-	--_outline-offset: 0.15em;
+:where(a) {
+	--_text: var(--link-text, var(--color-dark-100));
+	--_bg: var(--link-bg, transparent);
+	--_hover-color: var(--link-hover-color, var(--color-link-500));
+	--_active-color: var(--link-active-color, var(--color-link-400));
+	--_visited-color: var(--link-visited-color, var(--color-accent-400));
 
-	position: relative;
-	color: var(--_color);
-	font-weight: var(--_weight);
-	text-decoration-color: var(--_color-accent);
+	--_border-radius: var(--link-border-radius, 0px);
+	--_weight: var(--link-text-weight, inherit);
 
-	&:is(:hover) {
-		color: var(--_color-accent);
+	--_text-decoration-style: var(--link-text-decoration-style, solid);
+	--_text-decoration-thickness: var(--link-text-decoration-thickness, 0.1em);
+	--_text-underline-offset: var(--link-text-underline-offset, 0.4ex);
+
+	--_font-size: var(--link-font-size, inherit);
+
+	--_padding-inline: var(--button-padding-inline, 0px);
+	--_padding-block: var(--button-padding-block, 0px);
+
+	--_transition-motion-reduce: ;
+	--_transition-motion-ok: background-color var(--transition-duration) ease;
+	--_transition: var(--_transition-motion-reduce);
+
+	--_outline-width: var(--link-outline-width, 2px);
+	--_outline-style: var(--link-outline-style, solid);
+	--_outline-color: var(--link-outline-color, var(--color-link-500));
+	--_outline-offset: var(--link-outline-offset, 0.4ex);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	:where(a) {
+		--_transition: var(--_transition-motion-ok);
 	}
+}
+
+:where(a) {
+	transition: var(--_transition);
+	cursor: pointer;
+	padding-inline: var(--_padding-inline);
+	padding-block: var(--_padding-block);
+}
+
+:where(a):not(.exclude) {
+	color: var(--_text);
+	font-size: var(--_font-size);
+	font-weight: var(--_weight);
+	text-decoration-style: var(--_text-decoration-style);
+	text-decoration-thickness: var(--_text-decoration-thickness);
+	text-underline-offset: var(--_text-underline-offset);
+
+	&:hover {
+		color: var(--_hover-color);
+		text-decoration-color: var(--_hover-color);
+	}
+
+	&:active {
+		color: var(--_active-color);
+		text-decoration-color: var(--_active-color);
+	}
+
+	:focus-visible {
+		background-color: var(--_focus-bg);
+		color: var(--_hover-color);
+	}
+
+	// &:visited {
+	// 	color: var(--_visited-color);
+	// 	text-decoration-color: var(--_visited-color);
+	// }
+}
+
+:where(a):focus-visible {
+	outline-width: var(--_outline-width);
+	outline-style: var(--_outline-style);
+	outline-color: var(--_outline-color);
+	outline-offset: var(--_outline-offset);
 }

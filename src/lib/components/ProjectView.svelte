@@ -33,7 +33,7 @@
 </svelte:head>
 
 <div class="flow">
-	<div class="wrapper heading" data-wrapper-type="inner">
+	<div class="wrapper" data-wrapper-type="inner">
 		<h1>{project.title}</h1>
 	</div>
 
@@ -45,3 +45,10 @@
 		{/each}
 	</div>
 </div>
+
+<style>
+	h1,
+	p {
+		text-align: center;
+	}
+</style>

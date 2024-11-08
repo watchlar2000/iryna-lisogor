@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TipTap from '$lib/components/TipTapEditor.svelte';
+	import TipTap from '$lib/components/RichTextEditor/TipTapEditor.svelte';
 	// import type { PageData } from '../$types';
 	import type { LayoutData } from '../../$types';
 

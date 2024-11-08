@@ -1,4 +1,5 @@
 import AppMenu from './app-menu.svg?raw';
+import Crown from './crown.svg?raw';
 import Data from './data.svg?raw';
 import Edit from './edit.svg?raw';
 import Email from './email.svg?raw';
@@ -7,6 +8,7 @@ import Instagram from './instagram.svg?raw';
 import Linkedin from './linkedin.svg?raw';
 import Plus from './plus.svg?raw';
 import Trash from './trash.svg?raw';
+import Update from './update.svg?raw';
 
 export const icons = {
 	email: {
@@ -44,5 +46,13 @@ export const icons = {
 	trash: {
 		alt: 'trash icon',
 		src: Trash
+	},
+	update: {
+		alt: 'update icon',
+		src: Update
+	},
+	crown: {
+		alt: 'crown icon',
+		src: Crown
 	}
 } as const;
