@@ -15,8 +15,10 @@
 	/* Light mode */
 	--color-surface-900: hsl(0, 0%, 92%);
 	--color-surface-800: hsl(0, 0%, 80%);
+	--color-surface-700: hsl(0, 0%, 70%);
 	--color-surface-600: hsl(0, 0%, 60%);
 	--color-dark-100: hsl(0, 0%, 14%);
+	--color-dark-200: hsl(0, 0%, 22%);
 	--color-dark-300: hsl(0, 0%, 30%);
 	--color-dark-400: hsl(0, 0%, 40%);
 	--color-accent-500: hsl(39, 100%, 55%);
@@ -33,7 +35,8 @@
 	--color-global-text: var(--color-dark-100);
 
 	--gutter-wrapper-inner: 1rem;
-	--radius: 0.25em;
+	--radius: 0.25rem;
+	--button-border-radius: 0.75rem;
 	--text-max-width: 55ch;
 	--transition-duration: 125ms;
 

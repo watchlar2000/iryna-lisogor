@@ -17,10 +17,10 @@
 				<li>
 					<a class="" href={`/${project.work}/${convertToSlug(project.title)}`}>
 						<Image
-							src={getCoverImage(project.images).url}
+							src={getCoverImage(project.images)?.url}
 							layout="constrained"
 							aspectRatio={1.5}
-							alt={getCoverImage(project.images).alt}
+							alt={getCoverImage(project.images)?.alt}
 						/>
 					</a>
 				</li>
@@ -38,6 +38,10 @@
 
 		a {
 			display: block;
+
+			& > :global(img) {
+				border-radius: calc(var(--button-border-radius) / 2);
+			}
 		}
 	}
 </style>

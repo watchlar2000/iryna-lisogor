@@ -10,13 +10,21 @@ const sql = postgres(DATABASE_URL, { prepare: false });
 export const db = drizzle(sql, { schema });
 
 type SQLCondition = SQL | ReturnType<typeof eq>;
-type ReadParam = {
+
+type Id = {
 	id: number;
-	where: SQLCondition[];
+};
+
+type ReadParam = Id & {
+	where?: SQLCondition[];
 };
 
 type TableWithId = {
 	id: Column;
+};
+
+type UpdateParams = Id & {
+	payload: Record<string, string>;
 };
 
 export const api = (table: Table & TableWithId) => ({
@@ -31,5 +39,8 @@ export const api = (table: Table & TableWithId) => ({
 			.select()
 			.from(table)
 			.where(and(...filters));
+	},
+	update({ id, payload }: UpdateParams) {
+		return db.update(table).set(payload).where(eq(table.id, id)).returning();
 	}
 });

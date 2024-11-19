@@ -6,7 +6,7 @@
 
 <footer class="wrapper">
 	<div class="footer__socials-nav">
-		<SocialsNavigation list={socialLinksList} iconHeight="2rem" />
+		<SocialsNavigation list={socialLinksList} iconHeight="2rem" --link-padding-inline="2ch" />
 	</div>
 	<p>
 		All artistic content Copyright &#169;<br />

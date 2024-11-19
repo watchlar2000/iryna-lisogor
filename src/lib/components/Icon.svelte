@@ -12,7 +12,12 @@
 	let displayIcon = icons[name];
 </script>
 
-<span style="--icon-height: {height}; {styles}" class={className} {...$$restProps}>
+<span
+	style="--icon-height: {height}; {styles}"
+	aria-hidden="true"
+	class={className}
+	{...$$restProps}
+>
 	{@html displayIcon.src}
 </span>
 

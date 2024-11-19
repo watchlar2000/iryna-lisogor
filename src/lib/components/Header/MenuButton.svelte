@@ -10,7 +10,6 @@
 	};
 
 	export let ariaLabel = 'Toggle menu';
-	export let width: string | number = 80;
 </script>
 
 <button
@@ -19,7 +18,7 @@
 	aria-label={ariaLabel}
 	class={`button ${$$restProps.class || ''}`}
 >
-	<svg class:open viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" {width}>
+	<svg class:open viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5">
 		<path
 			class="top"
 			d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"
@@ -33,38 +32,40 @@
 	Menu
 </button>
 
-<style>
+<style lang="scss">
 	button {
+		--button-font-size: var(--size-step-1);
+		--button-font-weight: 500;
 		--button-border-width: 0px;
-		--button-bg: transparent;
-		--button-hover-bg: var(--color-surface-900);
-		--button-hover-color: currentColor;
-		--button-border-radius: 0px;
-
-		/* color: red; */
-		/* padding-right: var(--space-s); */
+		--button-bg: none;
+		--button-hover-bg: var(--color-surface-800);
+		--button-hover-color: var(--color-dark-200);
+		--button-active-color: var(--color-dark-100);
+		--button-active-bg: var(--color-surface-700);
+		--button-transform-scale: 1;
+		--button-outline-offset: 0px;
 	}
 
 	svg {
+		--_transition-duration: 0.25s;
 		--_icon-height: 3.5ch;
 
-		/* height: var(--_icon-height); */
-		/* transition: transform var(--transition-duration); */
-	}
+		padding: 0;
 
-	.top {
-		stroke-dasharray: 40 160;
-		transition: stroke-dashoffset var(--transition-duration);
-	}
+		.top {
+			stroke-dasharray: 40 160;
+			transition: stroke-dashoffset var(--_transition-duration);
+		}
 
-	.middle {
-		transform-origin: 50%;
-		transition: transform var(--transition-duration);
-	}
+		.middle {
+			transform-origin: 50%;
+			transition: transform var(--_transition-duration);
+		}
 
-	.bottom {
-		stroke-dasharray: 40 85;
-		transition: stroke-dashoffset var(--transition-duration);
+		.bottom {
+			stroke-dasharray: 40 85;
+			transition: stroke-dashoffset var(--_transition-duration);
+		}
 	}
 
 	.open {

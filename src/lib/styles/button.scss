@@ -21,8 +21,10 @@
 	--_focus-bg: var(--button-hover-bg, var(--color-dark-300));
 	// --_hover-color-light: var(--button-hover-color, var(--color-surface-900));
 	--_hover-color: var(--button-hover-color, var(--color-surface-900));
+	--_active-bg: var(--button-active-bg, var(--_hover-bg));
+	--_active-color: var(--button-active-color, var(--_hover-color));
 
-	--_border-radius: var(--button-border-radius, 1ch);
+	--_border-radius: var(--button-border-radius, var(--button-border-radius));
 	// --_border-light: var(--_bg-dark);
 	// --_border-dark: var(--_bg-light);
 	--_border-color: var(--button-border-color, var(--_bg));
@@ -37,17 +39,19 @@
 
 	--_transition-motion-reduce: ;
 	--_transition-motion-ok: transform var(--transition-duration) ease,
-		outline-offset var(--transition-duration) ease, background-color var(--transition-duration) ease;
+		background-color var(--transition-duration) ease;
 	--_transition: var(--_transition-motion-reduce);
 
 	--_gap: var(--button-gap, 1ch);
 	--_font-size: var(--button-font-size, var(--size-step--1));
 	--_font-weight: var(--button-font-weight, 600);
 
-	--_outline-width: var(--button-outline-width, 2px);
+	--_outline-width: var(--button-outline-width, 3px);
 	--_outline-style: var(--button-outline-style, solid);
 	--_outline-color: var(--button-outline-color, var(--color-link-500));
-	--_outline-offset: var(--button-outline-offset, 0px);
+	--_outline-offset: var(--button-outline-offset, 0.4ex);
+
+	--_transform-scale: var(--button-transform-scale, 1);
 
 	font-family: inherit;
 	letter-spacing: inherit;
@@ -114,17 +118,10 @@
 	-webkit-touch-callout: none;
 }
 
-:where(button, input[type='button'], input[type='submit'], input[type='reset'])
+:where(button, .button, input[type='button'], input[type='submit'], input[type='reset'])
 	> :where(svg, [data-icon]) {
 	block-size: var(--_icon-size);
 	inline-size: var(--_icon-size);
-	stroke: var(--_icon-color);
-	// filter: drop-shadow(var(--_ink-shadow));
-
-	flex-shrink: 0;
-	fill: none;
-	stroke-linecap: round;
-	stroke-linejoin: round;
 }
 
 :where(button, .button, input):where(:not(:active)):focus-visible {
@@ -144,13 +141,15 @@
 :where(button, .button, input[type='button'], input[type='submit'], input[type='reset']):where(
 		:not([disabled]):active
 	) {
-	transform: scale(0.95);
+	background-color: var(--_active-bg);
+	color: var(--_active-color);
+	transform: scale(var(--_transform-scale));
 }
 
 :where(button, .button, input[type='button'], input[type='submit'], input[type='reset'])[disabled] {
-	--_bg: none;
+	// --_bg: none;
 
-	opacity: 0.5;
+	opacity: 0.675;
 	cursor: not-allowed;
 }
 
@@ -164,10 +163,13 @@
 	}
 }
 
+// :where([type='submit']):not([disabled]) {
 :where([type='submit']) {
 	--_text: var(--color-link-400);
-	--_bg: var(--color-link-800);
+	// --_bg: var(--color-link-800);
 	--_hover-bg: var(--color-link-400);
+
+	--_border-width: 0px;
 
 	&:focus-visible {
 		outline-color: var(--_text);

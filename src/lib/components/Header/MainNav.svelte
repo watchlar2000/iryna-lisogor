@@ -1,20 +1,30 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { navConfig } from '$lib/config';
+	import { webSiteNavConfig } from '$lib/config';
 	import { PAGE } from '$lib/constants';
 	import { clickOutside } from '$lib/directives/clickOutside';
-	import { tick } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import Icon from '../Icon.svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let ariaLabel: string;
 
 	let expanded = false;
 	let focusedIndex = -1;
 
-	const workMenuItems = navConfig;
+	let worksButton: HTMLElement;
+
+	const workMenuItems = webSiteNavConfig;
+
+	let count = 1;
 
 	function handleClick(event: Event) {
+		// if (event.target.getAttribute('data-type') === 'nav') {
+		// 	dispatch('closeModal');
+		// }
+
 		if (event.type === 'outclick') {
 			expanded = false;
 			return;
@@ -26,8 +36,6 @@
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (!expanded) return;
-
-		console.log(event.key);
 
 		switch (event.key) {
 			case 'ArrowDown':
@@ -41,7 +49,8 @@
 				break;
 			case 'Escape':
 				expanded = false;
-				document.querySelector(`.dropdown__title`)?.focus();
+				console.log('escape clicked');
+				worksButton.focus();
 				break;
 		}
 	}
@@ -54,7 +63,7 @@
 </script>
 
 <nav aria-label={ariaLabel} {...$$restProps} class="cluster">
-	{#each navConfig as { title, href, items } (title)}
+	{#each webSiteNavConfig as { title, href, items } (title)}
 		{#if items && items.length > 0}
 			<div class="dropdown">
 				<button
@@ -68,6 +77,8 @@
 					on:keydown={handleKeyDown}
 					use:clickOutside
 					on:outclick={handleClick}
+					bind:this={worksButton}
+					data-type="nav"
 				>
 					works
 					<Icon
@@ -92,6 +103,9 @@
 									id={`work-menu-item-${index}`}
 									tabindex="-1"
 									on:keydown={handleKeyDown}
+									on:click={handleClick}
+									aria-current={$page.url.pathname === href ? PAGE : undefined}
+									data-type="nav"
 								>
 									{title}
 								</a>
@@ -101,7 +115,12 @@
 				{/if}
 			</div>
 		{:else}
-			<a {href} aria-current={$page.url.pathname === href ? PAGE : undefined} class="exclude">
+			<a
+				{href}
+				aria-current={$page.url.pathname === href ? PAGE : undefined}
+				class="exclude"
+				on:click={handleClick}
+			>
 				{title}
 			</a>
 		{/if}
@@ -110,20 +129,31 @@
 
 <style lang="scss">
 	nav {
+		--cluster-wrap: nowrap;
+		--cluster-column-gap: 0.75ch;
+
+		--_menu-font-size: var(--menu-font-size, var(--size-step-1));
+
 		z-index: 99;
+		text-transform: lowercase;
 
 		a,
 		button {
-			--_font-size: var(--size-step-1);
+			--_font-size: var(--_menu-font-size);
 			--_font-weight: inherit;
-			--_border-radius: 0px;
-			--_padding-inline: 1.5ch;
+			--_padding-inline: 2.5ch;
 			--_padding-block: 1ch;
 			--_outline-offset: 0px;
 			--_border-width: 0px;
 
-			&:active {
+			&:hover {
 				background-color: var(--color-surface-800);
+				color: var(--color-dark-200);
+			}
+
+			&:active {
+				background-color: var(--color-surface-700);
+				color: var(--color-dark-100);
 			}
 		}
 
@@ -153,22 +183,26 @@
 
 		.dropdown__menu {
 			position: absolute;
+			padding: var(--space-xs);
 			background: hsl(0, 0%, 98%);
-			top: 67px;
+			top: calc(var(--space-m) + 1.5);
 			left: 50%;
 			transform: translate(-50%);
+			border-radius: calc(var(--button-border-radius) * 1.5);
 
 			& > li {
 				display: flex;
 				justify-content: center;
 				width: 100%;
-				min-width: 18ch;
+				min-width: 22ch;
 				text-align: center;
+				border-radius: var(--radius);
 
 				a {
 					width: 100%;
 					padding-inline: 1.25ch;
 					padding-block: 0.75ch;
+					font-size: var(--text-size-heading-4);
 				}
 			}
 		}

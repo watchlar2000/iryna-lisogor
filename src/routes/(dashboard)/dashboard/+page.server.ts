@@ -1,6 +1,8 @@
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = () => {
-	throw redirect(302, '/dashboard/projects');
+export const load = () => {
+	/*
+	TODO: double check status code
+	*/
+	redirect(308, '/dashboard/projects');
 };

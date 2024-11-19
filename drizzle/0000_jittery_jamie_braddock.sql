@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS "authors" (
 	"surname" varchar,
 	"photo_url" varchar,
 	"about" text,
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now()
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "images" (
@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS "images" (
 	"alt" varchar NOT NULL,
 	"project_id" integer,
 	"is_cover_image" boolean DEFAULT false NOT NULL,
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now()
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "projects" (
@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS "projects" (
 	"slug" varchar NOT NULL,
 	"description" varchar,
 	"work" varchar,
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now()
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "works" (

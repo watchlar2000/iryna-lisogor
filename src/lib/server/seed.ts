@@ -24,7 +24,7 @@ const author = {
 	name: 'Iryna',
 	surname: 'Lisogor',
 	photoUrl:
-		'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/profile-photo-6570f3ea-234e-4b53-9f9e-ad0ef07e4c83',
+		'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/profile-photo-1c68a2b6-2ef2-4a6c-b845-bd7e7d267643',
 	about: `
     <p>I'm Ira, an illustrator based in Kyiv, Ukraine, with a passion for creating and storytelling. I enjoy diving headfirst into projects, exploring, and creating vibrant artworks which tell stories and spark joy. Previously worked in various fields like editorial, advertising, and social media.</p>
 

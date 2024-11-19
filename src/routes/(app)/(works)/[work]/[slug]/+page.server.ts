@@ -3,11 +3,10 @@ import { withErrorHandling } from '$lib/utils/withErrorHandling';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const projectData = await withErrorHandling(() => {
-		return routing.project.read({ slug: params.slug });
-	});
+	const slug = params.slug;
+	const data = await withErrorHandling(() => routing.project.read({ slug }));
 
 	return {
-		project: projectData
+		project: data
 	};
 };

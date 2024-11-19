@@ -5,7 +5,7 @@ import { createServerClient } from '@supabase/ssr';
 import { type Handle, type HandleServerError, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-const ROUTE = {
+export const ROUTE = {
 	home: '/',
 	auth: {
 		root: '/auth',
@@ -14,7 +14,8 @@ const ROUTE = {
 	},
 	dashboard: {
 		root: '/dashboard',
-		projects: '/dashboard/projects'
+		projects: '/dashboard/projects',
+		about: '/dashboard/about'
 	}
 };
 
@@ -24,26 +25,27 @@ const supabase: Handle = async ({ event, resolve }) => {
 			getAll: () => event.cookies.getAll(),
 			setAll: (cookiesToSet) => {
 				cookiesToSet.forEach(({ name, value, options }) => {
-					event.cookies.set(name, value, { ...options, path: ROUTE.home });
+					event.cookies.set(name, value, { ...options, path: '/' });
 				});
 			}
 		}
 	});
+
 	event.locals.safeGetSession = async () => {
+		const resetSessionAndUser = () => ({ session: null, user: null });
+
 		const {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
-		if (!session) {
-			return { session: null, user: null };
-		}
+
+		if (!session) return resetSessionAndUser();
 
 		const {
 			data: { user },
 			error
 		} = await event.locals.supabase.auth.getUser();
-		if (error) {
-			return { session: null, user: null };
-		}
+
+		if (error) return resetSessionAndUser();
 
 		return { session, user };
 	};
@@ -62,14 +64,14 @@ const authGuard: Handle = async ({ event, resolve }) => {
 
 	const urlPathName = event.url.pathname;
 
-	if (
-		(!event.locals.session && urlPathName.startsWith(ROUTE.dashboard.root)) ||
-		urlPathName === ROUTE.auth.root
-	) {
+	const isDashboardRoute = (path: string) => path.startsWith(ROUTE.dashboard.root);
+	const isAuthRoute = (path: string) => path.startsWith(ROUTE.auth.root);
+
+	if (!session && isDashboardRoute(urlPathName)) {
 		redirect(303, ROUTE.auth.login);
 	}
 
-	if (event.locals.session && urlPathName.startsWith(ROUTE.auth.root)) {
+	if (session && isAuthRoute(urlPathName)) {
 		redirect(303, ROUTE.dashboard.projects);
 	}
 
@@ -77,11 +79,10 @@ const authGuard: Handle = async ({ event, resolve }) => {
 };
 
 export const handleError: HandleServerError = async ({ error, event, status }) => {
-	console.error({ error, status });
 	captureException({ error, event, status });
 
 	return {
-		message: status === HTTP_STATUS.NOT_FOUND ? 'Page not found' : 'Something went wrong'
+		message: status === HTTP_STATUS.NOT_FOUND ? 'Page not found 123' : 'Internal error'
 	};
 };
 

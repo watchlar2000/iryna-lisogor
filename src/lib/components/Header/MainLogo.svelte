@@ -3,7 +3,7 @@
 <style lang="scss">
 	a {
 		--link-text-weight: 500;
-		--link-outline-offset: 0px;
+		--link-outline-offset: -4px;
 
 		font-size: var(--text-logo);
 		line-height: 1.15;
@@ -12,5 +12,6 @@
 		padding: 0.1em 0.25em;
 		text-transform: uppercase;
 		letter-spacing: -0.025ch;
+		border-radius: var(--button-border-radius);
 	}
 </style>

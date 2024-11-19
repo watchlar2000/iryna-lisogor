@@ -1,42 +1,60 @@
 import { routing } from '$lib/api';
-import { db } from '$lib/server/db';
-import { authors } from '$lib/server/schema';
 import { imagesStorage } from '$lib/server/supabase';
 import type { AuthorPayload } from '$lib/types/authors';
-import { eq } from 'drizzle-orm';
-import type { Actions, PageServerLoad } from './$types';
+import { getReadableDate } from '$lib/utils/date';
+import { withErrorHandling } from '$lib/utils/withErrorHandling';
+import { fail } from '@sveltejs/kit';
+import type { Actions } from './$types';
 
-export const load: PageServerLoad = async () => {
-	const author = await routing.author.read();
+export const load = async () => {
+	const data = await withErrorHandling(() => routing.author.read());
 
-	return { author };
+	return { author: data };
 };
 
 export const actions = {
 	about: async ({ request }) => {
-		const fd = await request.formData();
+		const payload: Partial<AuthorPayload> = {};
 
 		try {
-			const payload: Partial<AuthorPayload> = {};
-			const { photoFile: image, prevPhotoUrl, about } = Object.fromEntries(fd);
+			const fd = await request.formData();
+			const { photoFile, previousPhotoUrl, updatedPhotoUrl, about, authorId } =
+				Object.fromEntries(fd);
 
-			if (image) {
-				const imageName = `profile-photo-${crypto.randomUUID()}`;
-				const { publicUrl } = await imagesStorage.post({ image, imageName });
-				const oldProfileImageName = prevPhotoUrl
-					? prevPhotoUrl.toString().split('/').pop() || ''
-					: '';
-				await imagesStorage.delete({ imageName: oldProfileImageName });
-				payload.photoUrl = publicUrl ?? '';
+			if (updatedPhotoUrl !== previousPhotoUrl && photoFile) {
+				const name = `profile-photo-${crypto.randomUUID()}`;
+				const { data } = await imagesStorage.post({ file: photoFile, name });
+
+				if (!data) {
+					return fail(402, {
+						error: 'Failed to upload photo'
+					});
+				}
+
+				const oldProfileImageName = previousPhotoUrl.toString().split('/').pop();
+				await imagesStorage.delete({ name: oldProfileImageName as string });
+				payload.photoUrl = data.publicUrl;
 			}
 
 			if (about) {
 				payload.about = about.toString();
 			}
 
-			await db.update(authors).set(payload).where(eq(authors.id, 1));
-		} catch (error) {
-			console.log(error);
+			await routing.author.update({ id: +authorId, payload });
+
+			return {
+				success: true
+			};
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				return fail(400, {
+					error: err.message
+				});
+			}
+
+			return fail(400, {
+				error: 'An unknown error occurred'
+			});
 		}
 	}
 } satisfies Actions;

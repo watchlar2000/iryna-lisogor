@@ -2,9 +2,9 @@
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import { fly, slide } from 'svelte/transition';
-	import type { ActionData } from './$types';
+	// import type { ActionData } from './$types';
 
-	export let form: ActionData;
+	export let form;
 
 	let sending: boolean = false;
 

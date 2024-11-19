@@ -1,29 +1,57 @@
-import { PRIVATE_SERVICE_ROLE } from '$env/static/private';
+import { PRIVATE_SERVICE_ROLE_KEY } from '$env/static/private';
 import { PUBLIC_SUPABASE_URL } from '$env/static/public';
+import { HTTP_STATUS } from '$lib/constants/HttpStatusCode';
+import { BaseError } from '$lib/errors/BaseError';
+import type { FileObject } from '@supabase/storage-js';
 import { createClient } from '@supabase/supabase-js';
 
-export const supabase = createClient(PUBLIC_SUPABASE_URL, PRIVATE_SERVICE_ROLE);
+const supabase = createClient(PUBLIC_SUPABASE_URL, PRIVATE_SERVICE_ROLE_KEY);
 
 const query = (bucketName: string) => {
 	return supabase.storage.from(bucketName);
 };
 
-const storage = (
-	bucketName: string
-): {
-	post: (params: { image: any; imageName: string }) => Promise<{ publicUrl: string | null }>;
-	delete: (params: { imageName: string }) => any;
-} => ({
-	async post({ image, imageName }) {
-		const { data } = await query(bucketName).upload(imageName, image, {
-			upsert: false
-		});
-		const imagePath = data?.path;
-		const publicUrl = imagePath ? query(bucketName).getPublicUrl(imagePath).data.publicUrl : null;
-		return { publicUrl };
+interface Storage {
+	post: (params: { file: FormDataEntryValue; name: string }) => Promise<{
+		data: {
+			path: string;
+			id: string;
+			fullPath: string;
+			publicUrl: string | undefined;
+		};
+	}>;
+	delete: (params: { name: string }) => Promise<{
+		data: FileObject[] | null;
+	}>;
+}
+
+const storage = (bucketName: string): Storage => ({
+	async post({ file, name }) {
+		const { data, error } = await query(bucketName).upload(name, file);
+
+		if (error)
+			throw new BaseError({
+				status: HTTP_STATUS.BAD_REQUEST,
+				message: 'Something went wrong uploading a file'
+			});
+
+		const imagePath = data.path;
+		const publicUrl = imagePath
+			? query(bucketName).getPublicUrl(imagePath).data.publicUrl
+			: undefined;
+
+		return { data: { ...data, publicUrl } };
 	},
-	delete({ imageName }) {
-		return query(bucketName).remove([imageName]);
+	async delete({ name }) {
+		const { data, error } = await query(bucketName).remove([name]);
+
+		if (error)
+			throw new BaseError({
+				status: HTTP_STATUS.BAD_REQUEST,
+				message: `Something went wrong deleting the following file: ${name}`
+			});
+
+		return { data };
 	}
 });
 

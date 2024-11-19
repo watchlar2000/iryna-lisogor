@@ -1,116 +1,88 @@
 <script lang="ts">
-	import { applyAction, deserialize, enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
 	import TipTap from '$lib/components/RichTextEditor/TipTapEditor.svelte';
-	import type { Author } from '$lib/types/common';
+	import { formatDateToReadable } from '$lib/utils/date';
+	import { initImageUpload } from '$lib/utils/file';
+	import { notification } from '$lib/utils/notification';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { Image } from '@unpic/svelte';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 	import { readFileAsDataURL } from './utils';
 
 	export let data: PageData;
+	export let form: ActionData;
 
-	$: ({ photoUrl, about: aboutHTML } = data.author[0] as Author);
-
-	$: about = aboutHTML ?? '';
-
-	$: {
-		isDirty = about !== aboutHTML;
-	}
+	$: ({ photoUrl, about: aboutHTML, id, updatedAt } = data.author[0]);
 
 	let isDirty = false;
+	let loading = false;
 	let inputFile: HTMLElement;
 	let updatedPhotoUrl = '';
+	let about = '';
 
-	const initImageUpload = () => {
-		inputFile.click();
-	};
+	$: if (form) {
+		form?.error ? notification.error(form.error) : notification.success('Changes saved');
+	}
 
-	const handleChange = async (event: { currentTarget: EventTarget & HTMLFormElement }) => {
+	$: about = aboutHTML ?? '';
+	$: updatedPhotoUrl = photoUrl ?? '';
+
+	$: {
+		isDirty = about !== aboutHTML || updatedPhotoUrl !== photoUrl;
+	}
+
+	const updateProfilePhotoLocally = async (event: {
+		currentTarget: EventTarget & HTMLFormElement;
+	}) => {
 		const fd = new FormData(event.currentTarget);
 		const photoFile = fd.get('photoFile');
-		isDirty = true;
 
-		if (photoFile) {
-			updatedPhotoUrl = await readFileAsDataURL(photoFile as File);
+		try {
+			if (photoFile) {
+				updatedPhotoUrl = await readFileAsDataURL(photoFile as File);
+				isDirty = true;
+			}
+		} catch (err) {
+			notification.error(err.message);
+			isDirty = false;
 		}
 	};
 
-	type FormEvent = EventTarget & HTMLFormElement;
+	type HandleEnhanceParams = { formData: FormData };
+	type HandleEnhanceReturnParams = {
+		result: ActionResult<Record<string, unknown> | undefined, Record<string, unknown> | undefined>;
+	};
 
-	const handleSubmit = async (event: { currentTarget: FormEvent }): Promise<void> => {
-		type InitData = Author & {
-			prevPhotoUrl: string;
+	const handleEnhance = ({ formData }: HandleEnhanceParams) => {
+		formData.set('about', about);
+		formData.set('updatedPhotoUrl', updatedPhotoUrl);
+		formData.set('authorId', id.toString());
+
+		return async ({ result }: HandleEnhanceReturnParams) => {
+			if (result.type === 'success') {
+				await invalidateAll();
+			}
+
+			await applyAction(result);
 		};
-
-		const authorData = data.author[0] as Author;
-		const initData: InitData = {
-			...authorData,
-			prevPhotoUrl: authorData.photoUrl ?? ''
-		};
-
-		const fd = new FormData(event.currentTarget);
-
-		fd.set('about', about);
-
-		type Key = keyof InitData;
-
-		const filteredFormData = [...fd.entries()]
-			.filter(([key, value]) => {
-				if (key === 'photoFile' && value instanceof File) {
-					return value.name.length;
-				}
-
-				return initData[key as Key] !== value;
-			})
-			.reduce((acc, [key, value]) => {
-				acc.set(key, value);
-				return acc;
-			}, new FormData());
-
-		if (filteredFormData.get('photoFile')) {
-			filteredFormData.set('prevPhotoUrl', initData.prevPhotoUrl);
-		}
-
-		const response = await fetch(event.currentTarget.action, {
-			method: 'POST',
-			body: filteredFormData
-		});
-		const result: ActionResult = deserialize(await response.text());
-
-		if (result.type === 'success') {
-			await invalidateAll();
-		}
-
-		applyAction(result);
 	};
 </script>
 
 <!--https://hartenfeller.dev/blog/sveltekit-image-upload-store-->
-<!--
-use:enhance={() => {
-	// formLoading = true;
-	return async ({ update }) => {
-		// formLoading = false;
-		update();
-	};
-}}
--->
+
 <div class="flow">
 	<header class="cluster">
 		<h6>About page</h6>
-		<span class="timestamp">Last update: Nov 3 2024</span>
+		<span class="timestamp">Last update: {formatDateToReadable(updatedAt)}</span>
 	</header>
-	<!-- {#if formLoading}
-	<p>Server is running...</p>
-{/if} -->
 	<form
 		enctype="multipart/form-data"
 		method="POST"
 		action="?/about"
-		on:change={handleChange}
-		on:submit|preventDefault={handleSubmit}
+		on:change={updateProfilePhotoLocally}
+		use:enhance={handleEnhance}
 		class="flow"
 	>
 		<section class="flow">
@@ -121,26 +93,46 @@ use:enhance={() => {
 						alt="Iryna Lisogor profile photo"
 						aspectRatio={1}
 						layout="constrained"
-						src={updatedPhotoUrl ? updatedPhotoUrl : photoUrl}
+						src={!updatedPhotoUrl ? photoUrl : updatedPhotoUrl}
 					/>
 				</div>
-				<button on:click={initImageUpload} type="button" class="button-custom">
+				<button
+					on:click={() => initImageUpload(inputFile)}
+					aria-label="upload new file"
+					type="button"
+					class="button-custom"
+				>
 					<Icon name="update" /> Change profile photo
 				</button>
 			</div>
-			<div class="hidden">
-				<input accept="image/*" bind:this={inputFile} id="photoFile" name="photoFile" type="file" />
-			</div>
+			<input
+				accept="image/*"
+				bind:this={inputFile}
+				id="photoFile"
+				name="photoFile"
+				type="file"
+				class="hidden"
+			/>
+			<input
+				type="text"
+				name="previousPhotoUrl"
+				id="previousPhotoUrl"
+				value={photoUrl}
+				class="hidden"
+			/>
 		</section>
 		<section class="flow">
 			<h5>About:</h5>
 			<TipTap bind:content={about} />
 		</section>
 		<div class="cluster wrapper__form-controls">
-			<button type="submit" disabled={!isDirty}>Save</button>
-			{#if isDirty}
-				<button type="reset">Cancel</button>
-			{/if}
+			<button type="submit" class="button" disabled={!isDirty}>
+				{#if loading}
+					<Icon name="loader" />
+				{:else}
+					Save
+				{/if}
+			</button>
 		</div>
 	</form>
 </div>
@@ -161,7 +153,7 @@ use:enhance={() => {
 	}
 
 	.button-custom {
-		--button-bg: none;
+		// --button-bg: none;
 		--button-font-size: 0.875rem;
 		--button-font-weight: 500;
 		--button-padding-inline: 1.5ch;

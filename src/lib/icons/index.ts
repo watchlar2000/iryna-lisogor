@@ -6,6 +6,7 @@ import Email from './email.svg?raw';
 import Info from './info.svg?raw';
 import Instagram from './instagram.svg?raw';
 import Linkedin from './linkedin.svg?raw';
+import Loader from './loader.svg?raw';
 import Plus from './plus.svg?raw';
 import Trash from './trash.svg?raw';
 import Update from './update.svg?raw';
@@ -54,5 +55,9 @@ export const icons = {
 	crown: {
 		alt: 'crown icon',
 		src: Crown
+	},
+	loader: {
+		alt: 'loader icon',
+		src: Loader
 	}
 } as const;

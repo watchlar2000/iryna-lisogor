@@ -1,9 +1,12 @@
 import { relations } from 'drizzle-orm';
 import { boolean, integer, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
-// const randomId = uuid('id')
-// 	.primaryKey()
-// 	.default(sql`(gen_random_uuid ())`);
+const timestamps = {
+	createdAt: timestamp('created_at').notNull().defaultNow(),
+	updatedAt: timestamp('updated_at')
+		.notNull()
+		.$onUpdate(() => new Date())
+};
 
 export const authors = pgTable('authors', {
 	id: serial('id').primaryKey(),
@@ -11,8 +14,7 @@ export const authors = pgTable('authors', {
 	surname: varchar('surname'),
 	photoUrl: varchar('photo_url'),
 	about: text('about'),
-	createdAt: timestamp('created_at').defaultNow(),
-	updatedAt: timestamp('updated_at').defaultNow()
+	...timestamps
 });
 
 export const works = pgTable('works', {
@@ -21,9 +23,9 @@ export const works = pgTable('works', {
 	slug: varchar('slug').notNull()
 });
 
-export const worksRelations = relations(works, ({ many }) => ({
-	projects: many(projects)
-}));
+// export const worksRelations = relations(works, ({ many }) => ({
+// 	projects: many(projects)
+// }));
 
 export const projects = pgTable('projects', {
 	id: serial('id').primaryKey(),
@@ -31,8 +33,7 @@ export const projects = pgTable('projects', {
 	slug: varchar('slug').notNull(),
 	description: varchar('description'),
 	work: varchar('work'),
-	createdAt: timestamp('created_at').defaultNow(),
-	updatedAt: timestamp('updated_at').defaultNow()
+	...timestamps
 });
 
 export const projectsRelations = relations(projects, ({ many }) => ({
@@ -45,8 +46,7 @@ export const images = pgTable('images', {
 	alt: varchar('alt').notNull(),
 	projectId: integer('project_id').references(() => projects.id, { onDelete: 'cascade' }),
 	isCoverImage: boolean('is_cover_image').default(false).notNull(),
-	createdAt: timestamp('created_at').defaultNow(),
-	updatedAt: timestamp('updated_at').defaultNow()
+	...timestamps
 });
 
 export const imagesRelations = relations(images, ({ one }) => ({
@@ -55,3 +55,12 @@ export const imagesRelations = relations(images, ({ one }) => ({
 		references: [projects.id]
 	})
 }));
+
+export type InsertAuthor = typeof authors.$inferInsert;
+export type SelectAuthor = typeof authors.$inferSelect;
+
+export type InsertProject = typeof projects.$inferInsert;
+export type SelectProject = typeof projects.$inferSelect;
+
+export type InsertImage = typeof images.$inferInsert;
+export type SelectImage = typeof images.$inferSelect;

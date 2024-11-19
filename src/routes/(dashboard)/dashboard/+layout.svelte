@@ -1,31 +1,25 @@
 <script>
 	import Icon from '$lib/components/Icon.svelte';
+
+	import { Toaster } from 'svelte-french-toast';
 </script>
 
 <div class="sidebar">
 	<aside class="dashboard__sidebar">
 		<nav class="wrapper flow cluster">
-			<a href="/dashboard" class="button">
+			<a href="/dashboard" class="button exclude">
 				<Icon name="data" /> Projects
 			</a>
-			<a href="/dashboard/about" class="button"> <Icon name="info" /> About page</a>
+			<a href="/dashboard/about" class="button exclude"> <Icon name="info" /> About </a>
 		</nav>
 	</aside>
 	<main class="dashboard__content wrapper">
-		<!-- <header>Hello world</header> -->
 		<slot />
 	</main>
+	<Toaster position="top-right" />
 </div>
 
 <style lang="scss">
-	.header {
-		padding-block: var(--space-s);
-
-		&__logo {
-			padding: 2rem;
-			width: min-content;
-		}
-	}
 	.sidebar {
 		display: flex;
 		flex-wrap: nowrap;
@@ -44,7 +38,7 @@
 		padding-block: var(--space-m);
 		background-color: hsl(0, 0%, 96%);
 		margin-block: var(--space-m);
-		border-radius: 1rem;
+		border-radius: var(--button-border-radius);
 	}
 
 	nav {
@@ -54,8 +48,23 @@
 		--cluster-vertical-alignment: stretch;
 
 		.button {
-			--button-font-size: var(--size-step--3);
-			--button-border-width: 0px;
+			text-decoration: none;
+
+			--_font-size: var(--size-step--3);
+			--_font-weight: 500;
+			--_bg: var(--color-surface-800);
+			--_hover-color: currentColor;
+			--_hover-bg: var(--color-surface-700);
+			--_hover-color: var(--color-dark-200);
+			--_active-bg: var(--color-surface-600);
+			--_active-color: var(--color-dark-100);
+
+			--_border-width: 0px;
+
+			--_padding-inline: var(--space-s);
+			--_padding-block: var(--space-xs);
+
+			--_border-radius: var(--button-border-radius);
 		}
 	}
 </style>

@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { toggleScrollLock } from '$lib/helpers/togglecrollLock';
+	import { lockBodyScroll } from '$lib/helpers/lockBodyScroll';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { quintOut } from 'svelte/easing';
 	import { fade, slide } from 'svelte/transition';
 
-	// const MOBILE_MENU_CLOSE_WIDTH = 900;
+	lockBodyScroll();
 
-	export let open: boolean = false;
+	export let open: boolean;
 	export let placement: Placement = 'left';
 
 	const dispatch = createEventDispatcher();
@@ -30,37 +30,18 @@
 		dispatch('clickAway');
 	};
 
-	const handleKeyDown = (event) => {
-		const escapeKey = event.key === 'Escape';
+	// const handleKeyDown = (event: KeyboardEvent) => {
+	// 	const escapeKey = event.key === 'Escape';
 
-		if (open && escapeKey) {
-			handleClickAway();
-		}
-	};
-
-	// const handleWindowResize = () => {
-	// 	if (!open) return;
-
-	// 	if (open && innerWidth > MOBILE_MENU_CLOSE_WIDTH) {
+	// 	if (open && escapeKey) {
 	// 		handleClickAway();
 	// 	}
 	// };
-
-	onMount(() => {
-		toggleScrollLock();
-		// window.addEventListener('resize', handleWindowResize);
-
-		return () => {
-			toggleScrollLock();
-			// window.removeEventListener('resize', handleWindowResize);
-		};
-	});
 </script>
 
-<svelte:window on:keydown={handleKeyDown} />
+<!-- <svelte:window on:keydown={handleKeyDown} /> -->
 
 <aside class="drawer" class:open {style}>
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="overlay" on:click={handleClickAway} transition:fade={transitionConfig} />
 
 	<div
