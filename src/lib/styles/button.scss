@@ -147,15 +147,12 @@
 }
 
 :where(button, .button, input[type='button'], input[type='submit'], input[type='reset'])[disabled] {
-	// --_bg: none;
-
 	opacity: 0.675;
 	cursor: not-allowed;
 }
 
 :where([type='reset']) {
 	--_text: var(--color-warning-400);
-	--_bg: var(--color-warning-900);
 	--_hover-bg: var(--color-warning-400);
 
 	&:focus-visible {

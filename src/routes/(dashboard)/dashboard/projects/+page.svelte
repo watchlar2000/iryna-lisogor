@@ -32,9 +32,11 @@
 	};
 </script>
 
-<div class="wrapper flow">
-	<h1>Projects</h1>
-	<div class="flow control__panel">
+<div class="flow">
+	<header>
+		<h6>Projects</h6>
+	</header>
+	<!-- <div class="flow control__panel">
 		<label for="search">
 			Search
 			<input type="text" id="search" bind:value={$filter.searchString} />
@@ -54,34 +56,38 @@
 				{/each}
 			</ul>
 		</div>
-	</div>
+	</div> -->
 	<div>
 		{#if $filteredProjects.length}
-			<ul role="list" class="projects flow">
+			<ul role="list" class="projects__list flow">
 				{#each $filteredProjects as project}
 					<li class="cluster">
 						<div class="project__image">
 							<img src={project.images[0].url} alt={project.images[0].alt} />
 						</div>
 						<div class="project__meta flow">
-							<a href={`projects/${project.slug}`} class="link">
-								<h2>{project.title}</h2>
+							<a href={`projects/${project.slug}`}>
+								<h5>{project.title}</h5>
 							</a>
-							<p class="project__work">#{project.work}</p>
+							<div class="project__meta--tags-list">
+								<span>#{project.work}</span>
+							</div>
 						</div>
 						<div class="project__controls cluster">
-							<button class="button edit" data-button-variant="control">
+							<button class="button">
 								<Icon name="edit" height="1.2em" />
+								<span class="visually-hidden">Edit project ${project.title}</span>
 							</button>
-							<button class="button remove" data-button-variant="control">
+							<button class="button" type="reset">
 								<Icon name="trash" height="1.2em" />
+								<span class="visually-hidden">Remove project ${project.title}</span>
 							</button>
 						</div>
 					</li>
 				{/each}
 			</ul>
 		{:else}
-			<p>No results...</p>
+			<p>No projects found...</p>
 		{/if}
 	</div>
 </div>
@@ -97,6 +103,71 @@
 }); -->
 
 <style lang="scss">
+	header.cluster {
+		--_horizontal-alignment: space-between;
+
+		width: 100%;
+	}
+
+	.projects__list {
+		li {
+			--cluster-vertical-alignment: start;
+			background-color: var(--color-surface-900);
+			padding: var(--space-s);
+			border-radius: 0.625rem;
+		}
+	}
+
+	.project__image {
+		max-width: 12ch;
+		height: 8ch;
+
+		img {
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.project__meta {
+		--flow-space: 0px;
+
+		flex-grow: 1;
+
+		a {
+			--link-border-radius: 0.5ch;
+			--link-outline-offset: 0px;
+
+			display: inline-block;
+			text-decoration: none;
+
+			h5 {
+				font-weight: 600;
+			}
+		}
+
+		&--tags-list span {
+			font-size: var(--size-step--3);
+			color: var(--color-surface-800);
+			font-weight: 500;
+			background-color: var(--color-dark-400);
+			padding-inline: 1ch;
+			padding-block: 0.25ch;
+			border-radius: 0.5ch;
+
+			user-select: none;
+		}
+	}
+
+	.project__controls {
+		--cluster-direction: column;
+		--cluster-row-gap: var(--space-xs);
+
+		button {
+			--button-border-width: 0px;
+		}
+	}
+
+	/*
 	.wrapper {
 		// background-color: orange;
 
@@ -178,4 +249,5 @@
 			background-color: orange;
 		}
 	}
+		*/
 </style>

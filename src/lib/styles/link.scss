@@ -27,7 +27,8 @@
 
 :where(a) {
 	--_transition-motion-reduce: ;
-	--_transition-motion-ok: background-color var(--transition-duration) ease;
+	--_transition-motion-ok: color var(--transition-duration) ease,
+		background-color var(--transition-duration) ease;
 	--_transition: var(--_transition-motion-reduce);
 }
 

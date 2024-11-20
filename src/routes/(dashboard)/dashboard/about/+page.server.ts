@@ -1,7 +1,6 @@
 import { routing } from '$lib/api';
 import { imagesStorage } from '$lib/server/supabase';
 import type { AuthorPayload } from '$lib/types/authors';
-import { getReadableDate } from '$lib/utils/date';
 import { withErrorHandling } from '$lib/utils/withErrorHandling';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
