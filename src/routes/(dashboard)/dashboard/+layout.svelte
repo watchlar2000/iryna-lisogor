@@ -4,6 +4,7 @@
 	import { Toaster } from 'svelte-french-toast';
 </script>
 
+<Toaster position="top-right" />
 <div class="sidebar">
 	<aside class="dashboard__sidebar">
 		<nav class="wrapper flow cluster">
@@ -16,7 +17,6 @@
 	<main class="dashboard__content wrapper">
 		<slot />
 	</main>
-	<Toaster position="top-right" />
 </div>
 
 <style lang="scss">

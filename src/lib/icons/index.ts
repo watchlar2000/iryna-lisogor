@@ -1,4 +1,5 @@
 import AppMenu from './app-menu.svg?raw';
+import Close from './close.svg?raw';
 import Crown from './crown.svg?raw';
 import Data from './data.svg?raw';
 import Edit from './edit.svg?raw';
@@ -59,5 +60,9 @@ export const icons = {
 	loader: {
 		alt: 'loader icon',
 		src: Loader
+	},
+	close: {
+		alt: 'close icon',
+		src: Close
 	}
 } as const;

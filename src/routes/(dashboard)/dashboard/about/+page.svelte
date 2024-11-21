@@ -60,12 +60,15 @@
 		formData.set('updatedPhotoUrl', updatedPhotoUrl);
 		formData.set('authorId', id.toString());
 
+		loading = true;
+
 		return async ({ result }: HandleEnhanceReturnParams) => {
 			if (result.type === 'success') {
 				await invalidateAll();
 			}
 
 			await applyAction(result);
+			loading = false;
 		};
 	};
 </script>
@@ -126,13 +129,7 @@
 			<TipTap bind:content={about} />
 		</section>
 		<div class="cluster wrapper__form-controls">
-			<button type="submit" class="button" disabled={!isDirty}>
-				{#if loading}
-					<Icon name="loader" />
-				{:else}
-					Save
-				{/if}
-			</button>
+			<button type="submit" class="button" disabled={!isDirty || loading}> Save </button>
 		</div>
 	</form>
 </div>

@@ -1,8 +1,12 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
+	// import Modal from '$lib/components/Modal/Modal.svelte';
+	import Prompt from '$lib/components/Modal/Prompt.svelte';
 	import { derived, writable } from 'svelte/store';
 
 	export let data;
+
+	// let modal: Modal;
 
 	let worksList = [];
 	$: worksList = [{ id: 0, title: 'all', slug: 'all' }, ...data.works];
@@ -30,8 +34,20 @@
 	const handleSelectWork = (work: string): void => {
 		$filter.selectedWork = work;
 	};
+
+	const handleDelete = (id: number) => {
+		// modal.open();
+	};
 </script>
 
+// https://www.captaincodeman.com/dealing-with-dialogs-in-svelte
+
+<Prompt
+	label="Delete"
+	onresult={() => {}}
+	description="Project will be removed from the database"
+	labelType="reset"
+></Prompt>
 <div class="flow">
 	<header>
 		<h6>Projects</h6>
@@ -66,9 +82,9 @@
 							<img src={project.images[0].url} alt={project.images[0].alt} />
 						</div>
 						<div class="project__meta flow">
-							<a href={`projects/${project.slug}`}>
-								<h5>{project.title}</h5>
-							</a>
+							<!-- <a href={`projects/${project.slug}`}> -->
+							<h5>{project.title}</h5>
+							<!-- </a> -->
 							<div class="project__meta--tags-list">
 								<span>#{project.work}</span>
 							</div>
@@ -78,7 +94,7 @@
 								<Icon name="edit" height="1.2em" />
 								<span class="visually-hidden">Edit project ${project.title}</span>
 							</button>
-							<button class="button" type="reset">
+							<button class="button" type="reset" on:click={() => handleDelete(project.id)}>
 								<Icon name="trash" height="1.2em" />
 								<span class="visually-hidden">Remove project ${project.title}</span>
 							</button>
@@ -133,28 +149,21 @@
 
 		flex-grow: 1;
 
-		a {
-			--link-border-radius: 0.5ch;
-			--link-outline-offset: 0px;
-
-			display: inline-block;
-			text-decoration: none;
-
-			h5 {
-				font-weight: 600;
-			}
+		h5 {
+			font-size: var(--text-size-heading-4);
+			font-weight: 600;
 		}
 
 		&--tags-list span {
-			font-size: var(--size-step--3);
-			color: var(--color-surface-800);
-			font-weight: 500;
-			background-color: var(--color-dark-400);
-			padding-inline: 1ch;
-			padding-block: 0.25ch;
-			border-radius: 0.5ch;
+			font-size: var(--size-step--2);
+			// color: var(--color-surface-800);
+			// font-weight: 400;
+			// background-color: var(--color-dark-400);
+			// padding-inline: 1ch;
+			// padding-block: 0.25ch;
+			// border-radius: 0.5ch;
 
-			user-select: none;
+			// user-select: none;
 		}
 	}
 
