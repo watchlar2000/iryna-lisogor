@@ -1,31 +1,29 @@
 <script lang="ts">
 	import Modal from './Modal.svelte';
 
-	export let onresult: (result: boolean) => void;
+	export let onresult: (result: boolean) => Promise<void>;
+	// export let oncallback: (result: boolean) => void;
 	export let title = 'Are you sure?';
 	export let label: string;
 	export let labelType: 'reset' | 'submit' = 'reset';
 	export let description: string | undefined = undefined;
 
 	let modal: Modal;
+	let processingOnresult = false;
 
 	export const open = () => {
 		modal.open();
 	};
 
-	// ensure the dialog is closed and return the result
-	const close = (result: boolean) => {
+	const close = async (result: boolean) => {
+		processingOnresult = true;
+		await onresult(result);
+		processingOnresult = false;
 		modal.close();
-		onresult(result);
 	};
 </script>
 
-<Modal
-	bind:this={modal}
-	onclose={() => {
-		onresult(false);
-	}}
->
+<Modal bind:this={modal}>
 	<div slot="header" class="flow">
 		<h3>{title}</h3>
 		{#if description}
@@ -34,7 +32,7 @@
 	</div>
 	<div slot="commands" class="cluster">
 		<button type={labelType} on:click={() => close(true)}>
-			{label}
+			{processingOnresult ? 'Processing' : label}
 		</button>
 		<button class="button" on:click={() => close(false)}> Cancel </button>
 	</div>

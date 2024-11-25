@@ -1,12 +1,13 @@
 <script lang="ts">
 	import Icon from '$lib/components/Icon.svelte';
-	// import Modal from '$lib/components/Modal/Modal.svelte';
 	import Prompt from '$lib/components/Modal/Prompt.svelte';
+	import { notification } from '$lib/utils/notification.js';
 	import { derived, writable } from 'svelte/store';
 
 	export let data;
 
-	// let modal: Modal;
+	let deleteProject: Prompt;
+	let onDeleteResult: (result: boolean) => Promise<void>;
 
 	let worksList = [];
 	$: worksList = [{ id: 0, title: 'all', slug: 'all' }, ...data.works];
@@ -35,19 +36,32 @@
 		$filter.selectedWork = work;
 	};
 
-	const handleDelete = (id: number) => {
-		// modal.open();
+	const handleDelete = (id: number): void => {
+		deleteProject.open();
+
+		onDeleteResult = async (result) => {
+			if (!result) return;
+
+			return new Promise((resolve) => {
+				setTimeout(() => {
+					console.log(`removed project with id ${id}`);
+					resolve();
+					notification.success('Removed successfully');
+				}, 2000);
+			});
+		};
 	};
+
+	// https://www.captaincodeman.com/dealing-with-dialogs-in-svelte
 </script>
 
-// https://www.captaincodeman.com/dealing-with-dialogs-in-svelte
-
 <Prompt
+	bind:this={deleteProject}
 	label="Delete"
-	onresult={() => {}}
+	onresult={onDeleteResult}
 	description="Project will be removed from the database"
 	labelType="reset"
-></Prompt>
+/>
 <div class="flow">
 	<header>
 		<h6>Projects</h6>

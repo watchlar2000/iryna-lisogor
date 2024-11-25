@@ -1,19 +1,7 @@
 <script lang="ts">
 	import Icon from '../Icon.svelte';
 
-	export let onclose;
-	// export let commands;
-
-	export let showModal = true;
-
 	let dialog: HTMLDialogElement;
-
-	$: if (dialog && showModal) dialog.showModal();
-
-	// const closeDialog = () => {
-	// 	dialog.close();
-	// 	showModal = false;
-	// };
 
 	export const open = () => {
 		dialog.showModal();
@@ -21,7 +9,6 @@
 
 	export const close = () => {
 		dialog.close();
-		showModal = false;
 	};
 </script>
 
@@ -46,6 +33,7 @@
 
 	.dialog__content {
 		width: 100%;
+		text-align: center;
 
 		& > div:last-of-type {
 			color: orange;
