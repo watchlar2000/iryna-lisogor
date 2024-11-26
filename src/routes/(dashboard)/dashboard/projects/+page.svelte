@@ -2,34 +2,48 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Prompt from '$lib/components/Modal/Prompt.svelte';
 	import { notification } from '$lib/utils/notification.js';
+	import { onMount } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 
 	export let data;
 
 	let deleteProject: Prompt;
+	let onresult = false;
+	let onDeleteCallback: () => Promise<void>;
 	let onDeleteResult: (result: boolean) => Promise<void>;
 
 	let worksList = [];
 	$: worksList = [{ id: 0, title: 'all', slug: 'all' }, ...data.works];
 
+	// searchString will be used along with the search input so admin can use it to find the projects more efficiently
 	const filter = writable({
-		searchString: '',
+		// searchString: '',
 		selectedWork: 'all'
 	});
 
 	const projects = writable(data.projects);
 
+	onMount(() => {
+		const { hash } = document.location;
+
+		if (hash) {
+			filter.set({ selectedWork: hash.slice(1) });
+		}
+	});
+
 	const filteredProjects = derived([projects, filter], ([$projects, $filter]) => {
-		const { selectedWork, searchString } = $filter;
+		const { selectedWork } = $filter;
 		const isSelectedWorkAll = selectedWork === 'all';
 
-		if (!searchString && isSelectedWorkAll) return $projects;
+		if (isSelectedWorkAll) return $projects;
 
 		const filteredByWork = isSelectedWorkAll
 			? $projects
 			: $projects.filter(({ work }) => work === selectedWork);
 
-		return filteredByWork.filter((project) => project.title.toLowerCase().includes(searchString));
+		// return filteredByWork.filter((project) => project.title.toLowerCase().includes(searchString));
+
+		return filteredByWork;
 	});
 
 	const handleSelectWork = (work: string): void => {
@@ -39,18 +53,24 @@
 	const handleDelete = (id: number): void => {
 		deleteProject.open();
 
-		onDeleteResult = async (result) => {
-			if (!result) return;
-
+		onDeleteCallback = () => {
 			return new Promise((resolve) => {
 				setTimeout(() => {
 					console.log(`removed project with id ${id}`);
 					resolve();
-					notification.success('Removed successfully');
 				}, 2000);
 			});
 		};
 	};
+
+	$: if (onresult) {
+		notification.promise(onDeleteCallback(), {
+			loading: 'Removing project',
+			success: 'Removed successfully',
+			error: 'Failed to remove project'
+		});
+		onresult = false;
+	}
 
 	// https://www.captaincodeman.com/dealing-with-dialogs-in-svelte
 </script>
@@ -58,7 +78,7 @@
 <Prompt
 	bind:this={deleteProject}
 	label="Delete"
-	onresult={onDeleteResult}
+	onresult={(res) => (onresult = res)}
 	description="Project will be removed from the database"
 	labelType="reset"
 />
@@ -66,27 +86,25 @@
 	<header>
 		<h6>Projects</h6>
 	</header>
-	<!-- <div class="flow control__panel">
-		<label for="search">
-			Search
-			<input type="text" id="search" bind:value={$filter.searchString} />
-		</label>
+	<div class="flow filter__panel">
 		<div>
 			<ul role="list" class="cluster">
 				{#each worksList as work (work.id)}
 					<li>
-						<button
+						<a
+							href={`#${work.slug}`}
 							class:selected={$filter.selectedWork === work.slug}
+							class="button"
 							on:click={() => {
 								handleSelectWork(work.slug);
 							}}
 							>{work.title}
-						</button>
+						</a>
 					</li>
 				{/each}
 			</ul>
 		</div>
-	</div> -->
+	</div>
 	<div>
 		{#if $filteredProjects.length}
 			<ul role="list" class="projects__list flow">
@@ -96,9 +114,7 @@
 							<img src={project.images[0].url} alt={project.images[0].alt} />
 						</div>
 						<div class="project__meta flow">
-							<!-- <a href={`projects/${project.slug}`}> -->
 							<h5>{project.title}</h5>
-							<!-- </a> -->
 							<div class="project__meta--tags-list">
 								<span>#{project.work}</span>
 							</div>
@@ -122,28 +138,19 @@
 	</div>
 </div>
 
-<!-- export const projects = pgTable('projects', {
-	id: serial('id').primaryKey(),
-	title: varchar('title').notNull(),
-	slug: varchar('slug').notNull(),
-	description: varchar('description'),
-	work: varchar('work'),
-	createdAt: timestamp('created_at').defaultNow(),
-	updatedAt: timestamp('updated_at').defaultNow()
-}); -->
-
 <style lang="scss">
 	header.cluster {
-		--_horizontal-alignment: space-between;
+		// --_horizontal-alignment: space-between;
 
-		width: 100%;
+		// width: 100%;
 	}
 
 	.projects__list {
 		li {
 			--cluster-vertical-alignment: start;
+
 			background-color: var(--color-surface-900);
-			padding: var(--space-s);
+			padding: var(--space-xs);
 			border-radius: 0.625rem;
 		}
 	}
@@ -151,6 +158,8 @@
 	.project__image {
 		max-width: 12ch;
 		height: 8ch;
+		border-radius: 0.375rem;
+		overflow: hidden;
 
 		img {
 			height: 100%;
@@ -170,14 +179,6 @@
 
 		&--tags-list span {
 			font-size: var(--size-step--2);
-			// color: var(--color-surface-800);
-			// font-weight: 400;
-			// background-color: var(--color-dark-400);
-			// padding-inline: 1ch;
-			// padding-block: 0.25ch;
-			// border-radius: 0.5ch;
-
-			// user-select: none;
 		}
 	}
 
@@ -190,87 +191,23 @@
 		}
 	}
 
-	/*
-	.wrapper {
-		// background-color: orange;
+	.filter__panel {
+		a {
+			--link-bg: var(--color-surface-900);
+			--link-border-radius: 0.5rem;
+			--link-font-size: var(--size-step--2);
+			--link-padding-inline: 0.75ch;
+			--link-padding-block: 0.25ch;
+			--link-hover-color: ;
+			--link-active-color: ;
+			--link-hover-bg: var(--color-surface-800);
 
-		ul.projects li {
-			// --_horizontal-alignment: space-between;
-			--_vertical-alignment: flex-start;
-
-			width: 100%;
-			padding-inline: var(--space-xs);
-			padding-block: var(--space-xs);
-			background-color: hsl(0, 0%, 99%);
-			// min-width: 100%;
-
-			h2 {
-				font-size: var(--text-heading-4);
-			}
+			text-decoration: none;
+			font-weight: 400;
 		}
 	}
 
-	.project__image {
-		height: 5em;
-		width: 8em;
-
-		img {
-			object-fit: cover;
-			object-position: center;
-			height: 100%;
-		}
+	.selected {
+		background-color: var(--color-accent-500);
 	}
-
-	.project__meta {
-		align-self: flex-start;
-		justify-self: flex-start;
-		// text-align: left;
-		p {
-			font-size: var(--size-step--3);
-			padding: 0.15em 0.6em;
-			background-color: hsla(0, 0%, 60%, 0.4);
-			// width: max-content;
-			border-radius: 0.4em;
-			width: max-content;
-			margin-left: 0;
-			color: hsla(0, 0%, 20%, 0.75);
-		}
-	}
-
-	.project__controls {
-		// --_direction: column;
-		--_column-gap: var(--space-xs);
-
-		margin-left: auto;
-	}
-
-	.control__panel {
-		ul {
-			--_wrap: nowrap;
-			--_column-gap: var(--space-s);
-			--_horizontal-alignment: flex-start;
-			--_vertical-alignment: flex-start;
-
-			font-size: var(--size-step--3);
-			font-weight: 500;
-
-			li {
-				flex-basis: 0;
-				// width: max-content;
-
-				button {
-					width: max-content;
-					padding: 0.15em 0.6em;
-					background-color: hsla(0, 0%, 60%, 0.4);
-					color: hsla(0, 0%, 20%, 0.75);
-					border-radius: 0.5rem;
-				}
-			}
-		}
-
-		.selected {
-			background-color: orange;
-		}
-	}
-		*/
 </style>

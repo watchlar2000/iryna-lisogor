@@ -2,24 +2,20 @@
 	import Modal from './Modal.svelte';
 
 	export let onresult: (result: boolean) => Promise<void>;
-	// export let oncallback: (result: boolean) => void;
 	export let title = 'Are you sure?';
 	export let label: string;
 	export let labelType: 'reset' | 'submit' = 'reset';
 	export let description: string | undefined = undefined;
 
 	let modal: Modal;
-	let processingOnresult = false;
 
 	export const open = () => {
 		modal.open();
 	};
 
-	const close = async (result: boolean) => {
-		processingOnresult = true;
-		await onresult(result);
-		processingOnresult = false;
+	const close = (result: boolean) => {
 		modal.close();
+		onresult(result);
 	};
 </script>
 
@@ -32,7 +28,7 @@
 	</div>
 	<div slot="commands" class="cluster">
 		<button type={labelType} on:click={() => close(true)}>
-			{processingOnresult ? 'Processing' : label}
+			{label}
 		</button>
 		<button class="button" on:click={() => close(false)}> Cancel </button>
 	</div>
@@ -42,7 +38,6 @@
 	div:has(> button) {
 		--cluster-direction: row;
 		--cluster-horizontal-alignment: center;
-		// --cluster-wrap: nowrap;
 
 		width: 100%;
 	}
