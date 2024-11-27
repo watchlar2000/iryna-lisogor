@@ -37,7 +37,7 @@
 
 <style lang="scss">
 	div > * {
-		--_flow-space: var(--space-xs);
+		--_flow-space: var(--space-s);
 	}
 
 	.cluster {

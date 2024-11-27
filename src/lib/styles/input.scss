@@ -1,24 +1,32 @@
 .input {
-	--_color: var(--input-color, inherit);
+	--_color: var(--input-color, currentColor);
 	--_padding-inline: var(--input-padding-inline, 1.25ch);
 	--_padding-block: var(--input-padding-block, 1.75ch);
 	--_bg: var(--input-bg, #fcfcfc);
-	--_border-radius: var(--input-border-radius, 0.5em);
+	--_border-radius: var(--input-border-radius, 1ch);
 	--_border-width: var(--input-border-width, 3px);
-	--_border-color: var(--_input-border-color, var(--color-dark-transparent));
+	--_border-color: var(--_input-border-color, var(--color-dark-400));
+	--_focus-border-color: var(--input-focus-border-color, var(--color-dark-200));
 	--_border-style: var(--input-border-style, solid);
-	--_transition-duration: var(--input-transition-duration, 100ms);
-	--_transition-property: var(--input-transition-property, all);
-	--_transition-timing-func: var(--input-transition-timing-func, none);
+	// --_transition-duration: var(--input-transition-duration, 100ms);
+	// --_transition-property: var(--input-transition-property, all);
+	// --_transition-timing-func: var(--input-transition-timing-func, none);
 
-	--outline-color: orange;
-	--outline-width: 5px;
-	--outline-offset: 0px;
+	--_focus-color: var(--input-focus-color, var(--color-accent-500));
+
+	--_outline-width: var(--input-outline-width, 3px);
+	--_outline-style: var(--input-outline-style, solid);
+	--_outline-color: var(--input-outline-color, var(--color-accent-500));
+	--_outline-offset: var(--input-outline-offset, 0px);
+
+	--_font-size: var(--button-font-size, var(--size-step--1));
+	--_font-weight: var(--button-font-weight, 600);
 
 	appearance: none;
 	color: var(--_color);
-	font-size: inherit;
-	font-family: inherit;
+	font-size: var(--_font-size);
+	font-family: var(--font-ubuntu);
+	font-weight: 400;
 	padding-inline: var(--_padding-inline);
 	padding-block: var(--_padding-block);
 	background-color: var(--_bg);
@@ -26,18 +34,17 @@
 	border-color: var(--_border-color);
 	border-style: var(--_border-style);
 	border-radius: var(--_border-radius);
-	transition: 250ms all ease-in-out;
-	transition: var(--_transition-duration);
-	transition-property: var(--_transition-property);
-	transition-timing-function: var(--_transition-timing-func);
 
-	&[data-input-radius='hard'] {
-		--_border-radius: 0;
+	&:focus-visible {
+		outline-width: var(--_outline-width);
+		outline-style: var(--_outline-style);
+		outline-color: var(--_outline-color);
+		outline-offset: var(--_outline-offset);
 	}
 
 	&:not(textarea) {
 		line-height: inherit;
-		height: 2em;
+		height: 1.5ch;
 	}
 
 	&[type='file'] {
@@ -62,5 +69,6 @@
 }
 
 textarea.input {
+	width: 100%;
 	resize: vertical;
 }

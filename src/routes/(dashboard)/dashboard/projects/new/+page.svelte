@@ -1,45 +1,32 @@
 <script lang="ts">
-	import TipTap from '$lib/components/RichTextEditor/TipTapEditor.svelte';
-	// import type { PageData } from '../$types';
-	import type { LayoutData } from '../../$types';
+	import TipTapEditor from '$lib/components/RichTextEditor/TipTapEditor.svelte';
 
-	export let data: LayoutData;
-
-	$: ({ works } = data);
-
-	let description: string;
-	let selectedWork: string;
-
-	const handleSubmit = (event) => {
-		const fd = new FormData(event.currentTarget);
-		fd.set('work', selectedWork);
-		fd.set('description', description);
-		console.log(fd);
-	};
+	let about = '';
 </script>
 
-<h1>Add new project</h1>
-
-<form on:submit|preventDefault={handleSubmit}>
-	<label for="title" class="block"
-		>Title
-		<input type="text" name="title" id="title" autocomplete="off" />
-	</label>
-
-	<div>
-		<h2 class="text-lg font-semibold">Description:</h2>
-		<TipTap bind:content={description} class="mt-5" />
-	</div>
-
-	<select bind:value={selectedWork}>
-		{#each works as work (work.id)}
-			<option value={work.slug}>
-				{work.title}
-			</option>
-		{/each}
-	</select>
-	<button class="block p-2 bg-yellow-200 mt-4">Save</button>
-</form>
+<div class="flow">
+	<header>
+		<h6>New project</h6>
+	</header>
+	<form action="" class="flow">
+		<label for="title" class="cluster">
+			<h5>Title:</h5>
+			<input type="text" id="title" class="input" />
+		</label>
+		<label for="work" class="cluster">
+			<h5>Work:</h5>
+			<select name="work" id="work">
+				<option value="backgrpund-painting">Background painting</option>
+				<option value="visual-development">Visual development</option>
+				<option value="playground">Playground</option>
+			</select>
+		</label>
+		<section class="flow">
+			<h5>Description:</h5>
+			<TipTapEditor bind:content={about} />
+		</section>
+	</form>
+</div>
 
 <!-- export const projects = pgTable('projects', {
 	id: serial('id').primaryKey(),
@@ -50,3 +37,22 @@
 	createdAt: timestamp('created_at').defaultNow(),
 	updatedAt: timestamp('updated_at').defaultNow()
 }); -->
+
+<style lang="scss">
+	label {
+		--cluster-direction: column;
+		// --cluster-row-gap: var(--space-xs);
+		--cluster-vertical-alignment: flex-start;
+		--cluster-horizontal-alignment: flex-start;
+
+		// display: inline-flex;
+
+		// background-color: gray;
+
+		// justify-content: flex-start;
+
+		input {
+			width: 100%;
+		}
+	}
+</style>

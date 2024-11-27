@@ -1,28 +1,23 @@
 .wrapper__editor {
-	--_outline-width: var(--editor-outline-width, 2px);
-	--_outline-style: var(--editor-outline-style, solid);
-	--_outline-color: var(--editor-outline-color, var(--color-link-500));
-	--_outline-offset: var(--editor-outline-offset, 0.25ex);
+	--_outline-width: var(--input-outline-width, 3px);
+	--_outline-style: var(--input-outline-style, solid);
+	--_outline-color: var(--input-outline-color, var(--color-accent-500));
+	--_outline-offset: var(--input-outline-offset, 0px);
 
-	border: 2px solid var(--color-surface-800);
+	border: 3px solid var(--color-dark-400);
 	padding: var(--space-xs);
 	font-size: var(--text-size-meta);
-	border-radius: var(--radius);
+	border-radius: 1ch;
 	transition:
 		background-color 125ms ease,
 		outline-offset 125ms ease;
 
 	&:focus {
-		outline-color: var(--color-surface-800);
-		background-color: var(--color-surface-900);
+		outline-width: var(--_outline-width);
+		outline-style: var(--_outline-style);
+		outline-color: var(--_outline-color);
+		outline-offset: var(--_outline-offset);
 	}
-
-	// &:focus-visible {
-	// 	outline-width: var(--_outline-width);
-	// 	outline-style: var(--_outline-style);
-	// 	outline-color: var(--_outline-color);
-	// 	outline-offset: var(--_outline-offset);
-	// }
 
 	p {
 		max-width: 100%;

@@ -2,7 +2,7 @@
 	import { applyAction, enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
-	import TipTap from '$lib/components/RichTextEditor/TipTapEditor.svelte';
+	import TipTapEditor from '$lib/components/RichTextEditor/TipTapEditor.svelte';
 	import { formatDateToReadable } from '$lib/utils/date';
 	import { initImageUpload } from '$lib/utils/file';
 	import { notification } from '$lib/utils/notification';
@@ -126,7 +126,7 @@
 		</section>
 		<section class="flow">
 			<h5>About:</h5>
-			<TipTap bind:content={about} />
+			<TipTapEditor bind:content={about} />
 		</section>
 		<div class="cluster wrapper__form-controls">
 			<button type="submit" class="button" disabled={!isDirty || loading}> Save </button>
@@ -150,7 +150,6 @@
 	}
 
 	.button-custom {
-		// --button-bg: none;
 		--button-font-size: 0.875rem;
 		--button-font-weight: 500;
 		--button-padding-inline: 1.5ch;

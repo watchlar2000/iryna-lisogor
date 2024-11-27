@@ -9,7 +9,7 @@
 }
 
 .flow > * + * {
-	--_flow-space: var(--flow-space, 1em);
+	--_flow-space: var(--flow-space, 0.9em);
 
 	margin-block-start: var(--_flow-space);
 }

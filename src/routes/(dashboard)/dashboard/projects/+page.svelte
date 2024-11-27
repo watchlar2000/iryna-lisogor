@@ -83,8 +83,12 @@
 	labelType="reset"
 />
 <div class="flow">
-	<header>
+	<header class="cluster">
 		<h6>Projects</h6>
+		<a href="projects/new" class="button">
+			<Icon name="plus" height="var(--text-size-heading-2)" />
+			<span class="visually-hidden">Add new project</span>
+		</a>
 	</header>
 	<div class="flow filter__panel">
 		<div>
@@ -140,9 +144,24 @@
 
 <style lang="scss">
 	header.cluster {
-		// --_horizontal-alignment: space-between;
+		--_horizontal-alignment: space-between;
 
-		// width: 100%;
+		width: 100%;
+
+		a {
+			--_bg: var(--color-surface-700);
+			--_font-size: var(--size-step--4);
+			--_padding-inline: 0.5ch;
+			--_padding-block: 0.5ch;
+			--_border-radius: 50%;
+			--_hover-bg: var(--color-accent-500);
+			--_hover-color: var(--color-dark-100);
+			--_active-bg: var(--color-accent-400);
+			--_active-color: var(--color-dark-100);
+			--_text: var(--color-dark-100);
+
+			text-decoration: none;
+		}
 	}
 
 	.projects__list {
