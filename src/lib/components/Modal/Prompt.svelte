@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Modal from './Modal.svelte';
 
-	export let onresult: (result: boolean) => Promise<void>;
+	export let onresult: (result: boolean) => boolean;
 	export let title = 'Are you sure?';
 	export let label: string;
 	export let labelType: 'reset' | 'submit' = 'reset';
