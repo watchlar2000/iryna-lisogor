@@ -11,10 +11,8 @@
 
 <style lang="scss">
 	button {
-		--button-border-width: 0px;
 		--button-padding-inline: 1.75ch;
 		--button-padding-block: 0.75ch;
-		--button-font-size: var(--size-step--2);
-		--button-font-weight: 600;
+		--button-font-size: var(--size-step--3);
 	}
 </style>

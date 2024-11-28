@@ -47,6 +47,7 @@
 	});
 
 	const handleSelectWork = (work: string): void => {
+		document.location.hash = work;
 		$filter.selectedWork = work;
 	};
 
@@ -86,8 +87,8 @@
 	<header class="cluster">
 		<h6>Projects</h6>
 		<a href="projects/new" class="button">
-			<Icon name="plus" height="var(--text-size-heading-2)" />
-			<span class="visually-hidden">Add new project</span>
+			<Icon name="plus" />
+			Add new project
 		</a>
 	</header>
 	<div class="flow filter__panel">
@@ -95,15 +96,14 @@
 			<ul role="list" class="cluster">
 				{#each worksList as work (work.id)}
 					<li>
-						<a
-							href={`#${work.slug}`}
+						<button
 							class:selected={$filter.selectedWork === work.slug}
 							class="button"
 							on:click={() => {
 								handleSelectWork(work.slug);
 							}}
 							>{work.title}
-						</a>
+						</button>
 					</li>
 				{/each}
 			</ul>
@@ -149,16 +149,17 @@
 		width: 100%;
 
 		a {
-			--_bg: var(--color-surface-700);
-			--_font-size: var(--size-step--4);
-			--_padding-inline: 0.5ch;
-			--_padding-block: 0.5ch;
-			--_border-radius: 50%;
-			--_hover-bg: var(--color-accent-500);
-			--_hover-color: var(--color-dark-100);
-			--_active-bg: var(--color-accent-400);
-			--_active-color: var(--color-dark-100);
+			--_bg: var(--color-link-800);
+			--_font-size: var(--size-step--2);
+			--_padding-inline: 1.25ch;
+			--_padding-block: 0.75ch;
+			--_hover-bg: var(--color-link-500);
+			--_hover-color: var(--color-surface-800);
+			--_active-bg: var(--color-link-400);
+			--_active-color: var(--color-surface-900);
 			--_text: var(--color-dark-100);
+			--_font-weight: 600;
+			--_border-width: 0px;
 
 			text-decoration: none;
 		}
@@ -211,22 +212,16 @@
 	}
 
 	.filter__panel {
-		a {
-			--link-bg: var(--color-surface-900);
-			--link-border-radius: 0.5rem;
-			--link-font-size: var(--size-step--2);
-			--link-padding-inline: 0.75ch;
-			--link-padding-block: 0.25ch;
-			--link-hover-color: ;
-			--link-active-color: ;
-			--link-hover-bg: var(--color-surface-800);
+		button {
+			--button-padding-inline: 1.75ch;
+			--button-padding-block: 0.75ch;
+			--button-font-size: var(--size-step--3);
 
-			text-decoration: none;
-			font-weight: 400;
+			text-transform: capitalize;
 		}
 	}
 
 	.selected {
-		background-color: var(--color-accent-500);
+		border-color: var(--color-accent-400);
 	}
 </style>

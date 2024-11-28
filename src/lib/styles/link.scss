@@ -8,7 +8,7 @@
 	--_visited-color: var(--link-visited-color, var(--color-accent-400));
 
 	--_border-radius: var(--link-border-radius, var(--button-border-radius, 1ch));
-	--_weight: var(--link-text-weight, inherit);
+	--_font-weight: var(--link-text-weight, inherit);
 
 	--_text-decoration-style: var(--link-text-decoration-style, solid);
 	--_text-decoration-thickness: var(--link-text-decoration-thickness, 0.1em);
@@ -49,7 +49,7 @@
 
 :where(a):not(.exclude) {
 	color: var(--_text);
-	font-weight: var(--_weight);
+	font-weight: var(--_font-weight);
 	text-decoration-style: var(--_text-decoration-style);
 	text-decoration-thickness: var(--_text-decoration-thickness);
 	text-underline-offset: var(--_text-underline-offset);
