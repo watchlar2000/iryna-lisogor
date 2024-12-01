@@ -1,35 +1,38 @@
 <script lang="ts">
+	import { Editor } from '@tiptap/core';
 	import { onMount } from 'svelte';
-	import { writable } from 'svelte/store';
-	import type { EditorControl } from './config';
-	import { controls } from './config';
+	import { controls, extensions } from './config';
 	import EditorButton from './EditorButton.svelte';
-	import { initEditor } from './initTipTapEditor';
 
 	export let content = '';
 	let element: HTMLElement;
-
-	const controlsList = writable<EditorControl[]>([]);
+	let editor: Editor;
 
 	onMount(() => {
-		const { contentStore, destroy, editor } = initEditor({ content, element });
-
-		contentStore.subscribe((updatedContent) => {
-			content = updatedContent;
+		editor = new Editor({
+			editorProps: {
+				attributes: {
+					class: 'wrapper__editor flow'
+				}
+			},
+			injectCSS: false,
+			element: element,
+			extensions,
+			content,
+			onUpdate: ({ editor }) => {
+				content = editor.getHTML();
+			},
+			onTransaction: () => {
+				editor = editor;
+			}
 		});
-
-		controlsList.set(controls(editor));
-
-		return () => {
-			destroy();
-		};
 	});
 </script>
 
-<div class={`flow ${$$props.class || ''}`}>
+<div class="flow {$$props.class || ''}">
 	<div class="cluster">
-		{#each $controlsList as { label, onClick, active, disabled }}
-			<EditorButton {label} {onClick} {active} {disabled} />
+		{#each controls(editor) as { label, onClick, className, title }}
+			<EditorButton {label} {onClick} class={className} {title} />
 		{/each}
 	</div>
 	<div bind:this={element} />

@@ -128,9 +128,7 @@
 			<h5>About:</h5>
 			<TipTapEditor bind:content={about} />
 		</section>
-		<div class="cluster wrapper__form-controls">
-			<button type="submit" class="button" disabled={!isDirty || loading}> Save </button>
-		</div>
+		<button type="submit" class="button" disabled={!isDirty || loading}> Save </button>
 	</form>
 </div>
 

@@ -7,8 +7,9 @@ import StarterKit from '@tiptap/starter-kit';
 export type EditorControl = {
 	label: string;
 	onClick: () => void;
-	active: boolean;
-	disabled: boolean;
+	className: string;
+	title: string;
+	disabled?: boolean;
 };
 
 const setLink = (editor: Editor) => () => {
@@ -35,39 +36,39 @@ export const controls = (editor: Editor): EditorControl[] => {
 	return [
 		{
 			label: 'B',
-			onClick: () => editor.chain().focus().toggleBold().run(),
-			active: editor.isActive('bold'),
-			disabled: false
+			onClick: () => editor?.chain().focus().toggleBold().run(),
+			className: editor?.isActive('bold') ? 'is-active' : '',
+			title: 'Make the text bold'
 		},
 		{
 			label: 'I',
-			onClick: () => editor.chain().focus().toggleItalic().run(),
-			active: editor.isActive('italic'),
-			disabled: false
+			onClick: () => editor?.chain().focus().toggleItalic().run(),
+			className: editor?.isActive('italic') ? 'is-active' : '',
+			title: 'Make the text italic'
 		},
 		{
 			label: 'UL',
-			onClick: () => editor.chain().focus().toggleBulletList().run(),
-			active: editor.isActive('bulletList'),
-			disabled: false
+			onClick: () => editor?.chain().focus().toggleBulletList().run(),
+			className: editor?.isActive('bulletList') ? 'is-active' : '',
+			title: 'Create unordered list'
 		},
 		{
 			label: 'OL',
-			onClick: () => editor.chain().focus().toggleOrderedList().run(),
-			active: editor.isActive('orderedList'),
-			disabled: false
+			onClick: () => editor?.chain().focus().toggleOrderedList().run(),
+			className: editor?.isActive('orderedList') ? 'is-active' : '',
+			title: 'Create ordered list'
 		},
 		{
 			label: 'Set link',
 			onClick: setLink(editor),
-			active: editor.isActive('link'),
-			disabled: false
+			className: editor?.isActive('link') ? 'is-active' : '',
+			title: 'Set up the link'
 		},
 		{
 			label: 'Unset link',
-			onClick: () => editor.chain().focus().unsetLink().run(),
-			active: true,
-			disabled: false
+			onClick: () => editor?.chain().focus().unsetLink().run(),
+			className: '',
+			title: 'Unset the link'
 		}
 	];
 };

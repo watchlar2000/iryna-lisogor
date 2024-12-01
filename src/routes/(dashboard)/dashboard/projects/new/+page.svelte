@@ -1,17 +1,39 @@
 <script lang="ts">
+	import { applyAction, enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import TipTapEditor from '$lib/components/RichTextEditor/TipTapEditor.svelte';
+	import type { ActionResult } from '@sveltejs/kit';
 
-	let about = '';
+	let description = '';
+
+	type HandleEnhanceParams = { formData: FormData };
+	type HandleEnhanceReturnParams = {
+		result: ActionResult<Record<string, unknown> | undefined, Record<string, unknown> | undefined>;
+	};
+
+	const handleEnhance = ({ formData }: HandleEnhanceParams) => {
+		formData.set('description', description);
+		// formData.set('updatedPhotoUrl', updatedPhotoUrl);
+		// formData.set('authorId', id.toString());
+
+		return async ({ result }: HandleEnhanceReturnParams) => {
+			if (result.type === 'success') {
+				await invalidateAll();
+			}
+
+			await applyAction(result);
+		};
+	};
 </script>
 
 <div class="flow">
 	<header>
 		<h6>New project</h6>
 	</header>
-	<form action="" class="flow">
+	<form method="POST" class="flow" use:enhance={handleEnhance}>
 		<label for="title" class="cluster">
 			<h5>Title:</h5>
-			<input type="text" id="title" class="input" />
+			<input type="text" id="title" class="input" name="title" />
 		</label>
 		<label for="work" class="cluster">
 			<h5>Work:</h5>
@@ -23,8 +45,9 @@
 		</label>
 		<section class="flow">
 			<h5>Description:</h5>
-			<TipTapEditor bind:content={about} />
+			<TipTapEditor bind:content={description} />
 		</section>
+		<button type="submit">Save</button>
 	</form>
 </div>
 
@@ -41,7 +64,7 @@
 <style lang="scss">
 	label {
 		--cluster-direction: column;
-		// --cluster-row-gap: var(--space-xs);
+		--cluster-row-gap: 0.5ch;
 		--cluster-vertical-alignment: flex-start;
 		--cluster-horizontal-alignment: flex-start;
 
