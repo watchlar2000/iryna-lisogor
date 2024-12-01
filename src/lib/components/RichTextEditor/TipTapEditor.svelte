@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Editor } from '@tiptap/core';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { controls, extensions } from './config';
 	import EditorButton from './EditorButton.svelte';
 
@@ -26,6 +26,10 @@
 				editor = editor;
 			}
 		});
+	});
+
+	onDestroy(() => {
+		editor.destroy();
 	});
 </script>
 
