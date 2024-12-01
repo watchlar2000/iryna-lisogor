@@ -26,19 +26,21 @@
 				editor = editor;
 			}
 		});
-	});
 
-	onDestroy(() => {
-		editor.destroy();
+		return () => {
+			editor.destroy();
+		};
 	});
 </script>
 
 <div class="flow {$$props.class || ''}">
-	<div class="cluster">
-		{#each controls(editor) as { label, onClick, className, title }}
-			<EditorButton {label} {onClick} class={className} {title} />
-		{/each}
-	</div>
+	{#if editor}
+		<div class="cluster">
+			{#each controls(editor) as { label, onClick, className, title }}
+				<EditorButton {label} {onClick} class={className} {title} />
+			{/each}
+		</div>
+	{/if}
 	<div bind:this={element} />
 </div>
 
