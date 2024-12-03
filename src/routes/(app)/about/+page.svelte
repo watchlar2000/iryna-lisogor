@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Image } from '@unpic/svelte';
+	// import { Image } from '@unpic/svelte';
 
 	export let data;
 
@@ -17,14 +17,9 @@
 	</div>
 
 	<div class="wrapper flow" data-wrapper-type="inner">
-		<p class="article__photo">
-			<Image
-				alt="Iryna Lisogor profile photo"
-				layout="constrained"
-				src={author.photoUrl ?? ''}
-				aspectRatio={1}
-			/>
-		</p>
+		<div class="profile__photo">
+			<img alt="Iryna Lisogor herself" src={author.photoUrl ?? ''} />
+		</div>
 		<h2>Hello!</h2>
 		<div class="flow">
 			{@html author.about}
@@ -33,8 +28,13 @@
 </div>
 
 <style lang="scss">
-	.article__photo {
+	// .wrapper > *:not(p > img) {
+	// width: 50%;
+	// }
+
+	.profile__photo {
 		margin-inline: auto;
-		width: 50%;
+		width: 100%;
+		max-width: 25ch;
 	}
 </style>

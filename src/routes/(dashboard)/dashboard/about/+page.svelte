@@ -18,7 +18,7 @@
 
 	let isDirty = false;
 	let loading = false;
-	let inputFile: HTMLElement;
+	let inputFile: HTMLInputElement;
 	let updatedPhotoUrl = '';
 	let about = '';
 
@@ -45,7 +45,7 @@
 				isDirty = true;
 			}
 		} catch (err) {
-			notification.error(err.message);
+			notification.error(err?.message);
 			isDirty = false;
 		}
 	};

@@ -4,6 +4,58 @@ import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import StarterKit from '@tiptap/starter-kit';
 
+import { mergeAttributes, Node } from '@tiptap/core';
+import { Image as ImageUnpic } from '@unpic/svelte';
+
+export const CustomImage = Node.create({
+	name: 'customImage',
+	group: 'block',
+	inline: false,
+	atom: true,
+	draggable: true,
+
+	addAttributes() {
+		return {
+			src: {
+				default: null
+			},
+			alt: {
+				default: null
+			}
+		};
+	},
+
+	parseHTML() {
+		return [
+			{
+				tag: 'image-svelte-unpic-component'
+			}
+		];
+	},
+
+	renderHTML({ HTMLAttributes }) {
+		return ['image-svelte-unpic-component', mergeAttributes(HTMLAttributes)];
+	},
+
+	addNodeView() {
+		return ({ node }) => {
+			const dom = document.createElement('div');
+			const image = new ImageUnpic({
+				target: dom,
+				props: {
+					src: node.attrs.src,
+					alt: node.attrs.alt
+				}
+			});
+
+			return {
+				dom,
+				destroy: () => image.$destroy()
+			};
+		};
+	}
+});
+
 export type EditorControl = {
 	label: string;
 	onClick: () => void;
@@ -69,11 +121,24 @@ export const controls = (editor: Editor): EditorControl[] => {
 			onClick: () => editor.chain().focus().unsetLink().run(),
 			className: '',
 			title: 'Unset the link'
+		},
+		{
+			label: 'Insert image',
+			onClick: () => {
+				const url = window.prompt('URL');
+
+				if (url) {
+					editor.chain().focus().setImage({ src: url }).run();
+				}
+			},
+			className: '',
+			title: 'Insert an image'
 		}
 	];
 };
 
 export const extensions = [
+	CustomImage,
 	StarterKit.configure({
 		history: false
 	}),
