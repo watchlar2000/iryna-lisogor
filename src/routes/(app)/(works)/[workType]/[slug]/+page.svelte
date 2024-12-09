@@ -5,7 +5,7 @@
 
 	export let data: PageData;
 
-	$: project = data.project as ProjectWithImages[];
+	$: project = data.project[0] as ProjectWithImages;
 </script>
 
-<ProjectView project={project[0]} />
+<ProjectView {project} />

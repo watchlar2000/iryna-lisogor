@@ -9,7 +9,7 @@
 	import type { ActionResult } from '@sveltejs/kit';
 	import { Image } from '@unpic/svelte';
 	import type { ActionData, PageData } from './$types';
-	import { readFileAsDataURL } from './utils';
+	import { getImageData } from './getImageData';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -41,7 +41,8 @@
 
 		try {
 			if (photoFile) {
-				updatedPhotoUrl = await readFileAsDataURL(photoFile as File);
+				const data = await getImageData(photoFile as File);
+				updatedPhotoUrl = data.url;
 				isDirty = true;
 			}
 		} catch (err) {
@@ -94,7 +95,7 @@
 				<div class="wrapper__image cluster">
 					<Image
 						alt="Iryna Lisogor profile photo"
-						aspectRatio={1}
+						aspectRatio={1 / 1.25}
 						layout="constrained"
 						src={!updatedPhotoUrl ? photoUrl : updatedPhotoUrl}
 					/>

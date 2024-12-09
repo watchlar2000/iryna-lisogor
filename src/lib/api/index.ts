@@ -1,9 +1,9 @@
 import { author } from './author';
+import { image } from './image';
 import { project } from './project';
-import { work } from './work';
 
 export const routing = {
 	author,
 	project,
-	work
+	image
 };

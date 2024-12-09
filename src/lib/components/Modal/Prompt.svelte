@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Modal from './Modal.svelte';
 
-	export let onresult: (result: boolean) => boolean;
+	export let onresult: (result: boolean) => boolean = (res) => res;
 	export let title = 'Are you sure?';
-	export let label: string;
+	export let label = 'Confirm';
 	export let labelType: 'reset' | 'submit' = 'reset';
-	export let description: string | undefined = undefined;
+	export let description = '';
 
 	let modal: Modal;
 

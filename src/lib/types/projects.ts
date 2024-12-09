@@ -1,15 +1,24 @@
+import { WorkType, type SelectProjectsToImages } from '../server/schema';
 import { type Image, type Project } from './common';
 
-export type ProjectWithImages = Project & {
-	images: Image[];
+type ProjectImages = SelectProjectsToImages & {
+	image: Image;
 };
+
+export type ProjectWithImages = Project & {
+	coverImage?: Image;
+	images: ProjectImages[];
+};
+
+type EmptyObj = Record<PropertyKey, never>;
 
 export type ProjectReadParam =
-	| { id: number; work?: never; slug?: never }
-	| { work: string; id?: never; slug?: never }
-	| { slug: string; id?: never; work?: never };
+	| EmptyObj
+	| { id: number }
+	| { workType: WorkType }
+	| { slug: string };
 
-export type Row = {
-	projects: Project;
-	images: Image;
-};
+// export type Row = {
+// 	projects: Project;
+// 	images: Image;
+// };

@@ -2,6 +2,7 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Prompt from '$lib/components/Modal/Prompt.svelte';
 	import { notification } from '$lib/utils/notification.js';
+	import { Image } from '@unpic/svelte';
 	import { onMount } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 
@@ -12,13 +13,33 @@
 	let onDeleteCallback: () => Promise<void>;
 	let onDeleteResult: (result: boolean) => Promise<void>;
 
-	let worksList = [];
-	$: worksList = [{ id: 0, title: 'all', slug: 'all' }, ...data.works];
+	const workTypesList = [
+		{
+			id: 0,
+			title: 'all',
+			slug: 'all'
+		},
+		{
+			id: 1,
+			title: 'background painting',
+			slug: 'background-painting'
+		},
+		{
+			id: 2,
+			title: 'visual development',
+			slug: 'visual-development'
+		},
+		{
+			id: 3,
+			title: 'playground',
+			slug: 'playground'
+		}
+	] as const;
 
 	// searchString will be used along with the search input so admin can use it to find the projects more efficiently
 	const filter = writable({
 		// searchString: '',
-		selectedWork: 'all'
+		selectedWorkType: 'all'
 	});
 
 	const projects = writable(data.projects);
@@ -27,19 +48,19 @@
 		const { hash } = document.location;
 
 		if (hash) {
-			filter.set({ selectedWork: hash.slice(1) });
+			filter.set({ selectedWorkType: hash.slice(1) });
 		}
 	});
 
 	const filteredProjects = derived([projects, filter], ([$projects, $filter]) => {
-		const { selectedWork } = $filter;
-		const isSelectedWorkAll = selectedWork === 'all';
+		const { selectedWorkType } = $filter;
+		const isSelectedWorkAll = selectedWorkType === 'all';
 
 		if (isSelectedWorkAll) return $projects;
 
 		const filteredByWork = isSelectedWorkAll
 			? $projects
-			: $projects.filter(({ work }) => work === selectedWork);
+			: $projects.filter(({ workType }) => workType === selectedWorkType);
 
 		// return filteredByWork.filter((project) => project.title.toLowerCase().includes(searchString));
 
@@ -48,7 +69,7 @@
 
 	const handleSelectWork = (work: string): void => {
 		document.location.hash = work;
-		$filter.selectedWork = work;
+		$filter.selectedWorkType = work;
 	};
 
 	const handleDelete = (id: number): void => {
@@ -94,10 +115,10 @@
 	<div class="flow filter__panel">
 		<div>
 			<ul role="list" class="cluster">
-				{#each worksList as work (work.id)}
+				{#each workTypesList as work (work.id)}
 					<li>
 						<button
-							class:selected={$filter.selectedWork === work.slug}
+							class:selected={$filter.selectedWorkType === work.slug}
 							class="button"
 							on:click={() => {
 								handleSelectWork(work.slug);
@@ -115,12 +136,17 @@
 				{#each $filteredProjects as project}
 					<li class="cluster">
 						<div class="project__image">
-							<img src={project.images[0].url} alt={project.images[0].alt} />
+							<Image
+								src={project.coverImage?.url}
+								alt={project.coverImage?.alt}
+								width={project.coverImage?.width}
+								height={project.coverImage?.height}
+							/>
 						</div>
 						<div class="project__meta flow">
 							<h5>{project.title}</h5>
 							<div class="project__meta--tags-list">
-								<span>#{project.work}</span>
+								<span>#{project.workType}</span>
 							</div>
 						</div>
 						<div class="project__controls cluster">

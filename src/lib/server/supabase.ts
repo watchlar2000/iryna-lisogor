@@ -36,9 +36,7 @@ const storage = (bucketName: string): Storage => ({
 			});
 
 		const imagePath = data.path;
-		const publicUrl = imagePath
-			? query(bucketName).getPublicUrl(imagePath).data.publicUrl
-			: undefined;
+		const publicUrl = query(bucketName).getPublicUrl(imagePath).data.publicUrl;
 
 		return { data: { ...data, publicUrl } };
 	},
@@ -48,7 +46,7 @@ const storage = (bucketName: string): Storage => ({
 		if (error)
 			throw new BaseError({
 				status: HTTP_STATUS.BAD_REQUEST,
-				message: `Something went wrong deleting the following file: ${name}`
+				message: `Something went wrong deleting the file ${name}`
 			});
 
 		return { data };

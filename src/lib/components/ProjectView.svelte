@@ -1,30 +1,8 @@
 <script lang="ts">
-	import type { Image as ImageType } from '$lib/types/common.ts';
 	import type { ProjectWithImages } from '$lib/types/projects.ts';
 	import { Image } from '@unpic/svelte';
 
 	export let project: ProjectWithImages;
-
-	type CategorizedImages = {
-		cover: ImageType | null;
-		nonCover: ImageType[];
-	};
-
-	$: ({ cover, nonCover } = project.images.reduce<CategorizedImages>(
-		(acc, cur) => {
-			if (cur.isCoverImage) {
-				acc.cover = cur;
-			} else {
-				acc.nonCover = [...acc.nonCover, cur];
-			}
-
-			return acc;
-		},
-		{
-			cover: null,
-			nonCover: []
-		}
-	));
 </script>
 
 <svelte:head>
@@ -37,18 +15,32 @@
 		<h1>{project.title}</h1>
 	</div>
 
-	<div class="wrapper flow">
+	<div class="wrapper flow cluster">
 		<p data-wrapper-type="inner">{project.description}</p>
-		<Image src={cover?.url} layout="constrained" aspectRatio={1.5} alt={cover?.alt} />
-		{#each nonCover as image}
-			<Image src={image.url} layout="constrained" aspectRatio={1.5} alt={image.alt} />
+		{#each project.images as { image }}
+			<div>
+				<Image
+					src={image.url}
+					layout="constrained"
+					width={image.width}
+					height={image.height}
+					alt={image.alt}
+				/>
+			</div>
 		{/each}
 	</div>
 </div>
 
 <style>
-	h1,
-	p {
+	h1 {
 		text-align: center;
+	}
+	p {
+		/* text-align: center; */
+		width: 100%;
+	}
+	.cluster {
+		--cluster-horizontal-alignment: center;
+		--cluster-wrap: wrap;
 	}
 </style>

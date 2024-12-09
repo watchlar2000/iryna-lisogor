@@ -16,8 +16,9 @@
 
 .wrapper {
 	--padding-space: var(--space-s);
+	--_max-width: var(--wrapper-max-width, 70rem);
 
-	max-width: 75rem;
+	max-width: var(--_max-width);
 	margin-left: auto;
 	margin-right: auto;
 	padding: 0 var(--padding-space);

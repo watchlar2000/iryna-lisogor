@@ -1,34 +1,42 @@
 import { HTTP_STATUS } from '$lib/constants/HttpStatusCode';
 import { BaseError } from '$lib/errors/BaseError';
-import { mapRowsToProjectsWithImages } from '$lib/helpers/api';
-import { api } from '$lib/server/db';
-import { images, projects } from '$lib/server/schema';
+import { db } from '$lib/server/db';
+import { projects } from '$lib/server/schema';
 import type { ProjectReadParam, ProjectWithImages } from '$lib/types/projects';
-import { error } from '@sveltejs/kit';
 import { eq, SQL } from 'drizzle-orm';
-import type { PgSelect } from 'drizzle-orm/pg-core';
 
-const projectApi = api(projects);
+type SQLCondition = SQL | ReturnType<typeof eq>;
 
 export interface ProjectAPI {
 	read(params?: ProjectReadParam): Promise<ProjectWithImages[]>;
 }
 
-const withImages = <T extends PgSelect>(qb: T) => {
-	return qb.leftJoin(images, eq(projects.id, images.projectId));
-};
+export const project = {
+	async read(params: ProjectReadParam = {}) {
+		let whereCondition: SQLCondition | undefined;
+		const [key, value] = Object.entries(params)[0] || [];
 
-export const project: ProjectAPI = {
-	async read(params) {
-		const { id, work, slug } = params ?? {};
-		const idParam = id ? { id } : {};
-		const where: SQL[] = [];
+		if (key && value) {
+			const columnMap: Record<string, any> = {
+				id: projects.id,
+				workType: projects.workType,
+				slug: projects.slug
+			};
 
-		if (work) where.push(eq(projects.work, work));
-		if (slug) where.push(eq(projects.slug, slug));
+			whereCondition = eq(columnMap[key], value);
+		}
 
-		const query = projectApi.read({ where, ...idParam }).$dynamic();
-		const rows = await withImages(query);
+		const rows = await db.query.projects.findMany({
+			where: whereCondition,
+			with: {
+				images: {
+					with: {
+						image: true
+					}
+				},
+				coverImage: true
+			}
+		});
 
 		if (!rows.length)
 			throw new BaseError({
@@ -36,6 +44,6 @@ export const project: ProjectAPI = {
 				message: 'No project data found'
 			});
 
-		return mapRowsToProjectsWithImages(rows);
+		return rows;
 	}
 };

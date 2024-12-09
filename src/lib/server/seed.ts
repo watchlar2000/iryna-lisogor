@@ -1,109 +1,90 @@
 import { db } from './db.ts';
-import { authors, images, projects, works } from './schema.ts';
+import { authors, images, projects, projectsToImages, WorkType } from './schema.ts';
 
-const worksValues = [
+const authorsSeed = [
 	{
-		id: 1,
-		title: 'visual development',
-		slug: 'visual-development'
-	},
-	{
-		id: 2,
-		title: 'background painting',
-		slug: 'background-painting'
-	},
-	{
-		id: 3,
-		title: 'playground',
-		slug: 'playground'
+		name: 'Alice',
+		surname: 'Johnson',
+		photoUrl: 'https://images.unsplash.com/photo-1517423440428-a5a00ad493e8',
+		about: 'Alice is a seasoned visual development artist.'
 	}
 ];
 
-const author = {
-	id: 1,
-	name: 'Iryna',
-	surname: 'Lisogor',
-	photoUrl:
-		'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/profile-photo-1c68a2b6-2ef2-4a6c-b845-bd7e7d267643',
-	about: `
-    <p>I'm Ira, an illustrator based in Kyiv, Ukraine, with a passion for creating and storytelling. I enjoy diving headfirst into projects, exploring, and creating vibrant artworks which tell stories and spark joy. Previously worked in various fields like editorial, advertising, and social media.</p>
-
-    <p>Aside from work, I love having fun with my dog, reading books, hiking and exploring new things.</p>
-
-    <p>You can reach out to me via <strong>iryna.lisogor.artwrk@gmail.com.</strong></p>
-
-    <p>Resume available upon request.</p>
-  `
-};
-
-const projectsValues = [
+const projectsSeed = [
 	{
 		id: 1,
-		title: 'Visual dev project',
-		slug: 'visual-dev-project',
-		work: 'visual-development',
-		description:
-			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur labore iste accusamus architecto dolor illo obcaecati repudiandae distinctio ad molestiae? Obcaecati quisquam dolores veniam. Error soluta impedit tenetur vitae. Minima.'
+		title: 'Mystic Landscapes',
+		slug: 'mystic-landscapes',
+		description: 'A collection of breathtaking background paintings inspired by fantasy worlds.',
+		workType: WorkType.BACKGROUND_PAINTING,
+		coverImageId: 1
 	},
 	{
 		id: 2,
-		title: 'Background painting project',
-		slug: 'background-painting-project',
-		work: 'background-painting',
-		description:
-			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur labore iste accusamus architecto dolor illo obcaecati repudiandae distinctio ad molestiae? Obcaecati quisquam dolores veniam. Error soluta impedit tenetur vitae. Minima.'
+		title: 'Future Visions',
+		slug: 'future-visions',
+		description: 'Visual development concepts for a sci-fi universe.',
+		workType: WorkType.VISUAL_DEVELOPMENT,
+		coverImageId: 2
 	},
 	{
 		id: 3,
-		title: 'Playground project',
-		slug: 'playground-project',
-		work: 'playground',
-		description:
-			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur labore iste accusamus architecto dolor illo obcaecati repudiandae distinctio ad molestiae? Obcaecati quisquam dolores veniam. Error soluta impedit tenetur vitae. Minima.'
+		title: 'Playground Adventures',
+		slug: 'playground-adventures',
+		description: 'Interactive art and experimental playground designs.',
+		workType: WorkType.PLAYGROUND,
+		coverImageId: 3
 	}
 ];
 
-const imagesValues = [
+const imagesSeed = [
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/4kshrek-animationscreencaps.com-2168.jpg',
-		alt: 'test',
-		isCoverImage: true,
-		projectId: 1
+		id: 1,
+		url: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=1752&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		alt: 'A serene mountain landscape with snow-capped peaks.',
+		width: 773,
+		height: 512
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/4kshrek-animationscreencaps.com-3464.jpg',
-		alt: 'test',
-		isCoverImage: false,
-		projectId: 1
+		id: 2,
+		url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?q=80&w=1226&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		alt: 'A futuristic cityscape at sunset with high-rise buildings.',
+		width: 440,
+		height: 784
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/4kshrek-animationscreencaps.com-394.jpg',
-		alt: 'matilda 1',
-		isCoverImage: true,
-		projectId: 2
+		id: 3,
+		url: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		alt: 'A vibrant playground with colorful structures for children.',
+		width: 523,
+		height: 784
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-1622.jpg',
-		alt: 'matilda 2',
-		isCoverImage: false,
-		projectId: 2
+		id: 4,
+		url: 'https://plus.unsplash.com/premium_photo-1673292293042-cafd9c8a3ab3?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		alt: 'A magical forest scene with glowing light beams piercing through trees.',
+		width: 523,
+		height: 784
 	},
 	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-1779.jpg',
-		alt: 'matilda 2',
-		isCoverImage: true,
-		projectId: 3
-	},
-	{
-		url: 'https://mqcgrpdiguxgzulcbqim.supabase.co/storage/v1/object/public/images/mutantmayhem-animationscreencaps.com-3107.jpg',
-		alt: 'matilda 2',
-		isCoverImage: false,
-		projectId: 3
+		id: 5,
+		url: 'https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		alt: 'An alien landscape with rugged terrain and a vibrant sunset.',
+		width: 976,
+		height: 651
 	}
+];
+
+const projectsToImagesSeed = [
+	{ projectId: 1, imageId: 1 },
+	{ projectId: 1, imageId: 4 },
+	{ projectId: 2, imageId: 2 },
+	{ projectId: 2, imageId: 5 },
+	{ projectId: 3, imageId: 3 }
 ];
 
 const resetTablesData = async () => {
-	const tables = [works, authors, projects, images];
+	const tables = [authors, projects, images, projectsToImages];
 
 	for (const table of tables) {
 		await db.delete(table);
@@ -113,11 +94,11 @@ const resetTablesData = async () => {
 const main = async () => {
 	try {
 		await resetTablesData();
-
-		await db.insert(works).values(worksValues);
-		await db.insert(authors).values(author);
-		await db.insert(projects).values(projectsValues);
-		await db.insert(images).values(imagesValues);
+		await db.insert(images).values(imagesSeed);
+		await db.insert(authors).values(authorsSeed);
+		await db.insert(projects).values(projectsSeed);
+		await db.insert(projectsToImages).values(projectsToImagesSeed);
+		console.log('Seeding successful');
 	} catch (error) {
 		console.log(`'Error during seeding: ${error}`);
 	}

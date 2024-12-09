@@ -23,7 +23,7 @@
 
 <style>
 	.main {
-		margin-top: var(--space-m);
-		margin-inline: auto;
+		margin-top: var(--space-l);
+		/* margin-inline: auto; */
 	}
 </style>

@@ -14,8 +14,8 @@ export const transformWorkOptions = (works: typeof WorkOption) =>
 		slug: convertToSlug(option)
 	}));
 
-export const getCoverImage = (imageList: Image[]) => {
-	return imageList.find((image) => image.isCoverImage);
+export const getCoverImage = (id: number, imageList: Image[]) => {
+	return imageList.find((image) => image.id === id);
 };
 
 export const fullYear = () => new Date().getFullYear();

@@ -3,6 +3,15 @@
 	import { Image } from '@unpic/svelte';
 
 	export let projects;
+
+	function convertToKebabCase(input: string) {
+		return input
+			.trim() // Remove leading/trailing whitespace
+			.toLowerCase() // Convert to lowercase
+			.replace(/\s+/g, '-'); // Replace spaces with hyphens
+	}
+
+	$: console.log(projects);
 </script>
 
 <svelte:head>
@@ -15,12 +24,12 @@
 		<ul class="auto-grid" role="list">
 			{#each projects as project (project.id)}
 				<li>
-					<a class="" href={`/${project.work}/${convertToSlug(project.title)}`}>
+					<a class="" href={`${convertToKebabCase(project.workType)}/${project.slug}`}>
 						<Image
-							src={getCoverImage(project.images)?.url}
+							src={project.coverImage.url}
 							layout="constrained"
 							aspectRatio={1.5}
-							alt={getCoverImage(project.images)?.alt}
+							alt="Some alt text..."
 						/>
 					</a>
 				</li>

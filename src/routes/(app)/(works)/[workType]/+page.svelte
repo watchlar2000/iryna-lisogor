@@ -1,9 +1,11 @@
 <script lang="ts">
-	import ProjectsGrid from '../../../../lib/components/ProjectsGrid.svelte';
+	import ProjectsGrid from '$lib/components/ProjectsGrid.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	$: ({ projects } = data);
+
+	// $: console.log({ projects });
 </script>
 
 <svelte:head>

@@ -163,7 +163,7 @@
 // :where([type='submit']):not([disabled]) {
 :where([type='submit']) {
 	--_text: var(--color-link-400);
-	// --_bg: var(--color-link-800);
+	--_bg: var(--color-link-800);
 	--_hover-bg: var(--color-link-400);
 
 	--_border-width: 0px;

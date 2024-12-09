@@ -4,33 +4,28 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Modal from '$lib/components/Modal/Modal.svelte';
 	import TipTapEditor from '$lib/components/RichTextEditor/TipTapEditor.svelte';
-	import { initImageUpload } from '$lib/utils/file';
-	import { notification } from '$lib/utils/notification';
+	import type { InsertProject, SelectImage, SelectProject } from '$lib/server/schema';
 	import type { ActionResult } from '@sveltejs/kit';
-	import { readFileAsDataURL } from '../../about/utils';
+	import { writable } from 'svelte/store';
 
-	let project = {
-		title: '',
-		description: ''
-	};
+	export let data;
 
 	let inputImage: HTMLInputElement;
-	let projectImage = '';
 	let modal: Modal;
-	$: if (modal) modal.open();
 
-	const updateImageLocally = async (event: { currentTarget: EventTarget & HTMLFormElement }) => {
-		const fd = new FormData(event.currentTarget);
-		const image = fd.get('projectImage');
+	$: images = data.images;
 
-		try {
-			if (image) {
-				projectImage = await readFileAsDataURL(image as File);
-			}
-		} catch (err) {
-			notification.error(err?.message);
-		}
+	type Project = InsertProject & {
+		images: SelectImage[];
 	};
+
+	let project = writable<Project>({
+		title: '',
+		description: '',
+		images: []
+	});
+
+	$: if (modal) modal.open();
 
 	type HandleEnhanceParams = { formData: FormData };
 	type HandleEnhanceReturnParams = {
@@ -38,7 +33,7 @@
 	};
 
 	const handleEnhance = ({ formData }: HandleEnhanceParams) => {
-		formData.set('description', project.description);
+		formData.set('description', $project.description as string);
 		// formData.set('updatedPhotoUrl', updatedPhotoUrl);
 		// formData.set('authorId', id.toString());
 
@@ -52,67 +47,41 @@
 	};
 </script>
 
-<Modal bind:this={modal}>
+<Modal bind:this={modal} --dialog-width="80vw">
 	<div slot="header">
-		<h2>Add new project image</h2>
+		<h2>Select images related to project</h2>
 	</div>
-	<div slot="commands" class="project-image">
-		<form
-			method="POST"
-			action="?/image"
-			class="flow"
-			on:change={updateImageLocally}
-			use:enhance
-			enctype="multipart/form-data"
-		>
-			{#if projectImage}
-				<div>
-					<img src={projectImage} alt="" />
-				</div>
-			{/if}
-
-			<button
-				on:click={() => initImageUpload(inputImage)}
-				aria-label="upload new image"
-				type="button"
-				class="button-custom"
-			>
-				<Icon name="plus" /> Add new image
-			</button>
-			<input
-				accept="image/*"
-				bind:this={inputImage}
-				id="projectImage"
-				name="projectImage"
-				type="file"
-				class="hidden"
-			/>
-
-			<label for="title" class="cluster">
-				<h5>Title:</h5>
-				<input type="text" name="title" id="title" placeholder="Title" class="input" />
-			</label>
-			<label for="alt" class="cluster">
-				<h5>Alt:</h5>
-				<textarea
-					name="alt"
-					id="alt"
-					placeholder="Provide a brief description of the image for accessibility and SEO purposes"
-					class="input"
-				/>
-			</label>
-			<button type="submit">Save</button>
-		</form>
-	</div>
+	<ul role="list" class="cluster" draggable="true">
+		{#each $project.images as image}
+			<li>{image.id}</li>
+		{/each}
+	</ul>
+	<ul role="list" class="auto-grid auto-grid__images">
+		{#each images as image}
+			<li>
+				<label class="cluster">
+					<input
+						type="checkbox"
+						name="selectedImage"
+						value={image}
+						bind:group={$project.images}
+						hidden
+					/>
+					<img src={image.url} alt={image.alt} />
+				</label>
+			</li>
+		{/each}
+	</ul>
+	<div slot="commands"></div>
 </Modal>
 <div class="flow">
 	<header>
 		<h6>New project</h6>
 	</header>
 	<form method="POST" action="?/project" class="flow" use:enhance={handleEnhance}>
-		<label for="title" class="cluster">
+		<label for="project-title" class="cluster">
 			<h5>Title:</h5>
-			<input type="text" id="title" class="input" name="title" value={project.title} />
+			<input type="text" id="project-title" class="input" name="title" value={$project.title} />
 		</label>
 		<label for="work" class="cluster">
 			<h5>Work:</h5>
@@ -122,30 +91,36 @@
 				<option value="playground">Playground</option>
 			</select>
 		</label>
+		<section class="cluster cluster__images">
+			<div class="cluster cluster__images--header">
+				<h5>Images:</h5>
+				<button
+					on:click={modal.open}
+					aria-label="upload new file"
+					type="button"
+					class="button-custom"
+				>
+					<Icon name="update" /> Add image
+				</button>
+			</div>
+			<div>
+				<ul role="list">
+					{#if $project.images.length > 0}
+						{#each $project.images as image}
+							<li>{image.id}</li>
+						{/each}
+					{:else}
+						<li>No images selected</li>
+					{/if}
+				</ul>
+			</div>
+		</section>
 		<section class="flow">
 			<h5>Description:</h5>
-			<TipTapEditor bind:content={project.description} />
+			<TipTapEditor bind:content={$project.description} />
 		</section>
 		<button type="submit">Save</button>
 	</form>
-	<hr />
-	<div class="flow">
-		<h5>Images:</h5>
-		<button
-			on:click={() => modal.open()}
-			aria-label="upload new file"
-			type="button"
-			class="button-custom"
-			disabled={!project.title}
-		>
-			Add image
-		</button>
-		<div>
-			<ul role="list">
-				<li>No images...</li>
-			</ul>
-		</div>
-	</div>
 </div>
 
 <!-- export const projects = pgTable('projects', {
@@ -178,5 +153,28 @@
 
 	.project-image {
 		width: 100%;
+	}
+
+	.cluster__images {
+		--cluster-direction: column;
+		--cluster-vertical-alignment: flex-start;
+
+		&--header {
+			--cluster-direction: row;
+			--cluster-horizontal-alignment: space-between;
+
+			width: 100%;
+		}
+	}
+
+	.button-custom {
+		--button-padding-inline: 1.75ch;
+		--button-padding-block: 0.75ch;
+		--button-font-size: var(--size-step--3);
+	}
+
+	.auto-grid__images {
+		--auto-grid-min-size: 10ch;
+		--auto-grid-gap: var(--space-s);
 	}
 </style>

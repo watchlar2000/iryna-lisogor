@@ -3,10 +3,7 @@ import { withErrorHandling } from '$lib/utils/withErrorHandling';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async () => {
-	const { project, work } = routing;
-	const [projects, works] = await withErrorHandling(() =>
-		Promise.all([project.read(), work.read()])
-	);
+	const data = await withErrorHandling(() => routing.project.read());
 
-	return { projects, works };
+	return { projects: data };
 };

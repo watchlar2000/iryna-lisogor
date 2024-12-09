@@ -1,8 +1,9 @@
 import { routing } from '$lib/api';
+import { withErrorHandling } from '$lib/utils/withErrorHandling';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const projects = await routing.project.read();
+	const data = await withErrorHandling(() => routing.project.read());
 
-	return { projects };
+	return { projects: data };
 };

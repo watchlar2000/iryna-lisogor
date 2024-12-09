@@ -19,8 +19,10 @@
 			<Icon name="close" height="1.25rem" />
 			<span class="visually-hidden">Close dialog window</span>
 		</button>
+
 		<div class="dialog__content flow cluster">
 			<slot name="header" />
+			<slot />
 			<slot name="commands" />
 		</div>
 	</div>
@@ -34,14 +36,10 @@
 	.dialog__content {
 		width: 100%;
 		text-align: center;
-
-		& > div:last-of-type {
-			color: orange;
-		}
 	}
 
 	dialog {
-		max-width: var(--dialog-width);
+		width: var(--dialog-width);
 		border-radius: 1rem;
 		border: none;
 		padding: 0;
@@ -60,9 +58,6 @@
 		button {
 			align-self: self-end;
 		}
-
-		/* padding: var(--space-m); */
-		/* background-color: var(--color-light); */
 	}
 
 	dialog[open] {
