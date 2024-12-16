@@ -27,11 +27,13 @@
 		width: 0,
 		height: 0
 	};
+
+	const openEditModal = () => editModal.open();
 </script>
 
 <Prompt bind:this={deleteImagePrompt} />
 <ImageModal bind:this={createModal} />
-<ImageModal bind:this={editModal} imageDataProp={editImageData} formAction="?/update" />
+<ImageModal bind:this={editModal} imageDataProp={editImageData} mode="edit" title="Edit image" />
 <section class="flow">
 	<header class="cluster">
 		<h6>Images</h6>
@@ -79,7 +81,9 @@
 								editImageData.width = image.width;
 								editImageData.height = image.height;
 
-								editModal.open();
+								// Object.assign(editImageData, image);
+
+								openEditModal();
 							}}
 						>
 							<Icon name="edit" height="1em" />

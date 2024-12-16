@@ -23,11 +23,15 @@
 		height: 0
 	};
 
-	export let formAction = '?/upload';
+	export let mode: 'create' | 'edit' = 'create';
+
+	let formAction: string;
+	$: formAction = mode === 'create' ? '?/upload' : '?/update';
 
 	export let imageDataProp: ImageData = {
 		...defaultImageData
 	};
+	export let title = 'Add new image';
 
 	let imageData: ImageData;
 	$: imageData = { ...imageDataProp };
@@ -35,6 +39,8 @@
 	let inputImage: HTMLInputElement;
 
 	let modal: Modal;
+
+	let imageIsUpdated = false;
 
 	export const open = () => {
 		modal.open();
@@ -57,11 +63,13 @@
 
 		const data = await getImageData(imageFile as File);
 
-		console.log(data);
-
 		imageData.url = data?.url as string;
 		imageData.width = data?.width as number;
 		imageData.height = data?.height as number;
+
+		if (mode === 'edit') {
+			imageIsUpdated = true;
+		}
 	};
 
 	onMount(() => {
@@ -71,7 +79,7 @@
 
 <Modal bind:this={modal}>
 	<div slot="header">
-		<h2>Add new project image</h2>
+		<h2>{title}</h2>
 	</div>
 	<div class="modal__content">
 		<form
@@ -95,7 +103,13 @@
 				<img src={imageData.url} alt={imageData.alt} />
 			{/if}
 			<div>
-				<button on:click={() => initImageUpload(inputImage)} type="button" class="button-custom">
+				<button
+					on:click={() => {
+						initImageUpload(inputImage);
+					}}
+					type="button"
+					class="button-custom"
+				>
 					<Icon name="plus" />
 					<span class="visually-hidden">{!imageData.url ? 'Add new image' : 'Update image'}</span>
 					{!imageData.url ? 'Add new image' : 'Update image'}
@@ -109,6 +123,20 @@
 				type="file"
 				class="hidden"
 			/>
+			<input type="text" id="width" name="width" value={imageData.width} hidden />
+			<input type="text" id="height" name="height" value={imageData.height} hidden />
+			{#if mode === 'edit'}
+				<input type="text" id="id" name="id" bind:value={imageData.id} hidden />
+				<input type="text" id="url" name="url" value={imageData.url} hidden />
+				<input
+					type="checkbox"
+					id="imageIsUpdated"
+					name="imageIsUpdated"
+					bind:checked={imageIsUpdated}
+					hidden
+				/>
+			{/if}
+
 			<div>
 				<label for="alt" class="flow">
 					<h5>Alt:</h5>

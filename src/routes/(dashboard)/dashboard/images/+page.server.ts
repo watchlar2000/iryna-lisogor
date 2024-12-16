@@ -16,8 +16,11 @@ export const actions: Actions = {
 	upload: async ({ request }) => {
 		try {
 			const fd = await request.formData();
-			const file = fd.get('image') as File | null;
-			const alt = fd.get('alt') as string | null;
+
+			const file = fd.get('image') as File;
+			const alt = fd.get('alt') as string;
+			const width = parseInt(fd.get('width') as string, 10);
+			const height = parseInt(fd.get('height') as string, 10);
 
 			if (!file) {
 				return fail(400, {
@@ -40,27 +43,27 @@ export const actions: Actions = {
 
 			const name = crypto.randomUUID();
 			const {
-				data: { publicUrl }
+				data: { publicUrl: url }
 			} = await imagesStorage.post({ file, name });
 
-			if (!publicUrl) {
+			if (!url) {
 				return fail(402, {
 					error: 'Failed to upload image'
 				});
 			}
 
 			const payload: InsertImage = {
-				url: publicUrl as string,
-				alt: alt ?? '',
-				width: 200,
-				height: 200
+				url,
+				alt,
+				width,
+				height
 			};
 
 			await routing.image.create({ payload });
 
 			return {
 				success: true,
-				message: 'Image uploaded successfully'
+				message: 'Image uploaded'
 			};
 		} catch (err: unknown) {
 			if (err instanceof Error) {
@@ -75,56 +78,87 @@ export const actions: Actions = {
 		}
 	},
 	update: async ({ request }) => {
-		const fd = await request.formData();
-		const { image: file } = Object.fromEntries(fd);
+		try {
+			const fd = await request.formData();
 
-		console.log('calling update action');
+			const id = parseInt(fd.get('id') as string, 10);
+			const imageIsUpdated = fd.get('imageIsUpdate');
+			const file = fd.get('image') as File;
+			const previousUrl = fd.get('url') as string;
+			const alt = fd.get('alt') as string;
+			const width = parseInt(fd.get('width') as string, 10);
+			const height = parseInt(fd.get('height') as string, 10);
 
-		console.log(fd);
+			if (imageIsUpdated && !file) {
+				return fail(400, {
+					error: 'No image provided'
+				});
+			}
 
-		// const payload: InsertImage = {};
+			if (imageIsUpdated && !(file instanceof File)) {
+				return fail(400, { error: 'Invalid file input' });
+			}
 
-		// try {
-		// 	const fd = await request.formData();
-		// 	const { image: file, alt } = Object.fromEntries(fd);
+			if (imageIsUpdated && !file.type.startsWith('image/')) {
+				return fail(400, { error: 'Only image files are allowed' });
+			}
 
-		// 	if (!file) {
-		// 		return fail(400, {
-		// 			error: 'No image provided'
-		// 		});
-		// 	}
+			if (imageIsUpdated && file.size > 5 * 1024 * 1024) {
+				// 5MB limit
+				return fail(400, { error: 'File size exceeds 5MB' });
+			}
 
-		// 	const name = crypto.randomUUID();
-		// 	const { data } = await imagesStorage.post({ file, name });
+			// const name = crypto.randomUUID();
+			// const {
+			// 	data: { publicUrl: url }
+			// } = await imagesStorage.post({ file, name });
 
-		// 	if (!data) {
-		// 		return fail(402, {
-		// 			error: 'Failed to upload image'
-		// 		});
-		// 	}
+			// if (!url) {
+			// 	return fail(402, {
+			// 		error: 'Failed to upload image'
+			// 	});
+			// }
 
-		// 	payload.url = data.publicUrl as string;
-		// 	payload.alt = alt as string;
-		// 	payload.width = 200;
-		// 	payload.height = 200;
+			const postImageAndGetUrl = async (file: File) => {
+				const name = crypto.randomUUID();
+				const {
+					data: { publicUrl: url }
+				} = await imagesStorage.post({ file, name });
+				return url;
+			};
 
-		// 	await routing.image.create({ payload });
+			const url = imageIsUpdated ? await postImageAndGetUrl(file) : previousUrl;
 
-		// 	return {
-		// 		success: true,
-		// 		message: 'Image uploaded successfully'
-		// 	};
-		// } catch (err: unknown) {
-		// 	if (err instanceof Error) {
-		// 		return fail(400, {
-		// 			error: err.message
-		// 		});
-		// 	}
+			if (!url) {
+				return fail(402, {
+					error: 'Failed to upload image'
+				});
+			}
 
-		// 	return fail(400, {
-		// 		error: 'An unknown error occurred'
-		// 	});
-		// }
+			const payload: InsertImage = {
+				url,
+				alt,
+				width,
+				height
+			};
+
+			await routing.image.update({ id, payload });
+
+			return {
+				success: true,
+				message: 'Image updated'
+			};
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				return fail(400, {
+					error: err.message
+				});
+			}
+
+			return fail(400, {
+				error: 'An unknown error occurred'
+			});
+		}
 	},
 	delete: async ({ request }) => {
 		try {
@@ -144,7 +178,7 @@ export const actions: Actions = {
 
 			return {
 				success: true,
-				message: 'Image deleted successfully'
+				message: 'Image deleted'
 			};
 		} catch (err) {
 			if (err instanceof Error) {
