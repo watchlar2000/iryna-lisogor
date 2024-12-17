@@ -3,20 +3,16 @@
 	import { invalidateAll } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
 	import Modal from '$lib/components/Modal/Modal.svelte';
+	import type { InsertImage } from '$lib/server/schema';
 	import { initImageUpload } from '$lib/utils/file';
 	import { onMount } from 'svelte';
 	import { getImageData } from '../about/getImageData';
 
-	type ImageData = {
-		url: string;
-		alt: string;
-		width: number;
-		height: number;
-		id?: number;
+	type ImageData = InsertImage & {
 		input?: HTMLInputElement;
 	};
 
-	const defaultImageData = {
+	const defaultImageData: ImageData = {
 		url: '',
 		alt: '',
 		width: 0,
@@ -24,20 +20,16 @@
 	};
 
 	export let mode: 'create' | 'edit' = 'create';
+	export let title = 'Add new image';
+	export let imageDataProp = { ...defaultImageData };
 
 	let formAction: string;
 	$: formAction = mode === 'create' ? '?/upload' : '?/update';
 
-	export let imageDataProp: ImageData = {
-		...defaultImageData
-	};
-	export let title = 'Add new image';
-
 	let imageData: ImageData;
-	$: imageData = { ...imageDataProp };
+	$: imageData = imageDataProp;
 
 	let inputImage: HTMLInputElement;
-
 	let modal: Modal;
 
 	let imageIsUpdated = false;
@@ -51,21 +43,27 @@
 	};
 
 	const closeAndReset = () => {
-		imageData = { ...defaultImageData };
+		imageData = Object.assign(imageData, { ...defaultImageData });
+		inputImage.value = '';
 		close();
 	};
 
-	const handleChange = async (event: { currentTarget: EventTarget & HTMLFormElement }) => {
-		const fd = new FormData(event.currentTarget);
-		const imageFile = fd.get('image');
+	const handleChange = async (event: Event) => {
+		const form = event.currentTarget as HTMLFormElement;
+		const fd = new FormData(form);
+		const imageFile = fd.get('image') as File;
 
-		if (!imageFile) return;
+		if (!imageFile.name) {
+			return;
+		}
 
 		const data = await getImageData(imageFile as File);
 
-		imageData.url = data?.url as string;
-		imageData.width = data?.width as number;
-		imageData.height = data?.height as number;
+		imageData = Object.assign(imageData, {
+			url: data?.url || '',
+			width: data?.width || 0,
+			height: data?.height || 0
+		});
 
 		if (mode === 'edit') {
 			imageIsUpdated = true;
@@ -143,7 +141,7 @@
 					<textarea
 						name="alt"
 						id="alt"
-						value={imageData.alt}
+						bind:value={imageData.alt}
 						placeholder="Provide a brief description of the image for accessibility and SEO purposes"
 						class="input"
 					/>
@@ -170,7 +168,7 @@
 		}
 
 		img {
-			// height: 9ch;
+			height: 15ch;
 			width: auto;
 			margin-inline: auto;
 		}

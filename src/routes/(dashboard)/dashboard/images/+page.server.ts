@@ -82,12 +82,14 @@ export const actions: Actions = {
 			const fd = await request.formData();
 
 			const id = parseInt(fd.get('id') as string, 10);
-			const imageIsUpdated = fd.get('imageIsUpdate');
+			const imageIsUpdated = fd.get('imageIsUpdated');
 			const file = fd.get('image') as File;
 			const previousUrl = fd.get('url') as string;
 			const alt = fd.get('alt') as string;
 			const width = parseInt(fd.get('width') as string, 10);
 			const height = parseInt(fd.get('height') as string, 10);
+
+			console.log(imageIsUpdated);
 
 			if (imageIsUpdated && !file) {
 				return fail(400, {
@@ -107,17 +109,6 @@ export const actions: Actions = {
 				// 5MB limit
 				return fail(400, { error: 'File size exceeds 5MB' });
 			}
-
-			// const name = crypto.randomUUID();
-			// const {
-			// 	data: { publicUrl: url }
-			// } = await imagesStorage.post({ file, name });
-
-			// if (!url) {
-			// 	return fail(402, {
-			// 		error: 'Failed to upload image'
-			// 	});
-			// }
 
 			const postImageAndGetUrl = async (file: File) => {
 				const name = crypto.randomUUID();

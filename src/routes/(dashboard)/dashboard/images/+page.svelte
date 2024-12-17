@@ -3,32 +3,44 @@
 	import { invalidateAll } from '$app/navigation';
 	import Icon from '$lib/components/Icon.svelte';
 	import Prompt from '$lib/components/Modal/Prompt.svelte';
+	import type { InsertImage } from '$lib/server/schema.js';
 	import { notification } from '$lib/utils/notification.js';
 	import type { ActionData } from './$types';
 	import { handleConfirmation } from './handleConfirmation.js';
 	import ImageModal from './ImageModal.svelte';
 
+	const showNotification = (form: ActionData) => {
+		if (form?.error) {
+			notification.error(form.error);
+		} else {
+			notification.success(form?.message ?? 'Done');
+		}
+	};
+
 	export let data;
-	$: images = data.images;
+	$: ({ images } = data);
 
 	export let form: ActionData;
 	$: if (form) {
-		form?.error ? notification.error(form.error) : notification.success(form.message ?? 'Done');
+		showNotification(form);
 	}
 
 	let deleteImagePrompt: Prompt;
 	let createModal: ImageModal;
 	let editModal: ImageModal;
 
-	const editImageData = {
-		id: -1,
+	let editImageData: InsertImage = {
+		id: undefined,
 		url: '',
 		alt: '',
 		width: 0,
 		height: 0
 	};
 
-	const openEditModal = () => editModal.open();
+	const handleEditButton = (image: InsertImage) => {
+		editImageData = { ...image };
+		editModal.open();
+	};
 </script>
 
 <Prompt bind:this={deleteImagePrompt} />
@@ -75,21 +87,7 @@
 					<input type="text" name="id" value={image.id} class="hidden" />
 					<input type="text" name="name" value={image.url.toString().split('/').pop()} hidden />
 					<div class="image__card--controls cluster">
-						<button
-							class="button"
-							type="button"
-							on:click={() => {
-								editImageData.id = image.id;
-								editImageData.url = image.url;
-								editImageData.alt = image.alt;
-								editImageData.width = image.width;
-								editImageData.height = image.height;
-
-								// Object.assign(editImageData, image);
-
-								openEditModal();
-							}}
-						>
+						<button class="button" type="button" on:click={() => handleEditButton(image)}>
 							<Icon name="edit" height="1em" />
 							<span class="visually-hidden">Edit image</span>
 						</button>
