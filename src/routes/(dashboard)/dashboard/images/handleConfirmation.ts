@@ -1,20 +1,20 @@
 import type Prompt from '$lib/components/Modal/Prompt.svelte';
 
-export const handleConfirmation = async (prompt: Prompt) => {
-	let userConfirmed = false;
+type HandleConfirmation = {
+	prompt: Prompt;
+	label: string;
+	description: string;
+};
 
-	await new Promise((resolve) => {
+export const handleConfirmation = async ({ prompt, label, description }: HandleConfirmation) =>
+	new Promise((resolve) => {
 		prompt.open();
 		prompt.$set({
 			onresult: (result) => {
-				userConfirmed = result;
 				resolve(result);
 				return result;
 			},
-			label: 'Delete',
-			description: 'Image to be deleted from the database'
+			label,
+			description
 		});
 	});
-
-	return userConfirmed;
-};

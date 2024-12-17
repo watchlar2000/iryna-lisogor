@@ -52,7 +52,11 @@
 					method="POST"
 					action="?/delete"
 					use:enhance={async ({ cancel }) => {
-						const userConfirmation = await handleConfirmation(deleteImagePrompt);
+						const userConfirmation = await handleConfirmation({
+							prompt: deleteImagePrompt,
+							label: 'Delete image',
+							description: 'Image to be deleted from the database'
+						});
 
 						if (!userConfirmation) {
 							cancel();
@@ -147,15 +151,13 @@
 		}
 
 		&--cover {
-			height: 15vw;
-			min-height: 10rem;
+			height: 10ch;
 			width: 100%;
 
 			img {
-				object-fit: contain;
-				object-position: center;
+				object-fit: cover;
 				height: 100%;
-				margin-inline: auto;
+				width: 100%;
 			}
 		}
 
