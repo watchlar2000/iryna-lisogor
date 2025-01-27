@@ -1,102 +1,102 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: () => import("../views/Home.vue"),
+    path: '/',
+    name: 'home',
+    component: () => import('../views/Home.vue'),
     meta: {
-      title: "Home",
+      title: 'Home',
     },
   },
   {
-    path: "/project/:slug",
-    name: "project",
-    component: () => import("../views/Project.vue"),
+    path: '/project/:slug',
+    name: 'project',
+    component: () => import('../views/Project.vue'),
     props: true,
     meta: {
-      title: "Project",
+      title: 'Project',
     },
   },
   {
-    path: "/about",
-    name: "about",
-    component: () => import("../views/About.vue"),
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/About.vue'),
     meta: {
-      title: "About",
+      title: 'About',
     },
   },
   {
-    path: "/illustrations",
-    name: "illustrations",
-    component: () => import("../views/Projects.vue"),
+    path: '/illustrations',
+    name: 'illustrations',
+    component: () => import('../views/Projects.vue'),
     props: true,
     meta: {
-      title: "Illustrations",
+      title: 'Illustrations',
     },
     beforeEnter: async (to, from, next) => {
-      to.params.category = "illustrations";
+      to.params.category = 'illustrations';
       next();
     },
   },
   {
-    path: "/character-design",
-    name: "character-design",
-    component: () => import("../views/Projects.vue"),
+    path: '/character-design',
+    name: 'character-design',
+    component: () => import('../views/Projects.vue'),
     props: true,
     meta: {
-      title: "Character design",
+      title: 'Character design',
     },
     beforeEnter: async (to, from, next) => {
-      to.params.category = "character-design";
+      to.params.category = 'character-design';
       next();
     },
   },
   {
-    path: "/sketches",
-    name: "sketches",
-    component: () => import("../views/Projects.vue"),
+    path: '/sketches',
+    name: 'sketches',
+    component: () => import('../views/Projects.vue'),
     props: true,
     meta: {
-      title: "Sketches",
+      title: 'Sketches',
     },
     beforeEnter: async (to, from, next) => {
-      to.params.category = "sketches";
+      to.params.category = 'sketches';
       next();
     },
   },
   {
-    path: "/404",
-    name: "404",
-    component: () => import("../views/NotFound.vue"),
+    path: '/404',
+    name: '404',
+    component: () => import('../views/NotFound.vue'),
     props: true,
     meta: {
-      title: "404",
+      title: '404',
     },
   },
   {
-    path: "/network-issue",
-    name: "network-issue",
-    component: () => import("../views/NetworkIssue.vue"),
+    path: '/network-issue',
+    name: 'network-issue',
+    component: () => import('../views/NetworkIssue.vue'),
     props: true,
     meta: {
-      title: "Network Issue",
+      title: 'Network Issue',
     },
   },
   {
-    path: "*",
-    redirect: { name: "404", params: { resource: "page" } },
+    path: '*',
+    redirect: { name: '404', params: { resource: 'page' } },
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   routes,
   scrollBehavior() {
-    return { x: 0, y: 0, behavior: "smooth" };
+    return { x: 0, y: 0, behavior: 'smooth' };
   },
 });
 

@@ -1,9 +1,9 @@
-import { collection, getDocs } from "@firebase/firestore";
-import { db } from "../firestore/firestore.config";
+import { collection, getDocs } from '@firebase/firestore';
+import { db } from '../firestore/firestore.config';
 
 const COLLECTIONS = {
-  works: "works",
-  images: "images",
+  works: 'works',
+  images: 'images',
 };
 
 export default {
@@ -18,18 +18,19 @@ export default {
           const imagesSnap = await getDocs(
             collection(
               db,
-              `${COLLECTIONS.works}/${data.id}/${COLLECTIONS.images}`
-            )
+              `${COLLECTIONS.works}/${data.id}/${COLLECTIONS.images}`,
+            ),
           );
           const images = imagesSnap.docs.map((image) => {
             return { id: image.id, ...image.data() };
           });
           return { ...data, images };
-        })
+        }),
       );
+      console.log({ projectsData });
       return projectsData;
     } catch (e) {
-      throw new Error("500");
+      throw new Error('500');
     }
   },
 };
